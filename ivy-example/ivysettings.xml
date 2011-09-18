@@ -1,0 +1,17 @@
+<ivysettings>
+    <settings defaultResolver="main"/>
+    <credentials host="localhost" realm="Artifactory Realm" username="admin" passwd="password"/>
+    <resolvers>
+        <chain name="main">
+            <filesystem name="local" checkmodified="true" validate="true">
+                <ivy pattern="${ivy.settings.dir}/../repository/[module]-ivy-[revision].xml"/>
+                <artifact pattern="${ivy.settings.dir}/../repository/[module]-[revision].[ext]"/>
+            </filesystem>
+            <ibiblio name="rjo" m2compatible="true" root="http://repo.jfrog.org/artifactory/repo"/>
+        </chain>
+        <!-- <url name="publish_artifactory" m2compatible="true">
+            <artifact
+                    pattern="http://localhost:8081/artifactory/libs-releases-local/[organization]/[module]/[revision]/[artifact]-[revision].[ext]"/>
+        </url>-->
+    </resolvers>
+</ivysettings>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="1.0" xmlns:m="http://ant.apache.org/ivy/maven">
+    <info organisation="org.jfrog.test"
+          module="multi2"
+          status="integration"/>
+    <configurations>
+        <include file="../common-configurations.xml"/>
+    </configurations>
+    <dependencies>
+        <dependency org="org.apache.commons" name="commons-email" rev="1.1" conf="compile"/>
+        <dependency org="org.codehaus.plexus" name="plexus-utils" rev="1.5.1" conf="compile"/>
+        <dependency org="javax.servlet.jsp" name="jsp-api" rev="2.1" conf="compile"/>
+        <dependency org="commons-io" name="commons-io" rev="1.4" conf="compile"/>
+        <dependency org="org.springframework" name="spring-aop" rev="2.5.6" conf="compile"/>
+        <dependency org="org.testng" name="testng" rev="5.12.1" conf="test->compile"/>
+    </dependencies>
+</ivy-module>

@@ -1,0 +1,76 @@
+/**
+ * There are 2 ways to activate the Artifactory Build-Info plugin.
+ * 1. use apply from directly from the build.gradle as shown below.
+ * 2. use the init script "gradle --init-script init.gradle" ATTENTION: Check the URL inside this init.gradle
+ * 3. Copy the init.gradle to your ~/.gradle directory and execute normally. ATTENTION: Now the Artifactory URL will
+ * always be applied to all your projects.
+ *
+ * Check the URL that apply uses to get the remote script
+ *
+ */
+
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+
+def globalVersion = new Version(currentVersion)
+
+allprojects {
+    apply plugin: 'artifactory'
+    group = 'org.gradle'
+    version = globalVersion
+    status = version.status
+}
+
+subprojects {
+    apply plugin: 'maven'
+    apply plugin: 'java'
+
+    dependencies {
+        testCompile 'junit:junit:4.7'
+    }
+    manifest.mainAttributes(provider: 'gradle')
+}
+
+artifactory {
+    contextUrl = 'http://repo.jfrog.org/artifactory'
+    publish {
+        defaults {
+            publishConfigs('archives', 'published')
+            properties = ['build.status': "$it.project.status".toString()]
+        }
+    }
+    resolve {
+        repoKey = 'gradle'
+    }
+}
+
+dependsOnChildren()
+
+class Version {
+    String originalVersion
+    String thisVersion
+    String status
+    Date buildTime
+
+    Version(String versionValue) {
+        buildTime = new Date()
+        originalVersion = versionValue
+        if (originalVersion.endsWith('-SNAPSHOT')) {
+            status = 'integration'
+            thisVersion = originalVersion.substring(0,originalVersion.length()-'-SNAPSHOT'.length()) + getTimestamp()
+        } else {
+            status = 'release'
+        }
+    }
+
+    String getTimestamp() {
+        // Convert local file timestamp to UTC
+        def format = new SimpleDateFormat('yyyyMMddHHmmss')
+        format.setCalendar(Calendar.getInstance(TimeZone.getTimeZone('UTC')));
+        return format.format(buildTime)
+    }
+
+    String toString() {
+        thisVersion
+    }
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="1.0" xmlns:m="http://ant.apache.org/ivy/maven">
+    <info organisation="org.jfrog.test"
+          module="multi3"
+          status="integration"/>
+    <configurations>
+        <include file="../common-configurations.xml"/>
+    </configurations>
+    <dependencies>
+        <dependency org="org.jfrog.test" name="multi1" rev="latest.integration" conf="compile"/>
+        <dependency org="hsqldb" name="hsqldb" rev="1.8.0.10" conf="runtime"/>
+        <dependency org="javax.servlet" name="servlet-api" rev="2.5" conf="provided"/>
+        <dependency org="org.testng" name="testng" rev="5.12.1" conf="test->compile"/>
+    </dependencies>
+</ivy-module>

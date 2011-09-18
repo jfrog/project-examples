@@ -1,0 +1,6 @@
+<configurations>
+    <conf name="compile"/>
+    <conf name="runtime" extends="compile"/>
+    <conf name="provided" extends="compile"/>
+    <conf name="test" extends="compile"/>
+</configurations>
