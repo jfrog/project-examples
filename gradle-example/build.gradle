@@ -33,6 +33,7 @@ subprojects {
 
 artifactory {
     contextUrl = 'http://repo.jfrog.org/artifactory'
+    //contextUrl = 'http://localhost:8081/artifactory'
     publish {
         defaults {
             publishConfigs('archives', 'published')
@@ -45,6 +46,10 @@ artifactory {
 }
 
 dependsOnChildren()
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.0-milestone-3'
+}
 
 class Version {
     String originalVersion
