@@ -16,6 +16,7 @@ def globalVersion = new Version(currentVersion)
 
 allprojects {
     apply plugin: 'artifactory'
+    apply plugin: 'idea'
     group = 'org.gradle'
     version = globalVersion
     status = version.status
@@ -32,9 +33,20 @@ subprojects {
 }
 
 artifactory {
-    contextUrl = 'http://repo.jfrog.org/artifactory'
-    //contextUrl = 'http://localhost:8081/artifactory'
+    //contextUrl = 'http://repo.jfrog.org/artifactory'
+    contextUrl = 'http://localhost:8081/artifactory'
     publish {
+        repository {
+            repoKey = 'gradle-local' //The Artifactory repository key to publish to
+            username = "${artifactory_user}" //The publisher user name
+            password = "${artifactory_password}" //The publisher password
+            ivy {
+                //Optional section for configuring Ivy publication (when publishIvy = true). Assumes Maven repo layout if If not specified
+                ivyLayout = '[organization]/[module]/ivy-[revision].xml'
+                artifactLayout = '[organization]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]'
+                mavenCompatible = false //Convert any dots in an [organization] layout value to path separators, similar to Maven's groupId-to-path conversion. True if not specified
+            }
+        }
         defaults {
             publishConfigs('archives', 'published')
             properties = ['build.status': "$it.project.status".toString()]
@@ -43,6 +55,7 @@ artifactory {
     resolve {
         repoKey = 'gradle'
     }
+
 }
 
 dependsOnChildren()
@@ -62,7 +75,7 @@ class Version {
         originalVersion = versionValue
         if (originalVersion.endsWith('-SNAPSHOT')) {
             status = 'integration'
-            thisVersion = originalVersion.substring(0,originalVersion.length()-'-SNAPSHOT'.length()) + getTimestamp()
+            thisVersion = originalVersion.substring(0, originalVersion.length() - 'SNAPSHOT'.length()) + getTimestamp()
         } else {
             status = 'release'
         }
