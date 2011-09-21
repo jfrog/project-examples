@@ -50,6 +50,8 @@ artifactory {
         defaults {
             publishConfigs('archives', 'published')
             properties = ['build.status': "$it.project.status".toString()]
+            publishPom = false         //Publish generated POM files to Artifactory (true by default)
+            publishIvy = true         //Publish generated Ivy descriptor files to Artifactory (true by default)
         }
     }
     resolve {
