@@ -2,13 +2,14 @@ gradle.projectsLoaded {
     rootProject.allprojects {
         buildscript {
             repositories {
-                //mavenRepo(urls: 'http://repo.jfrog.org/artifactory/gradle-plugins').setChecksums('sha1')
-                mavenRepo(urls: 'http://localhost:8081/artifactory/gradle').setChecksums('sha1')
-            }
+			maven{
+			url "http://repo.jfrog.org/artifactory/gradle"
+			//url "http://localhost:8081/artifactory/gradle"
+			}
             dependencies {
-                classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '2.0.6')
+                classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '2.0.7')
             }
-        }
+         }       
+	   }
     }
 }
-

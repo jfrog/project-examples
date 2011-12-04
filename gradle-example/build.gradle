@@ -9,6 +9,17 @@
  *
  */
 
+ buildscript {
+    repositories {
+        maven {
+            url "http://repo.jfrog.org/artifactory/gradle-plugins-snapshots"
+        }
+        dependencies {
+            classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '2.0.7')
+        }
+    }
+    
+}
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
