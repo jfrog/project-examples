@@ -1,0 +1,11 @@
+{
+ "status": "promoted",
+ "comment" : "Promote build @buildName@ @buildNumber@ to @targetRepo@",
+ "ciUser": "@artifactoryUser@",
+ "dryRun" : false,
+ "targetRepo" : "@targetRepo@",
+ "copy": true,
+ "artifacts" : true,
+ "dependencies" : false,
+ "failFast": true
+}
