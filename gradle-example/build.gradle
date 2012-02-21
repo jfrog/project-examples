@@ -12,7 +12,8 @@
  buildscript {
     repositories {
         maven {
-            url "http://repo.jfrog.org/artifactory/gradle"
+           // url "http://repo.jfrog.org/artifactory/gradle"
+		      url "http://localhost:8081/artifactory/gradle"
         }
         dependencies {
             classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '2.0.12')
@@ -28,10 +29,12 @@ def globalVersion = new Version(currentVersion)
 allprojects {
     apply plugin: 'artifactory'
     apply plugin: 'idea'
-    group = 'org.gradle'
+    group = 'org.jfrog.example.gradle'
     version = globalVersion
     status = version.status
 }
+
+artifactoryPublish.skip=true
 
 subprojects {
     apply plugin: 'maven'
@@ -41,6 +44,25 @@ subprojects {
         testCompile 'junit:junit:4.7'
     }
     manifest.mainAttributes(provider: 'gradle')
+	configurations {
+        published
+    }
+	  task sourceJar(type: Jar) {
+        from sourceSets.main.allSource
+        classifier = 'sources'
+    }
+	task javadocJar(type: Jar, dependsOn:javadoc) {      
+	classifier = 'javadoc'     
+	from javadoc.destinationDir 
+   } 
+    artifactoryPublish {
+        dependsOn sourceJar,javadocJar
+    }
+    // Add the sourceJars to non-extractor modules
+    artifacts {
+        published sourceJar 
+		published javadocJar
+    }
 }
 
 artifactory {
@@ -59,15 +81,20 @@ artifactory {
             }
         }
         defaults {
-            publishConfigs('archives', 'published')
+            publishConfigs('archives','published')
             properties = ['build.status': "$it.project.status".toString()]
             publishPom = false         //Publish generated POM files to Artifactory (true by default)
             publishIvy = true         //Publish generated Ivy descriptor files to Artifactory (true by default)
         }
     }
     resolve {
-        repoKey = 'gradle'
-    }
+	    repository {
+          repoKey = 'gradle'  //The Artifactory (preferably virtual) repository key to resolve from
+          username = "${artifactory_user}"       //Optional resolver user name (leave out to use anonymous resolution)
+          password = "${artifactory_password}"   //The resolver password
+     
+       }
+	}
 
 }
 
