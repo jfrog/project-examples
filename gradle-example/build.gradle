@@ -118,6 +118,7 @@ class Version {
             thisVersion = originalVersion.substring(0, originalVersion.length() - 'SNAPSHOT'.length()) + getTimestamp()
         } else {
             status = 'release'
+            thisVersion = versionValue
         }
     }
 
