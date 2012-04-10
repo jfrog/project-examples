@@ -1,3 +1,0 @@
-<project name="multi1" default="compile">
-    <import file="../common.xml"/>
-</project>
