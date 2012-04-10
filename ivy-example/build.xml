@@ -1,0 +1,82 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one
+   or more contributor license agreements.  See the NOTICE file
+   distributed with this work for additional information
+   regarding copyright ownership.  The ASF licenses this file
+   to you under the Apache License, Version 2.0 (the
+   "License"); you may not use this file except in compliance
+   with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing,
+   software distributed under the License is distributed on an
+   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+   KIND, either express or implied.  See the License for the
+   specific language governing permissions and limitations
+   under the License.    
+-->
+<project name="all" 
+         xmlns:ivy="antlib:org.apache.ivy.ant">
+         
+	<property name="ivy.jar.dir" value="${user.home}/.ivy2/jars" />
+	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar" />
+
+    <property name="build.dir" value="build" />
+    <property name="src.dir" value="src" />
+    
+    
+	<!-- ================================= 
+          target: load-ivy         
+            this target is not necessary if you put ivy.jar in your ant lib directory
+            if you already have ivy 1.4 in your ant lib, you can simply remove this
+            target
+         ================================= -->
+    <target name="load-ivy">
+    	<!-- try to load ivy here from home ivy dir, in case the user has not already dropped
+    	      it into ant's lib dir (note that the latter copy will always take precedence).
+    	      We will not fail as long as ivy home lib dir exists (it may be empty) and
+    	      ivy is in at least one of ant's lib dir or the ivy home lib dir. -->
+    	<path id="ivy.lib.path">
+    		<pathelement location="${ivy.jar.file}"/>
+    	</path>
+    	<taskdef resource="org/apache/ivy/ant/antlib.xml"
+    	          uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+    </target>    
+         
+  <target name="buildlist" depends="load-ivy"> 
+    <ivy:buildlist reference="build-path">
+      <fileset dir="projects" includes="**/build.xml"/>
+    </ivy:buildlist>
+  </target>
+  
+  <!--Publish release version--> 
+  <target name="publish-release" depends="buildlist" 
+  			description="compile, jar and publish all projects in the right order">
+    <subant target="publish" buildpathref="build-path" />
+  </target>
+  <!--Publish dev version--> 
+  <target name="publish-dev" depends="buildlist" 
+  			description="compile, jar and publish all projects in the right order">
+    <subant target="publish-dev" buildpathref="build-path" />
+  </target>
+   <!--For CI useage, only pubish to local repository --> 
+  <target name="publish-ci" depends="buildlist" 
+  			description="compile, jar and publish all projects in the right order">
+    <subant target="publish-local" buildpathref="build-path" />
+  </target>
+  
+
+
+  <target name="clean-all" depends="buildlist" description="clean all projects">
+    <subant target="clean" buildpathref="build-path" />
+  </target>
+  
+  <target name="clean" depends="clean-all, load-ivy" 
+  			description="clean tutorial: delete repository, ivy cache, and all projects">
+    <delete dir="repository"/>
+  	<ivy:cleancache />
+  </target>
+  
+  
+</project>

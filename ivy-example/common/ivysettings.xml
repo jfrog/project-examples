@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-settings>
+  <settings defaultResolver="main" />
+  <!--Authentication required for publishing (deployment). 'Artifactory Realm' is the realm used by Artifactory so don't change it.-->
+  <credentials host="localhost" realm="Artifactory Realm" username="admin" passwd="password" />
+  <resolvers>
+    <chain name="main">
+	  <filesystem name="local" checkmodified="true" validate="true">
+           <ivy pattern="${ivy.settings.dir}/../repository/[module]-ivy-[revision].xml"/>
+           <artifact pattern="${ivy.settings.dir}/../repository/[module]-[revision].[ext]"/>
+      </filesystem>
+      <ibiblio name="public" m2compatible="true" root="http://localhost:8081/artifactory/libs-release" />
+	  <url name="artifactory" m2compatible="false">
+           <ivy pattern="http://localhost:8081/artifactory/ivy-local/[organization]/[module]/[revision]/[type]s/ivy-[revision].xml" />
+		   <artifact pattern="http://localhost:8081/artifactory/ivy-local/[organization]/[module]/[revision]/[type]s/[module](-[classifier])-[revision].[ext]" />
+      </url>
+    </chain>
+  </resolvers>
+</ivy-settings>
