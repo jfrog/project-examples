@@ -162,9 +162,9 @@
     </target>
 
     <!-- ================================= 
-          target: publish-dev              
+          target: publish-integration              
          ================================= -->
-    <target name="publish-dev" depends="local-version, jar" description="--> publish this project in the local ivy repository">
+    <target name="publish-integration" depends="local-version, jar" description="--> publish this project in the local ivy repository">
     	<ivy:publish artifactspattern="${build.dir}/[artifact].[ext]" 
     			        resolver="artifactory"
     			        pubrevision="${version}"

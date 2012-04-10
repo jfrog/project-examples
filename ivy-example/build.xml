@@ -58,9 +58,9 @@
   <!--Publish dev version--> 
   <target name="publish-dev" depends="buildlist" 
   			description="compile, jar and publish all projects in the right order">
-    <subant target="publish-dev" buildpathref="build-path" />
+    <subant target="publish-integration" buildpathref="build-path" />
   </target>
-   <!--For CI useage, only pubish to local repository --> 
+   <!--For CI usage, only pubish to local repository --> 
   <target name="publish-ci" depends="buildlist" 
   			description="compile, jar and publish all projects in the right order">
     <subant target="publish-local" buildpathref="build-path" />
