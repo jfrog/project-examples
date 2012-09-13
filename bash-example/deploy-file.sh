@@ -35,6 +35,6 @@ echo "INFO: Uploading $localFilePath to $targetFolder/$fileName"
 curl -i -X PUT -u $artifactoryUser:$artifactoryPassword \
  -H "X-Checksum-Md5: $md5Value" \
  -H "X-Checksum-Sha1: $sha1Value" \
- --data-binary @"$localFilePath" \
+ -T "$localFilePath" \
  "$targetFolder/$fileName"
 
