@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "core", "core\core.csproj", "{AFCF5EBB-BC6A-42C7-AC40-38548680B845}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{B8CD21CA-85E4-404A-8263-8E8A2B2834F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "services", "services\services.csproj", "{0FAC1A5D-F94E-4AF9-B7D9-AC1278F4C48B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AFCF5EBB-BC6A-42C7-AC40-38548680B845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFCF5EBB-BC6A-42C7-AC40-38548680B845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFCF5EBB-BC6A-42C7-AC40-38548680B845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFCF5EBB-BC6A-42C7-AC40-38548680B845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8CD21CA-85E4-404A-8263-8E8A2B2834F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8CD21CA-85E4-404A-8263-8E8A2B2834F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8CD21CA-85E4-404A-8263-8E8A2B2834F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8CD21CA-85E4-404A-8263-8E8A2B2834F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FAC1A5D-F94E-4AF9-B7D9-AC1278F4C48B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FAC1A5D-F94E-4AF9-B7D9-AC1278F4C48B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FAC1A5D-F94E-4AF9-B7D9-AC1278F4C48B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FAC1A5D-F94E-4AF9-B7D9-AC1278F4C48B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
