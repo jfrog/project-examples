@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>JFrog</authors>
+    <owners>JFrog</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+	<description>JFrog Services</description>
+    <copyright>Copyright 2013</copyright>
+  </metadata>
+</package>
