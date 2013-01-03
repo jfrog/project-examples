@@ -1,0 +1,14 @@
+apply plugin: "cpp-exe"
+
+repositories {
+    maven { url 'http://10.0.0.126:8080/artifactory/libs-release' }
+}
+
+cpp {
+    sourceSets {
+        main {
+            libs << project(":TextWriter").libraries.main
+            dependency group: "org.jfrog.example.cpp.external", name: "TextScanner", version: "1.0"
+        }
+    }
+}

@@ -1,12 +1,3 @@
-buildscript {
-    repositories {
-        maven { url 'http://repo.jfrog.org/artifactory/gradle-plugins' }
-    }
-    dependencies {
-        classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '2.0.16')
-    }
-}
-
 allprojects {
     apply plugin: 'idea'
     version = '1.0-SNAPSHOT'
@@ -15,7 +6,6 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'artifactory'
     idea {
         module {
             sourceDirs += [file('src/main/cpp'), file('src/main/headers')]
@@ -25,37 +15,6 @@ subprojects {
 
 project(":TextWriter") {
     apply plugin: "cpp-lib"
-//    cpp {
-//        sourceSets {
-//            main {
-//                dependency group: "some-org", name: "some-lib", version: "1.0"
-//            }
-//        }
-//    }
-}
-
-project(":TextWriterDemo") {
-    apply plugin: "cpp-exe"
-    cpp {
-        sourceSets {
-            main {
-                libs << project(":TextWriter").libraries.main
-            }
-        }
-    }
-}
-
-artifactory {
-    contextUrl = 'http://10.0.0.126:8080/artifactory'   //The base Artifactory URL if not overridden by the publisher/resolver
-    publish {
-        publishPom = false //just to prevent complains
-    }
-    resolve {
-        repository {
-            repoKey = 'libs-releases'  //The Artifactory (preferably virtual) repository key to resolve from
-            maven = false                //Resolve Maven-style artifacts and descriptors (true by default)
-        }
-    }
 }
 
 task wrapper(type: Wrapper) {

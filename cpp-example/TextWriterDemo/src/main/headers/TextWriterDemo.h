@@ -8,6 +8,7 @@
 #ifndef TEXTWRITERDEMO_H
 #define	TEXTWRITERDEMO_H
 #include "TextWriter.h"
+#include "TextScanner.h"
 
 class TextWriterDemo {
 public:
@@ -17,6 +18,7 @@ public:
     virtual ~TextWriterDemo();
 private:
     TextWriter demo ;
+    TextScanner textScanner;
 };
 
 #endif	/* TEXTWRITERDEMO_H */
