@@ -1,3 +1,7 @@
+allprojects {
+    version = '1.0-SNAPSHOT'
+}
+
 project(":TextWriter") {
     apply plugin: "cpp-lib"
 //    cpp {
