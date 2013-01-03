@@ -22,11 +22,11 @@ void TextWriterDemo:: run(){
     demo.append("appending text to second line");
     std::string path="text.writer.demo.out";
     demo.writeLine(path);
-    if(textScanner.contains("where","here")){
-        demo.writeLine("String found");
-    } else {
-        demo.writeLine("String not found");
-    }
+//    if(textScanner.contains("where","here")){
+//        demo.writeLine("String found");
+//    } else {
+//        demo.writeLine("String not found");
+//    }
     demo.writeToConsole();
 }
 
