@@ -1,0 +1,25 @@
+project(":TextWriter") {
+    apply plugin: "cpp-lib"
+//    cpp {
+//        sourceSets {
+//            main {
+//                dependency group: "some-org", name: "some-lib", version: "1.0"
+//            }
+//        }
+//    }
+}
+
+project(":TextWriterDemo") {
+    apply plugin: "cpp-exe"
+    cpp {
+        sourceSets {
+            main {
+                libs << project(":TextWriter").libraries.main
+            }
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.3'
+}
