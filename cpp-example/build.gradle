@@ -11,6 +11,7 @@ allprojects {
     apply plugin: 'idea'
     version = '1.0-SNAPSHOT'
     status = 'integration'
+    group = 'org.jfrog.example.cpp'
 }
 
 subprojects {
