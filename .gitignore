@@ -2,10 +2,12 @@
 *.ipr
 *.iws
 *.iml
-/build
-/*/build
-/*/out
-out
+atlassian*.xml
+maven-example/target
+maven-example/*/target
+gradle-example/build
+gradle-example/*/build
+gradle-example/*/*/build
 _ReSharper*
 bin
 obj
