@@ -27,8 +27,18 @@
  */
 
 buildscript {
+    repositories {
+        maven { url 'http://repo.jfrog.org/artifactory/gradle-plugins-snapshots' }
+    }
     dependencies {
-        classpath files(new File(projectDir, "../../../build/libs/build-info-extractor-gradle-2.1.x-SNAPSHOT-uber.jar"))
+        classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '2.1.x-SNAPSHOT')
+    }
+    configurations.classpath {
+        resolutionStrategy {
+            failOnVersionConflict()
+            cacheDynamicVersionsFor 0, 'seconds'
+            cacheChangingModulesFor 0, 'seconds'
+        }
     }
 }
 
@@ -104,7 +114,7 @@ artifactory {
     clientConfig.info.setBuildNumber(new java.util.Random(System.currentTimeMillis()).nextInt(20000))
 
     //contextUrl = 'http://repo.jfrog.org/artifactory'
-    contextUrl = 'http://localhost:8080/artifactory'
+    contextUrl = 'http://localhost:8081/artifactory'
     publish {
         repository {
             repoKey = 'gradle-snapshot-local'
