@@ -111,7 +111,7 @@ artifactory {
     clientConfig.setIncludeEnvVars(true)
     clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new java.util.Date().toString())
     clientConfig.info.setBuildName('new-strange-name')
-    clientConfig.info.setBuildNumber(new java.util.Random(System.currentTimeMillis()).nextInt(20000))
+    clientConfig.info.setBuildNumber(new java.util.Random(System.currentTimeMillis()).nextInt(20000).toString())
 
     //contextUrl = 'http://repo.jfrog.org/artifactory'
     contextUrl = 'http://localhost:8081/artifactory'
