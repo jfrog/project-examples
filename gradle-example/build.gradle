@@ -12,8 +12,8 @@
 buildscript {
   repositories {
     maven {
-      //url "http://repo.jfrog.org/artifactory/gradle"
-       url "http://localhost:8081/artifactory/gradle"
+        url "http://jcenter.bintray.com"
+       //url "http://localhost:8081/artifactory/gradle"
       credentials {
         username = "${artifactory_user}"
         password = "${artifactory_password}"
