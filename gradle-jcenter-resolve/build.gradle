@@ -1,0 +1,22 @@
+
+
+apply plugin: 'java'
+
+group 'gradel.jcenter.resolve'
+version "1.0-${System.currentTimeMillis()}"
+
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    
+	compile(group: 'commons-lang', name: 'commons-lang', version: '2.6')
+	compile(group: 'junit', name: 'junit', version: '4.11')
+     
+}
+
+
+
+
