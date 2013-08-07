@@ -3,9 +3,9 @@
  */
 import org.apache.commons.lang.StringUtils;
 
-public class Upload {
+public class HelloWorld {
     public static void main(String[] args) {
-        new Upload();
-        System.out.println("Hello World!");
+        new HelloWorld();
+        System.out.println(StringUtils.capitalize("hello world"));
     }
 }
