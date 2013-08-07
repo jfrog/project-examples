@@ -1,20 +1,11 @@
-
 apply plugin: 'java'
 
-group 'gradle.jcenter.resolve'
+group 'org.jfrog.gradle.example.jcenter'
 version "1.0"
-
 
 repositories {
     jcenter()
 }
-
 dependencies {
-    
 	compile(group: 'commons-lang', name: 'commons-lang', version: '2.6')
-     
 }
-
-
-
-
