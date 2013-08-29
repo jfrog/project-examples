@@ -93,6 +93,11 @@ project('api') {
                     extension "txt"
                     type "text"
                 }
+		// The config below will add a extra attribute to the ivy.xml
+		// See http://ant.apache.org/ivy/history/latest-milestone/concept.html#extra
+		descriptor.withXml {
+		    asNode().info[0].attributes().put('e:architecture', 'amd64')
+		}
             }
         }
     }
@@ -110,8 +115,8 @@ artifactoryPublish.skip = true
 artifactory {
     clientConfig.setIncludeEnvVars(true)
     clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new java.util.Date().toString())
-    clientConfig.info.setBuildName('new-strange-name')
-    clientConfig.info.setBuildNumber(new java.util.Random(System.currentTimeMillis()).nextInt(20000).toString())
+    //clientConfig.info.setBuildName('new-strange-name')
+    //clientConfig.info.setBuildNumber(new java.util.Random(System.currentTimeMillis()).nextInt(20000).toString())
 
     //contextUrl = 'http://repo.jfrog.org/artifactory'
     contextUrl = 'http://localhost:8081/artifactory'
