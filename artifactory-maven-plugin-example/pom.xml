@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0          http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jfrog.test</groupId>
+    <artifactId>multi</artifactId>
+    <version>2.17-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Simple Multi Modules Build</name>
+
+    <modules>
+        <module>multi1</module>
+        <module>multi2</module>
+        <module>multi3</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+	
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+		    <plugins>
+			    <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.3.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+		   <plugins>
+				<plugin>
+                <groupId>org.jfrog.buildinfo</groupId>
+                <artifactId>artifactory-maven-plugin</artifactId>
+                <version>2.2.0</version>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>build-info</id>
+                        <goals>
+                            <goal>publish</goal>
+                        </goals>
+                        <configuration>
+                            <deployProperties>
+                                <gradle>awesome</gradle>                         
+                            </deployProperties>
+                            <artifactory>
+                                <includeEnvVars>true</includeEnvVars>
+                                <timeoutSec>60</timeoutSec>
+                                <propertiesFile>publish.properties</propertiesFile>
+                            </artifactory>
+                            <publisher>
+                                <contextUrl>{{ARTIFACTORY_CONTEXT_URL|"http://localhost:8081/artifactory"}}</contextUrl>
+                                <username>deployer</username>
+                                <password>{DESede}0XIOf5RBEyFKbzWU1h2XGQ==</password>
+                                <excludePatterns>*-tests.jar</excludePatterns>
+                                <repoKey>libs-release-local</repoKey>
+                                <snapshotRepoKey>libs-snapshot-local</snapshotRepoKey>
+                            </publisher>
+                            <buildInfo>
+							    <buildName>plugin-demo</buildName>
+                                <buildNumber>{{DRONE_BUILD_NUMBER|TRAVIS_BUILD_NUMBER|CI_BUILD_NUMBER|BUILD_NUMBER}}</buildNumber>
+                                <buildUrl>{{DRONE_BUILD_URL|CI_BUILD_URL|BUILD_URL}}</buildUrl>
+                            </buildInfo>
+                            <licenses>
+                               <autoDiscover>true</autoDiscover>
+                               <includePublishedArtifacts>false</includePublishedArtifacts>
+                               <runChecks>true</runChecks>
+                               <scopes>compile,runtime</scopes>
+                               <violationRecipients>build@organisation.com</violationRecipients>
+                            </licenses>
+                        </configuration>
+                    </execution>
+                </executions>
+              </plugin>
+			 </plugins>
+        </build>
+	 
+            <repositories>
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central</id>
+                    <name>bintray</name>
+                    <url>http://jcenter.bintray.com</url>
+                </repository>
+            </repositories>
+            <pluginRepositories>
+                <pluginRepository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central</id>
+                    <name>bintray-plugins</name>
+                    <url>http://jcenter.bintray.com</url>
+                </pluginRepository>
+            </pluginRepositories>
+         	
+</project>
