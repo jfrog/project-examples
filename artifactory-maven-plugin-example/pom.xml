@@ -28,8 +28,8 @@
 
     <build>
         <pluginManagement>
-		    <plugins>
-			    <plugin>
+            <plugins>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>2.3.2</version>
@@ -41,8 +41,8 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-		   <plugins>
-				<plugin>
+             <plugins>
+	       <plugin>
                 <groupId>org.jfrog.buildinfo</groupId>
                 <artifactId>artifactory-maven-plugin</artifactId>
                 <version>2.2.0</version>
@@ -71,7 +71,7 @@
                                 <snapshotRepoKey>libs-snapshot-local</snapshotRepoKey>
                             </publisher>
                             <buildInfo>
-							    <buildName>plugin-demo</buildName>
+			        <buildName>plugin-demo</buildName>
                                 <buildNumber>{{DRONE_BUILD_NUMBER|TRAVIS_BUILD_NUMBER|CI_BUILD_NUMBER|BUILD_NUMBER}}</buildNumber>
                                 <buildUrl>{{DRONE_BUILD_URL|CI_BUILD_URL|BUILD_URL}}</buildUrl>
                             </buildInfo>
@@ -86,28 +86,27 @@
                     </execution>
                 </executions>
               </plugin>
-			 </plugins>
+	   </plugins>
         </build>
-	 
-            <repositories>
-                <repository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>central</id>
-                    <name>bintray</name>
-                    <url>http://jcenter.bintray.com</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>central</id>
-                    <name>bintray-plugins</name>
-                    <url>http://jcenter.bintray.com</url>
-                </pluginRepository>
-            </pluginRepositories>
+        <repositories>
+          <repository>
+             <snapshots>
+              <enabled>false</enabled>
+             </snapshots>
+             <id>central</id>
+             <name>bintray</name>
+             <url>http://jcenter.bintray.com</url>
+           </repository>
+         </repositories>
+         <pluginRepositories>
+           <pluginRepository>
+             <snapshots>
+               <enabled>false</enabled>
+             </snapshots>
+             <id>central</id>
+             <name>bintray-plugins</name>
+             <url>http://jcenter.bintray.com</url>
+           </pluginRepository>
+         </pluginRepositories>
          	
 </project>
