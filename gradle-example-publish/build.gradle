@@ -76,7 +76,7 @@ configure(javaProjects()) {
         publications {
             mavenJava(MavenPublication) {
                 from components.java
-                artifact(file("$rootDir/build/build-info.json")) // deploy arbitrary file
+                artifact(file("$rootDir/gradle.properties")) // deploy arbitrary file
             }
         }
     }
