@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MyLogger</id>
-    <version>$version$</version>
+    <version>1.0.0.0</version>
     <title>$title$</title>
     <authors>JFrog</authors>
     <owners>JFrog</owners>
