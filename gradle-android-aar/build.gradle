@@ -1,0 +1,127 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.9.2'
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:2.2.3'
+    }
+}
+
+import java.text.SimpleDateFormat
+
+def globalVersion = new Version(currentVersion)
+
+// Define the artifacts coordinates
+group = 'org.jfrog.example.android'
+version = globalVersion
+status = version.status
+
+// Plugins
+apply plugin: 'android-library'
+apply plugin: 'maven'
+apply plugin: 'artifactory'
+
+
+
+// Android
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 19
+    }
+}
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java
+    classifier "sources"
+}
+
+//artifactoryPublish {
+//    dependsOn sourceJar
+//}
+
+artifacts {
+    archives sourceJar
+}
+
+artifactory {
+    publish {
+        contextUrl = artifactory_contextUrl //The Artifactory server URL, property taken from gradle.properties
+        repository {
+            repoKey = 'gradle-snapshot-local' //The Artifactory repository key to publish to
+            username = artifactory_user //The publisher user name, property taken from gradle.properties
+            password = artifactory_password //The publisher password, property taken from gradle.properties
+            ivy {
+                //Optional section for configuring Ivy publication (when publishIvy = true). Assumes Maven repo layout if If not specified
+                ivyLayout = '[organization]/[module]/ivy-[revision].xml'
+                artifactLayout = '[organization]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]'
+                mavenCompatible = false
+                //Convert any dots in an [organization] layout value to path separators, similar to Maven's groupId-to-path conversion. True if not specified
+            }
+        }
+        defaults {
+            publishConfigs('archives')
+            properties = ['build.status': "$it.project.status".toString()]
+            publishPom = false //Publish generated POM files to Artifactory (true by default)
+            publishIvy = true //Publish generated Ivy descriptor files to Artifactory (true by default)
+        }
+    }
+    resolve {
+        contextUrl = artifactory_contextUrl
+        repository {
+            repoKey = 'libs-release' //The Artifactory (preferably virtual) repository key to resolve from
+            username = artifactory_user
+            //Optional resolver user name (leave out to use anonymous resolution), property taken from gradle.properties
+            password = artifactory_password //The resolver password, property taken from gradle.properties
+
+        }
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+// Our project dependencies
+dependencies {
+    compile 'joda-time:joda-time:2.3'
+    compile 'com.android.support:support-v4:19.1.+'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
+
+class Version {
+    String originalVersion
+    String thisVersion
+    String status
+    Date buildTime
+
+    Version(String versionValue) {
+        buildTime = new Date()
+        originalVersion = versionValue
+        if (originalVersion.endsWith('-SNAPSHOT')) {
+            status = 'integration'
+            thisVersion = originalVersion.substring(0, originalVersion.length() - 'SNAPSHOT'.length()) + getTimestamp()
+        } else {
+            status = 'release'
+            thisVersion = versionValue
+        }
+    }
+
+    String getTimestamp() {
+        // Convert local file timestamp to UTC
+        def format = new SimpleDateFormat('yyyyMMddHHmmss')
+        format.setCalendar(Calendar.getInstance(TimeZone.getTimeZone('UTC')));
+        return format.format(buildTime)
+    }
+
+    String toString() {
+        thisVersion
+    }
+}
