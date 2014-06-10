@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Recursively deploys folder content (filtering only jars and pom). Attempt checksum deploy first to optimize upload time.
+# Recursively deploys folder content. Attempt checksum deploy first to optimize upload time.
 
 repo_url="http://localhost:8081/artifactory"
 tgt_repo="test"
@@ -13,7 +13,7 @@ if [ -z "$dir" ]; then echo "Please specify a directory to recursively upload fr
 
 if [ ! -x "`which sha1sum`" ]; then echo "You need to have the 'sha1sum' command in your path."; exit 1; fi
 
-# Upload by checksum all jars and pom from the source dir to the target repo
+# Upload by checksum all files from the source dir to the target repo
 find "$dir" -type f | while read f; do
     rel="$(echo "$f" | sed -e "s#$dir##" -e "s# /#/#")";
     sha1=$(sha1sum "$f")
