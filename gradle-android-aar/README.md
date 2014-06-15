@@ -11,4 +11,8 @@ the `ANDROID_HOME` environment variable to the location of your SDK:
 export ANDROID_HOME=/opt/tools/android-sdk
 ```
 
+After satisfying those requirements, the build is pretty simple:
+
+* Run `gradlew artifactoryPublish` from the `app` directory to build the aar
+
 
