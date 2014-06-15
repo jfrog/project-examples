@@ -98,7 +98,7 @@ repositories {
 dependencies {
     compile 'joda-time:joda-time:2.3'
     
-    // Backward compatability for andoird <http://developer.android.com/reference/android/support/v4/app/package-summary.html>  
+    // Backward compatability for andoird <http://developer.android.com/tools/support-library/index.html>  
     //compile 'com.android.support:support-v4:19.1.+'
 }
 
