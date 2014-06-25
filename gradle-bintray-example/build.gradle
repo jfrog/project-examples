@@ -1,0 +1,127 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:0.4"
+    }
+}
+
+import java.text.SimpleDateFormat
+
+def globalVersion = new Version(currentVersion)
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+    apply plugin: 'idea'
+    apply plugin: 'com.jfrog.bintray'
+    configure(subprojects.findAll { new File(it.projectDir, 'src').directory }) {
+        apply plugin: 'java'
+    }
+    group = 'org.jfrog.example.gradle'
+    version = globalVersion
+    status = version.status
+
+    ext.publish = true
+    bintray {
+        apiUrl = "https://api.bintray.net"
+        user = bintray_user
+        key = bintray_key
+        configurations = ['published', 'archives']
+        //publications = ['published']
+        publish = project.publish
+        pkg {
+            repo = 'maven'
+            //userOrg = 'myorg'
+            name = 'mypkg3'
+            desc = 'what a fantastic package indeed!'
+            websiteUrl = 'https://github.com/bintray/gradle-bintray-plugin'
+            issueTrackerUrl = 'https://github.com/bintray/gradle-bintray-plugin/issues'
+            vcsUrl = 'https://github.com/bintray/gradle-bintray-plugin.git'
+            licenses = ['Apache-2.0']
+            labels = ['gear', 'gore', 'gorilla']
+            publicDownloadNumbers = true
+            version {
+                name = '1.3.x-Final' //Optional logical version name
+                desc = 'optional, version-specific description'
+                vcsTag = '1.3.0'
+            }
+        }
+    }
+    
+}
+
+
+subprojects {
+    apply plugin: 'maven'
+
+    if (project.plugins.hasPlugin('java')) {
+        // manifest.mainAttributes(provider: 'gradle')
+        configurations {
+            published
+        }
+        dependencies {
+            testCompile 'junit:junit:4.7'
+        }
+
+        task sourceJar(type: Jar) {
+            from sourceSets.main.allSource
+            classifier = 'sources'
+        }
+        task javadocJar(type: Jar, dependsOn: javadoc) {
+            classifier = 'javadoc'
+            from javadoc.destinationDir
+        }
+
+
+        // Add the sourceJars to non-extractor modules
+        artifacts {
+            published sourceJar
+            published javadocJar
+        }
+    }
+}
+
+configurations {
+    published
+}
+
+
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.12'
+}
+
+class Version {
+    String originalVersion
+    String thisVersion
+    String status
+    Date buildTime
+
+    Version(String versionValue) {
+        buildTime = new Date()
+        originalVersion = versionValue
+        if (originalVersion.endsWith('-SNAPSHOT')) {
+            status = 'integration'
+            thisVersion = originalVersion.substring(0, originalVersion.length() - 'SNAPSHOT'.length()) + getTimestamp()
+        } else {
+            status = 'release'
+            thisVersion = versionValue
+        }
+    }
+
+    String getTimestamp() {
+        // Convert local file timestamp to UTC
+        def format = new SimpleDateFormat('yyyyMMddHHmmss')
+        format.setCalendar(Calendar.getInstance(TimeZone.getTimeZone('UTC')));
+        return format.format(buildTime)
+    }
+
+    String toString() {
+        thisVersion
+    }
+}
