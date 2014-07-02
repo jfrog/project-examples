@@ -17,7 +17,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>multi1</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <!-- runtime dependency -->
