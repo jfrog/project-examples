@@ -1,0 +1,15 @@
+﻿<Project ToolsVersion="4.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+<ArtifactoryDeploy>
+  <DeployAttribute>
+    <Input>obj\(.+)\(.+).dll(?:$)</Input>
+    <Output>msbuild-test-DAL\$1\$2.dll</Output>
+    <Properties>
+      <Property key="DAL" val="bin" />
+      <Property key="DAL" val="c" />
+    </Properties>
+  </DeployAttribute>
+</ArtifactoryDeploy>
+
+  </PropertyGroup>
+</Project>
