@@ -47,9 +47,6 @@
       </DeployAttribute>
     </ArtifactoryDeploy>
 
-    <!--  (?:$)-->
-
-
 
   </PropertyGroup>
 </Project>
