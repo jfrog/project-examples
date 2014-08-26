@@ -1,0 +1,39 @@
+﻿<Project ToolsVersion="4.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+
+    <CurrentVersion>2.0</CurrentVersion>
+    <!--<BuildServer>TFS</BuildServer>-->
+
+
+    <!-- Resolution-->
+    <Resolve-Enable>true</Resolve-Enable>
+    <Resolve-ArtifactoryUrl>http://192.168.56.1:8080/artifactory</Resolve-ArtifactoryUrl>
+    <Resolve-ArtifactoryUserName>admin</Resolve-ArtifactoryUserName>
+    <Resolve-ArtifactoryPassword>password</Resolve-ArtifactoryPassword>
+    <Resolve-Repository>nuget-local</Resolve-Repository>
+
+
+    <!-- Deployment-->
+    <Deploy-ArtifactoryUrl>http://192.168.56.1:8080/artifactory</Deploy-ArtifactoryUrl>
+    <Deploy-ArtifactoryUserName>admin</Deploy-ArtifactoryUserName>
+    <Deploy-ArtifactoryPassword>password</Deploy-ArtifactoryPassword>
+    <Deploy-Repository>libs-snapshot-local</Deploy-Repository>
+
+
+    <ArtifactoryDeploy>
+      <DeployAttribute>
+        <Input>bin\(.+).dll</Input>
+        <Output>$1.dll</Output>
+        <Properties>
+          <Property key="a" val="b" />
+          <Property key="a" val="c" />
+        </Properties>
+      </DeployAttribute>
+    </ArtifactoryDeploy>
+
+    <!--  (?:$)-->
+
+
+
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Artifactory</id>
+    <version>1.0.1.3</version>
+    <title>Artifactory</title>
+    <authors>Jfrog</authors>
+    <owners>Jfrog</owners>
+    <licenseUrl>http://www.jfrog.com/home/v_privacypolicy</licenseUrl>
+    <projectUrl>http://www.jfrog.com/</projectUrl>
+    <iconUrl>http://www.jfrog.com/assets/img/jfrog-logo-badge.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Artifactory for C# .NET users - Alpha</description>
+    <summary>Artifactory for C# .NET users - Alpha</summary>
+    <releaseNotes>first upload to nuget , for testing by jfrog only.</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <language />
+    <tags>artifactory</tags>
+    <dependencies>
+      <dependency id="Nuget.Core" version="2.8.2" />
+    </dependencies>
+  </metadata>
+</package>
