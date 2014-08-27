@@ -2,7 +2,7 @@
   <PropertyGroup>
 
     <CurrentVersion>2.0</CurrentVersion>
-    <!--<BuildServer>TFS</BuildServer>-->
+
 
     <!--Enable Artifactory plug-in to publish Build Info -->
     <BuildInfo-Enable>true</BuildInfo-Enable>
@@ -35,7 +35,7 @@
     <Deploy-Repository>libs-snapshot-local</Deploy-Repository>
 
 
-    <!-- Here you can supply path to files (with Capturing Groups) for the plug-in to publish to Artifactory -->
+    <!-- Here you can supply paths to files (with Capturing Groups) for the plug-in to publish to Artifactory -->
     <ArtifactoryDeploy>
       <DeployAttribute>
         <Input>obj\(.+)\(.+).dll</Input>
