@@ -7,9 +7,9 @@
   -->
   <ItemGroup Condition="'$(Resolve-Enable)' == 'true' AND '$(Resolve-ArtifactoryUserName)' != '' AND '$(Resolve-ArtifactoryPassword)' != '' AND 
 						'$(Resolve-ArtifactoryUrl)' != '' AND '$(Resolve-Repository)' != '' ">
-	<ValidateResolution Include="true"/>
+    <ValidateResolution Include="true"/>
   </ItemGroup>
-  
+
   <ItemGroup Condition=" @(ValidateResolution) == 'true' AND '$(PackageSources)' == '' ">
     <PackageSource Include="$(Resolve-ArtifactoryUrl)/api/nuget/$(Resolve-Repository)" />
   </ItemGroup>

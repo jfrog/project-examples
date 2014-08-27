@@ -29,7 +29,7 @@ $nugetPath = join-path $solutionDirectory '\.nuget\NuGet.targets'
 
 $doc = [System.Xml.XmlDocument](Get-Content $nugetPath); 
 
-$resolvePath = '$(solutionDir)' + '\packages\Artifactory.1.0.1.3\artifactory\resolve.targets'
+$resolvePath = '$(solutionDir)' + '\packages\Artifactory.0.9.0\artifactory\resolve.targets'
 
 $child = $doc.Project.AppendChild($doc.CreateElement("Import"))
 $child.SetAttribute("Project",$resolvePath);
