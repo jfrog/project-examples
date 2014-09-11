@@ -16,27 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{48A2A6
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Artifactory_items", "Artifactory_items", "{98E70DCC-B586-4AD2-A711-458299C9118B}"
-	ProjectSection(SolutionItems) = preProject
-		artifactory.build = artifactory.build
-	EndProjectSection
-EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://192.168.56.2:8080/tfs/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = ArtifactoryDemo.DAL\\ArtifactoryDemo.DAL.csproj
-		SccProjectName1 = ArtifactoryDemo.DAL
-		SccLocalPath1 = ArtifactoryDemo.DAL
-		SccProjectUniqueName2 = ArtifactoryDemo.Services\\ArtifactoryDemo.Services.csproj
-		SccProjectName2 = ArtifactoryDemo.Services
-		SccLocalPath2 = ArtifactoryDemo.Services
-		SccProjectUniqueName3 = ArtifactoryDemo.Web\\ArtifactoryDemo.Web.csproj
-		SccProjectName3 = ArtifactoryDemo.Web
-		SccLocalPath3 = ArtifactoryDemo.Web
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

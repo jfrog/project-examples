@@ -14,5 +14,4 @@ obj
 *.suo
 *.user
 packages
-!msbuild-example/packages
 *.tmp

@@ -1,0 +1,64 @@
+﻿<Project ToolsVersion="4.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+
+    <!--Credentials agents the Artifactory-->
+    <ArtifactoryUserName>$(ARTIFACTORY_USER)</ArtifactoryUserName>
+    <ArtifactoryPassword>$(ARTIFACTORY_PASSWORD)</ArtifactoryPassword>
+
+
+    <!-- Resolution-->
+
+    <!--Enable Artifactory plug-in to interfere Nuget "Package Restore" -->
+    <Resolve-Enable>true</Resolve-Enable>
+    <!--The base Artifactory URL for the resolver-->
+    <Resolve-ArtifactoryUrl>$(ARTIFACTORY_RESOLVE_ADDRESS)</Resolve-ArtifactoryUrl>
+    <!--The Artifactory (preferably virtual) repository key to resolve from-->
+    <Resolve-Repository>$(ARTIFACTORY_RESOLVE_REPO)</Resolve-Repository>
+    <!--
+      To override the user credentials for the resolution process, uncomment the two fields below.
+    -->
+    <!--<Resolve-ArtifactoryUserName>$(ARTIFACTORY_USER_RESOLVE)</Resolve-ArtifactoryUserName>-->
+    <!--<Resolve-ArtifactoryPassword>$(ARTIFACTORY_PASSWORD_RESOLVE)</Resolve-ArtifactoryPassword>-->
+
+
+    <!-- Deployment-->
+
+    <!--Enable Artifactory plug-in to publish artifacts -->
+    <Deploy-Enable>true</Deploy-Enable>
+    <!--The base Artifactory URL for the publisher-->
+    <Deploy-ArtifactoryUrl>$(ARTIFACTORY_DEPLOY_ADDRESS)</Deploy-ArtifactoryUrl>
+    <!--The Artifactory repository key to publish to-->
+    <Deploy-Repository>$(ARTIFACTORY_DEPLOY_REPO)</Deploy-Repository>
+
+
+    <!--Enable Artifactory plug-in to publish Build Info -->
+    <BuildInfo-Enable>true</BuildInfo-Enable>
+
+
+    <!--
+        Incase the build is running under TFS, comment the two fields bellow.
+        The information will be take from TFS.
+    -->
+    <!--<buildNumber>0.0</buildNumber>-->
+    <!--<buildName>msbuild-artifactory</buildName>-->
+
+    
+    <!-- 
+      Here you can supply path to files (also with Capturing Groups) for the plug-in to publish to Artifactory 
+     -->
+    
+    <ArtifactoryDeploy>
+      <DeployAttribute>
+        <Input>obj\(.+)\(.+).dll</Input>
+        <Output>msbuild-artifactory\$1\$2.dll</Output>
+        <Properties>
+          <Property key="a" val="b" />
+          <Property key="a" val="c" />
+        </Properties>
+      </DeployAttribute>
+    </ArtifactoryDeploy>
+
+    <!--  (?:$)-->
+
+  </PropertyGroup>
+</Project>
