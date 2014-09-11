@@ -1,10 +1,14 @@
 MSBuild Project Example
 ==========================
 
+#### Note:
+Major version zero (0.9.0) is for initial development. Anything may change at any time. This public API should not be considered stable.
+
+==========================
 ### Preparations
 * There are two ways to integrate with Artifactory plugin:
 	* Run the Solution as is.
-	* Delete the packages folder, and publish (to your nuget repository) the Artifactory nuget package from "nupkg\Artifactory.1.0.1.3.nupkg" 
+	* Delete the packages folder, and publish (to your nuget repository) the Artifactory nuget package from "nupkg\Artifactory.0.9.0.nupkg" 
 	
 ### Configuration
 * On the Solution level you can find the "artifactory.build" file, this is the main plugin configuration for
