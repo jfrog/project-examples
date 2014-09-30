@@ -16,15 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{48A2A6
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".artifactory", ".artifactory", "{B0E941AE-4E4E-4539-99EF-B79CCE63DD94}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".artifactory", ".artifactory", "{B11BC4A6-4417-4257-922B-05317973A8A5}"
 	ProjectSection(SolutionItems) = preProject
-		.artifactory\artifactory.build = .artifactory\artifactory.build
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "targets", "targets", "{A5757D55-7068-4A59-9F7C-DCEC14219413}"
-	ProjectSection(SolutionItems) = preProject
-		.artifactory\targets\artifactory.targets = .artifactory\targets\artifactory.targets
-		.artifactory\targets\resolve.targets = .artifactory\targets\resolve.targets
+		.artifactory\Artifactory.build = .artifactory\Artifactory.build
+		.artifactory\Deploy.targets = .artifactory\Deploy.targets
+		.artifactory\Resolve.targets = .artifactory\Resolve.targets
 	EndProjectSection
 EndProject
 Global
@@ -48,8 +44,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{A5757D55-7068-4A59-9F7C-DCEC14219413} = {B0E941AE-4E4E-4539-99EF-B79CCE63DD94}
 	EndGlobalSection
 EndGlobal
