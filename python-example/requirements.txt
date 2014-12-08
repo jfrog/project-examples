@@ -1,0 +1,4 @@
+PyYAML==3.11
+epguide==1.0
+nose==1.3.4
+virtualenv==1.11.6

@@ -3,7 +3,8 @@
 
     <!--
       MSBuild Artifactory Plugin
-      For more details, please go to the plugin Wiki site - http://www.jfrog.com/confluence/display/RTF/MSBuild+Artifactory+Plugin
+      For more details, please go to the plugin Wiki site - 
+      http://www.jfrog.com/confluence/display/RTF/MSBuild+Artifactory+Plugin
     -->
     
     <!--Credentials for Artifactory-->

@@ -92,7 +92,8 @@
       <Using Namespace="System.Net" />
       <Using Namespace="Microsoft.Build.Framework" />
       <Using Namespace="Microsoft.Build.Utilities" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
+      <Code Type="Fragment" Language="cs">
+            <![CDATA[
                 try {
                     OutputFilename = Path.GetFullPath(OutputFilename);
 
