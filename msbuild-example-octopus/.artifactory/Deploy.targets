@@ -1,0 +1,18 @@
+<Project ToolsVersion="4.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <pluginVersion>1.0.0</pluginVersion>
+  </PropertyGroup>
+  <Import Project="$(solutionDir)\.artifactory\Artifactory.build" Condition="'$(NuGetToolsPath)' == '' And Exists('$(solutionDir)\.artifactory\Artifactory.build')" />
+  <PropertyGroup>
+    <StartTime>$([System.DateTime]::Now.ToString(yyyy-MM-dd'T'HH:mm:ss.ssszzzz))</StartTime>
+    <BuildNumber Condition="'$(TF_BUILD)' == 'True'">$(TF_BUILD_BUILDNUMBER)</BuildNumber>
+    <BuildName Condition="'$(TF_BUILD)' == 'True'">$(TF_BUILD_BUILDDEFINITIONNAME)</BuildName>
+    <BuildUNCPath Condition="'$(TF_BUILD)' == 'True'">$(TF_BUILD_DROPLOCATION)</BuildUNCPath>
+    <BuildReason Condition="'$(TF_BUILD)' == 'True'">$(TF_BUILD_BUILDREASON)</BuildReason>
+    <BuildRevision Condition="'$(TF_BUILD)' == 'True'">$(TF_BUILD_SOURCEGETVERSION)</BuildRevision>
+  </PropertyGroup>
+  <UsingTask TaskName="JFrog.Artifactory.ArtifactoryBuild" AssemblyFile="$(solutionDir)\packages\Artifactory.$(pluginVersion)\lib\net45\JFrog.Artifactory.dll" />
+  <Target Name="[Artifactory]" AfterTargets="Build">
+    <ArtifactoryBuild projRefList="@(ProjectReference)" ProjectName="$(MSBuildProjectName)" SolutionRoot="$(solutionDir)" ProjectPath="$(MSBuildProjectDirectory)" Configuration="$(Configuration)" StartTime="$(StartTime)" TfsActive="$(TF_BUILD)" BuildUNCPath="$(BuildUNCPath)" BuildReason="$(BuildReason)" BuildNumber="$(BuildNumber)" VcsRevision="$(BuildRevision)" User="$(ArtifactoryUserName)" Password="$(ArtifactoryPassword)" Url="$(DeployArtifactoryUrl)" BuildName="$(BuildName)" DeploymentRepository="$(DeployRepository)" DeployEnabled="$(DeployEnabled)" BuildInfoEnabled="$(BuildInfoEnabled)" ToolVersion="$(MSBuildToolsVersion)" />
+  </Target>
+</Project>

@@ -1,0 +1,98 @@
+<Project ToolsVersion="4.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+	In order to resolve artifacts (Nuget packages) from Artifactory, we include the Artifactory Nuget repository, 
+    as it is configured in the 'Artifactory.build' file. 
+    Setting 'ResolveEnabled' to false in 'Artifactory.build' cancels the override.
+  -->
+  <ItemGroup Condition="'$(ResolveArtifactoryUserName)' == '' " >
+    <ResolveArtifactoryUserName Include="$(ArtifactoryUserName)"  />
+  </ItemGroup>
+  <ItemGroup Condition="'$(ResolveArtifactoryUserName)' != '' " >
+    <ResolveArtifactoryUserName Include="$(ResolveArtifactoryUserName)"  />
+  </ItemGroup>
+  <ItemGroup Condition="'$(ResolveArtifactoryPassword)' == '' " >
+    <ResolveArtifactoryPassword Include="$(ArtifactoryPassword)"  />
+  </ItemGroup>
+  <ItemGroup Condition="'$(ResolveArtifactoryPassword)' != '' " >
+    <ResolveArtifactoryPassword Include="$(ResolveArtifactoryPassword)"  />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(ResolveEnabled)' == 'true' AND '$(ResolveArtifactoryUrl)' != '' AND '$(ResolveRepository)' != ''  
+                            AND '@(ResolveArtifactoryUserName)' != '' AND '@(ResolveArtifactoryPassword)' != '' AND '$(NuGetToolsPath)' != '' ">
+    <ValidateResolution Include="true"/>
+  </ItemGroup>
+  <ItemGroup Condition=" @(ValidateResolution) == 'true' AND '$(PackageSources)' == '' ">
+    <PackageSource Include="$(ResolveArtifactoryUrl)/api/nuget/$(ResolveRepository)" />
+  </ItemGroup>
+
+  <!-- 
+      Creating a temp NuGet.Config file for internal use (under solution)   
+  -->
+  <Target Name="[Artifactory] InitNugetConfig" BeforeTargets="RestorePackages" Condition="@(ValidateResolution) == 'true'">
+    <Warning Condition="Exists('$(solutionDir)\NuGet.Config')" Text="[Artifactory] Artifactory plugin will ignore the NuGet configuration file under the solution level" />
+    <Move Condition="Exists('$(solutionDir)\NuGet.Config')" SourceFiles="$(solutionDir)\NuGet.Config" DestinationFiles="$(solutionDir)\NuGet.Config.temp-$([System.DateTime]::Now.ToString(yyyyMMddHHmmssffff))"/>
+    <NugetConfig SolutionDirectory="$(solutionDir)" NugetRepository="@(PackageSource)" NugetUser="@(ResolveArtifactoryUserName)" NugetPassword="@(ResolveArtifactoryPassword)"/>
+  </Target>
+  <Target Name="[Artifactory] CleanInternalNugetConfig" AfterTargets="RestorePackages">
+    <Delete Files="$(solutionDir)NuGet.Config" />
+  </Target>
+
+  <UsingTask TaskName="NugetConfig" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <SolutionDirectory ParameterType="System.String" Required="true" />
+      <NugetRepository ParameterType="System.String" Required="true" />
+      <NugetUser ParameterType="System.String" Required="true" />
+      <NugetPassword ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Core" />
+      <Reference Include="System.Xml" />
+      <Reference Include="System.Xml.Linq"/>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Net" />
+      <Using Namespace="System.Xml.Linq" />
+      <Using Namespace="Microsoft.Build.Framework" />
+      <Using Namespace="Microsoft.Build.Utilities" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+                FileStream nugetConfigFile = null;
+                try {
+                      Log.LogMessage("Genereting Nuget.Config file for internal use.");                  
+                      
+                      XElement address = new XElement("configuration",
+                                    new XElement("packageSources",
+                                        new XElement("add", 
+                                        new XAttribute("key","MSBuild-Artifactory"),
+                                        new XAttribute("value",NugetRepository))),
+                                    new XElement("packageSourceCredentials",
+                                        new XElement("MSBuild-Artifactory",
+                                            new XElement("add", 
+                                            new XAttribute("key", "Username"),
+                                            new XAttribute("value", NugetUser)),
+                                            new XElement("add", 
+                                            new XAttribute("key", "ClearTextPassword"),
+                                            new XAttribute("value", NugetPassword))))
+                    );
+
+                    nugetConfigFile = new FileStream(SolutionDirectory + "\\NuGet.Config", FileMode.Create);
+                    address.Save(nugetConfigFile);                   
+                    
+                    return true;
+                }
+                catch (Exception ex) {
+                    Log.LogErrorFromException(ex);                    
+                    return false;
+                }
+                finally {
+                    if(nugetConfigFile != null){
+                        nugetConfigFile.Close();
+                    }
+                }
+            ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Import Project="$(solutionDir)\.artifactory\Artifactory.build" Condition="Exists('$(solutionDir)\.artifactory\Artifactory.build')"/>
+</Project>
