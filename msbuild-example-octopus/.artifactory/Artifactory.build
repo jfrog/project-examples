@@ -5,7 +5,7 @@
       MSBuild Artifactory Plugin
       For more details, please go to the plugin Wiki site - http://www.jfrog.com/confluence/display/RTF/MSBuild+Artifactory+Plugin
     -->
-    
+
     <!--Credentials for Artifactory-->
     <ArtifactoryUserName>$(ARTIFACTORY_USER)</ArtifactoryUserName>
     <ArtifactoryPassword>$(ARTIFACTORY_PASSWORD)</ArtifactoryPassword>
@@ -16,29 +16,29 @@
     <!--Enable Artifactory plugin to override Nuget "Package Restore" -->
     <ResolveEnabled>true</ResolveEnabled>
     <!--Root URL of the Artifactory server. e.g., http://domain:port/artifactory-->
-    <ResolveArtifactoryUrl>http://localhost:8080/artifactory</ResolveArtifactoryUrl>
+    <ResolveArtifactoryUrl>$(ARTIFACTORY_RESOLVE_ADDRESS)</ResolveArtifactoryUrl>
     <!--NuGet repository key to resolve from. Usually remote or virtual repository-->
-    <ResolveRepository>nuget-virtual</ResolveRepository>
+    <ResolveRepository>$(ARTIFACTORY_RESOLVE_REPO)</ResolveRepository>
     <!--
       To override the user credentials for the resolution process, uncomment the two fields below.
     -->
     <!--<ResolveArtifactoryUserName>$(ARTIFACTORY_RESOLVE_USER)</ResolveArtifactoryUserName>-->
     <!--<ResolveArtifactoryPassword>$(ARTIFACTORY_RESOLVE_PASSWORD)</ResolveArtifactoryPassword>-->
 
-    
+
     <!-- Deployment-->
 
     <!--Enable Artifactory plugin to publish artifacts -->
     <DeployEnabled>true</DeployEnabled>
     <!--Root URL of the Artifactory server. e.g., http://domain:port/artifactory-->
-    <DeployArtifactoryUrl>http://localhost:8080/artifactory</DeployArtifactoryUrl>
+    <DeployArtifactoryUrl>$(ARTIFACTORY_DEPLOY_ADDRESS)</DeployArtifactoryUrl>
     <!--Local repository key to publish artifacts to-->
-    <DeployRepository>nuget-local</DeployRepository>
+    <DeployRepository>$(ARTIFACTORY_DEPLOY_REPO)</DeployRepository>
 
     <!--Enable Artifactory plugin to publish Build Info -->
     <BuildInfoEnabled>true</BuildInfoEnabled>
 
-    
+
     <!-- 
       Under <Deployments> you can add multiple <Deploy> elements which define the sets of files to deploy to Artifactory. Each <Deploy> element contains the following:
 
@@ -54,22 +54,24 @@
       <Properties>
           Artifactory properties that will be attached to every file that the <InputPattren> finds.
           Each Property is defined in a separate <Property> tag.
-     -->   
-    
+     -->
+
     <Deployments>
       <!--Examples-->
-      
+
       <!--All Nuget files under the bin folder deployed to the root of the deploy repository-->
-      
-      <Deploy>
+
+      <!--<Deploy>
         <InputPattern>bin\(.+).nupkg</InputPattern>
-          <!--$1 refers to (.+) capturing group-->
+        -->
+      <!--$1 refers to (.+) capturing group-->
+      <!--
         <OutputPattern>$1.nupkg</OutputPattern>
-      </Deploy>
-      
-      
+      </Deploy>-->
+
+
       <!--All DLL files one or more level under the obj folder deployed with custom properties under the 'myproject' folder of the deploy repository.-->
-      
+
       <!--<Deploy>
         <InputPattern>obj\(.+)\(.+).dll</InputPattern>
         <OutputPattern>myproject/$1/$2.dll</OutputPattern>
@@ -78,10 +80,10 @@
           <Property key="myprop" val="myval" />
         </Properties>
       </Deploy>-->
-      
+
     </Deployments>
 
-    <!-- Environment Variables-->   
+    <!-- Environment Variables-->
     <!--
       Environment variables that will be included as part of the published build info.
       Patterns may contain the * and the ? wildcards. Include patterns are applied before any exclude patterns.
@@ -122,13 +124,13 @@
     -->
     <!--<BuildName>$(BUILD_NAME)</BuildName>-->
     <!--<BuildNumber>$(BUILD_NUMBER)</BuildNumber>-->
-    
-    
+
+
     <!--Network Configuration-->
-    
+
     <!--Timeout(seconds) for the plugin deployment client-->
     <ConnectionTimeout>300</ConnectionTimeout>
-    
+
     <ProxySettings>
       <Bypass>true</Bypass>
       <Host>127.0.0.1</Host>
@@ -138,9 +140,9 @@
     </ProxySettings>
 
     <!--TFS Integration-->
-    
+
     <!--In order to get a full http url address to the TFS build page through the Artifactory Build info , the plugin needs the Team Project name-->
     <!--<TEAM_PROJECT>$(TEAM_PROJECT_NAME)</TEAM_PROJECT>-->
-    
+
   </PropertyGroup>
 </Project>

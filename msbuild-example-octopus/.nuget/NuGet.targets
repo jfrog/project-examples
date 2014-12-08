@@ -10,7 +10,7 @@
     <RequireRestoreConsent Condition=" '$(RequireRestoreConsent)' != 'false' ">true</RequireRestoreConsent>
     <!-- Download NuGet.exe if it does not already exist -->
     <DownloadNuGetExe Condition=" '$(DownloadNuGetExe)' == '' ">false</DownloadNuGetExe>
-    <RunOctoPack>true</RunOctoPack>
+    <RunOctoPack Condition=" '$(RunOctoPack)' == '' ">true</RunOctoPack>
   </PropertyGroup>
   <ItemGroup Condition=" '$(PackageSources)' == '' ">
     <!-- Package sources used to restore packages. By default, registered sources under %APPDATA%\NuGet\NuGet.Config will be used -->
