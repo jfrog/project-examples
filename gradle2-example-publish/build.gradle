@@ -1,0 +1,146 @@
+/*
+ * Copyright (C) 2013 JFrog Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	
+    configurations.classpath {
+        resolutionStrategy {
+            cacheDynamicVersionsFor 0, 'seconds'
+            cacheChangingModulesFor 0, 'seconds'
+        }
+    }
+}
+
+plugins {
+	id 'com.jfrog.artifactory' version '3.0.1'
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'maven-publish'
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId 'org.jfrog.test.gradle.publish.java'
+			artifactId 'java-artifact'
+			version '1.1.x-SNAPSHOT'
+			
+			from components.java
+			artifact(file("$rootDir/gradle.properties")) // deploy arbitrary file
+		}
+		mavenWeb(MavenPublication) {
+			groupId 'org.jfrog.test.gradle.publish.web'
+			artifactId 'web-artifact'
+			version '1.2.x-SNAPSHOT'
+			
+			from components.web
+			artifact(file("$rootDir/gradle.properties")) // deploy arbitrary file
+		}		
+	}
+}
+
+def javaProjects() {
+    subprojects.findAll { new File(it.projectDir, 'src').directory }
+}
+
+configure(javaProjects()) {
+    apply plugin: 'java'
+
+    dependencies {
+        testCompile 'junit:junit:4.7'
+    }	
+}
+
+project('api') {
+	version = '1.3.x-SNAPSHOT'
+	
+    apply plugin: 'ivy-publish'
+	
+    publishing {
+        publications {
+            ivyJava(IvyPublication) {
+                from components.java
+                artifact(file("$rootDir/settings.gradle")) {
+                    name "gradle-settings"
+                    extension "txt"
+                    type "text"
+                }				
+				descriptor.extraInfo 'http://my.namespace', 'myElement', 'Some value'
+
+				// The config below will add a extra attribute to the ivy.xml
+				// See http://ant.apache.org/ivy/history/latest-milestone/concept.html#extra
+				descriptor.withXml {
+					asNode().info[0].attributes().put('e:architecture', 'amd64')
+				}				
+            }
+        }
+    }
+
+    artifactoryPublish {
+        publications(publishing.publications.ivyJava)
+        properties {
+            simpleFile '**:**:**:*@*', simpleFile: 'only on settings file'
+        }
+    }
+	
+	// Create the ivy.xml file (by the generateDescriptorFileForIvyJavaPublication task) before
+	// the execution of the artifactoryPublish task:
+	artifactoryPublish.dependsOn {
+		tasks.findAll { task -> task.name.startsWith('generateDescriptorFileFor') }
+	}		
+}
+
+artifactory {
+    clientConfig.setIncludeEnvVars(true)
+    clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new java.util.Date().toString())
+    //clientConfig.info.setBuildName('new-strange-name')
+    //clientConfig.info.setBuildNumber(new java.util.Random(System.currentTimeMillis()).nextInt(20000).toString())
+
+    //contextUrl = 'http://repo.jfrog.org/artifactory'
+    contextUrl = 'http://localhost:8081/artifactory'
+    publish {
+        repository {
+            repoKey = 'gradle-repo'
+            username = 'admin'
+            password = 'password'
+            ivy {
+                ivyLayout = '[organization]/[module]/ivy-[revision].xml'
+            }
+        }
+        defaults {
+            //publishIvy & publishPom are true by default
+            publishArtifacts = true
+            publications('mavenJava','mavenWeb')
+            properties = ['qa.level': 'basic']
+            properties {
+                archives 'org.jfrog:*:*:*@*', key1: 'val1 only on jars', key2: 'val2 only on jars'
+                all 'org.jfrog:shared:1.?:*@*', key3: 'val3 only in shared', key4: 'val4 only in shared'
+                all 'org.jfrog:*:1.?:*@*', key5: 'val5 on everything published', key6: 'val6 on everything published'
+                all 'org.jfrog:*:2.?:*@*', nokey1: 'noVal1'
+                foo 'org.jfrog:*:2.?:*@*', nokey1: 'noVal2'
+            }
+        }
+    }
+    resolve {
+        repoKey = 'repo'
+		username = 'admin'
+		password = 'password'		
+    }
+}
