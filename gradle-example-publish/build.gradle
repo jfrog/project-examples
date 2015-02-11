@@ -28,14 +28,13 @@
 
 buildscript {
     repositories {
-        maven { url 'http://repo.jfrog.org/artifactory/gradle-plugins-snapshots' }
+	maven { url 'http://jcenter.bintray.com' }
     }
     dependencies {
-        classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '2.1.x-SNAPSHOT')
+        classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '3.0.1')
     }
     configurations.classpath {
         resolutionStrategy {
-            failOnVersionConflict()
             cacheDynamicVersionsFor 0, 'seconds'
             cacheChangingModulesFor 0, 'seconds'
         }
@@ -51,7 +50,7 @@ def javaProjects() {
 }
 
 allprojects {
-    apply plugin: 'artifactory-publish'
+    apply plugin: 'com.jfrog.artifactory'
     group = 'org.jfrog.test.gradle.publish'
     version = globalVersion
     status = version.status
