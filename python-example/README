@@ -8,6 +8,8 @@ Please follow these steps before you start resolving from Artifactory:
    python setup.py register -r pypi-local
 6. Run the following command to upload the project to Artifactory:
    python setup.py sdist upload -r pypi-local
+7. Run the following command to download the dependencies from requirements.txt
+   pip install -r requirements.txt
 
 
 
