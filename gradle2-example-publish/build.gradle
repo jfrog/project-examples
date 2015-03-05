@@ -14,25 +14,11 @@
  * limitations under the License.
  */
 
-
-/**
- * There are 2 ways to activate the Artifactory Build-Info plugin.
- * 1. use apply from directly from the build.gradle as shown below.
- * 2. use the init script "gradle --init-script init.gradle" ATTENTION: Check the URL inside this init.gradle
- * 3. Copy the init.gradle to your ~/.gradle directory and execute normally. ATTENTION: Now the Artifactory URL will
- * always be applied to all your projects.
- *
- * Check the URL that apply uses to get the remote script
- *
- */
-
 buildscript {
-    repositories {
-	maven { url 'http://jcenter.bintray.com' }
-    }
-    dependencies {
-        classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '3.0.1')
-    }
+	repositories {
+		jcenter()
+	}
+	
     configurations.classpath {
         resolutionStrategy {
             cacheDynamicVersionsFor 0, 'seconds'
@@ -41,49 +27,52 @@ buildscript {
     }
 }
 
-import java.text.SimpleDateFormat
+plugins {
+	id 'com.jfrog.artifactory' version '3.0.1'
+}
 
-def globalVersion = new Version('1.2.x-SNAPSHOT')
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'maven-publish'
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			groupId 'org.jfrog.test.gradle.publish.java'
+			artifactId 'java-artifact'
+			version '1.1.x-SNAPSHOT'
+			
+			from components.java
+			artifact(file("$rootDir/gradle.properties")) // deploy arbitrary file
+		}
+		mavenWeb(MavenPublication) {
+			groupId 'org.jfrog.test.gradle.publish.web'
+			artifactId 'web-artifact'
+			version '1.2.x-SNAPSHOT'
+			
+			from components.web
+			artifact(file("$rootDir/gradle.properties")) // deploy arbitrary file
+		}		
+	}
+}
 
 def javaProjects() {
     subprojects.findAll { new File(it.projectDir, 'src').directory }
 }
 
-allprojects {
-    apply plugin: 'com.jfrog.artifactory'
-    group = 'org.jfrog.test.gradle.publish'
-    version = globalVersion
-    status = version.status
-}
-
-artifactoryPublish.skip = true
-
-project('services') {
-    artifactoryPublish.skip = true
-}
-
 configure(javaProjects()) {
     apply plugin: 'java'
-    apply plugin: 'maven-publish'
 
     dependencies {
         testCompile 'junit:junit:4.7'
-    }
-    manifest.mainAttributes(provider: 'gradle')
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                from components.java
-                artifact(file("$rootDir/gradle.properties")) // deploy arbitrary file
-            }
-        }
-    }
+    }	
 }
 
 project('api') {
+	version = '1.3.x-SNAPSHOT'
+	
     apply plugin: 'ivy-publish'
-
+	
     publishing {
         publications {
             ivyJava(IvyPublication) {
@@ -92,12 +81,14 @@ project('api') {
                     name "gradle-settings"
                     extension "txt"
                     type "text"
-                }
-		// The config below will add a extra attribute to the ivy.xml
-		// See http://ant.apache.org/ivy/history/latest-milestone/concept.html#extra
-		descriptor.withXml {
-		    asNode().info[0].attributes().put('e:architecture', 'amd64')
-		}
+                }				
+				descriptor.extraInfo 'http://my.namespace', 'myElement', 'Some value'
+
+				// The config below will add a extra attribute to the ivy.xml
+				// See http://ant.apache.org/ivy/history/latest-milestone/concept.html#extra
+				descriptor.withXml {
+					asNode().info[0].attributes().put('e:architecture', 'amd64')
+				}				
             }
         }
     }
@@ -108,9 +99,13 @@ project('api') {
             simpleFile '**:**:**:*@*', simpleFile: 'only on settings file'
         }
     }
+	
+	// Create the ivy.xml file (by the generateDescriptorFileForIvyJavaPublication task) before
+	// the execution of the artifactoryPublish task:
+	artifactoryPublish.dependsOn {
+		tasks.findAll { task -> task.name.startsWith('generateDescriptorFileFor') }
+	}		
 }
-
-artifactoryPublish.skip = true
 
 artifactory {
     clientConfig.setIncludeEnvVars(true)
@@ -122,7 +117,7 @@ artifactory {
     contextUrl = 'http://localhost:8081/artifactory'
     publish {
         repository {
-            repoKey = 'gradle-snapshot-local'
+            repoKey = 'gradle-repo'
             username = 'admin'
             password = 'password'
             ivy {
@@ -132,7 +127,7 @@ artifactory {
         defaults {
             //publishIvy & publishPom are true by default
             publishArtifacts = true
-            publications('mavenJava')
+            publications('mavenJava','mavenWeb')
             properties = ['qa.level': 'basic']
             properties {
                 archives 'org.jfrog:*:*:*@*', key1: 'val1 only on jars', key2: 'val2 only on jars'
@@ -145,35 +140,7 @@ artifactory {
     }
     resolve {
         repoKey = 'repo'
-    }
-}
-
-class Version {
-    String originalVersion
-    String thisVersion
-    String status
-    Date buildTime
-
-    Version(String versionValue) {
-        buildTime = new Date()
-        originalVersion = versionValue
-        if (originalVersion.endsWith('-SNAPSHOT')) {
-            status = 'integration'
-            thisVersion = originalVersion.substring(0, originalVersion.length() - 'SNAPSHOT'.length()) + getTimestamp()
-        } else {
-            status = 'release'
-            thisVersion = versionValue
-        }
-    }
-
-    String getTimestamp() {
-        // Convert local file timestamp to UTC
-        def format = new SimpleDateFormat('yyyyMMddHHmmss')
-        format.setCalendar(Calendar.getInstance(TimeZone.getTimeZone('UTC')));
-        return format.format(buildTime)
-    }
-
-    String toString() {
-        thisVersion
+		username = 'admin'
+		password = 'password'		
     }
 }
