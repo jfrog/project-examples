@@ -1,4 +1,5 @@
-## Sample projects that use the Gradle Artifactory Plugin.
+## Gradle Artifactory Plugin Examples
+Sample projects that use the Gradle Artifactory Plugin.
 The Plugin documenation is available at:
 https://www.jfrog.com/confluence/display/RTF/Gradle+Artifactory+Plugin
 
