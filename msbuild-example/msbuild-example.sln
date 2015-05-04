@@ -16,7 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{48A2A6
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".artifactory", ".artifactory", "{B11BC4A6-4417-4257-922B-05317973A8A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artifactory", "Artifactory\Artifactory.csproj", "{9CAD74E7-637B-43DA-90FD-B9A61939043E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".artifactory", ".artifactory", "{81DC0012-BEBB-47E4-B2AB-ED8DB50D61F1}"
 	ProjectSection(SolutionItems) = preProject
 		.artifactory\Artifactory.build = .artifactory\Artifactory.build
 		.artifactory\Deploy.targets = .artifactory\Deploy.targets
@@ -41,6 +43,10 @@ Global
 		{439B963D-59BC-4BC3-A89E-0EAD2BD2D64E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{439B963D-59BC-4BC3-A89E-0EAD2BD2D64E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{439B963D-59BC-4BC3-A89E-0EAD2BD2D64E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CAD74E7-637B-43DA-90FD-B9A61939043E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CAD74E7-637B-43DA-90FD-B9A61939043E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CAD74E7-637B-43DA-90FD-B9A61939043E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CAD74E7-637B-43DA-90FD-B9A61939043E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

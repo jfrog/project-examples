@@ -3,8 +3,7 @@
 
     <!--
       MSBuild Artifactory Plugin
-      For more details, please go to the plugin Wiki site - 
-      http://www.jfrog.com/confluence/display/RTF/MSBuild+Artifactory+Plugin
+      For more details, please go to the plugin Wiki site - http://www.jfrog.com/confluence/display/RTF/MSBuild+Artifactory+Plugin
     -->
     
     <!--Credentials for Artifactory-->
@@ -15,7 +14,7 @@
     <!-- Resolution-->
 
     <!--Enable Artifactory plugin to override Nuget "Package Restore" -->
-    <ResolveEnabled>true</ResolveEnabled>
+    <ResolveEnabled>$(RESOLVED_ENABLED)</ResolveEnabled>
     <!--Root URL of the Artifactory server. e.g., http://domain:port/artifactory-->
     <ResolveArtifactoryUrl>$(ARTIFACTORY_RESOLVE_ADDRESS)</ResolveArtifactoryUrl>
     <!--NuGet repository key to resolve from. Usually remote or virtual repository-->
@@ -30,14 +29,14 @@
     <!-- Deployment-->
 
     <!--Enable Artifactory plugin to publish artifacts -->
-    <DeployEnabled>true</DeployEnabled>
+    <DeployEnabled>$(DEPLOYED_ENABLED)</DeployEnabled>
     <!--Root URL of the Artifactory server. e.g., http://domain:port/artifactory-->
     <DeployArtifactoryUrl>$(ARTIFACTORY_DEPLOY_ADDRESS)</DeployArtifactoryUrl>
     <!--Local repository key to publish artifacts to-->
     <DeployRepository>$(ARTIFACTORY_DEPLOY_REPO)</DeployRepository>
 
     <!--Enable Artifactory plugin to publish Build Info -->
-    <BuildInfoEnabled>true</BuildInfoEnabled>
+    <BuildInfoEnabled>$(BUILD_INFO_ENABLED)</BuildInfoEnabled>
 
     
     <!-- 
@@ -55,31 +54,32 @@
       <Properties>
           Artifactory properties that will be attached to every file that the <InputPattren> finds.
           Each Property is defined in a separate <Property> tag.
-     -->   
-    
+     -->
+
     <Deployments>
       <!--Examples-->
-      
+
       <!--All Nuget files under the bin folder deployed to the root of the deploy repository-->
-      
+
       <!--<Deploy>
-        <InputPattern>bin\(.+).nupkg</InputPattern>
-        --><!--$1 refers to (.+) capturing group--><!--
-        <OutputPattern>$1.nupkg</OutputPattern>
+        <InputPattern>obj\(.+)\(.+).nupkg</InputPattern>
+        -->
+      <!--$1 refers to (.+) capturing group-->
+      <!--
+        <OutputPattern>org\jfrog\services\$2.nupkg</OutputPattern>
       </Deploy>-->
-      
-      
+
       <!--All DLL files one or more level under the obj folder deployed with custom properties under the 'myproject' folder of the deploy repository.-->
-      
-      <!--<Deploy>
+
+      <Deploy>
         <InputPattern>obj\(.+)\(.+).dll</InputPattern>
         <OutputPattern>myproject/$1/$2.dll</OutputPattern>
         <Properties>
           <Property key="qa" val="ready" />
           <Property key="myprop" val="myval" />
         </Properties>
-      </Deploy>-->
-      
+      </Deploy>
+
     </Deployments>
 
     <!-- Environment Variables-->   
@@ -107,16 +107,31 @@
     <LicenseControl>
       <Enabled>false</Enabled>
       <LicenseViolationRecipients>
-        <!--<Recipient email="address@gmail.com"/>-->
+        <!--<Recipient email="address@jfrog.com"/>-->
       </LicenseViolationRecipients>
       <!--If Nuget package license is not identified by Artifactory, run license discovery inside the package. [RESOURCE INTENSIVE]-->
       <AutomaticLicenseDiscovery>true</AutomaticLicenseDiscovery>
-      <IncludePublishedArtifacts>true</IncludePublishedArtifacts>
+      <IncludePublishedArtifacts>false</IncludePublishedArtifacts>
       <ScopesForLicenseAnalysis>
         <!--<Scope value="Debug"/>-->
       </ScopesForLicenseAnalysis>
     </LicenseControl>
 
+    <BlackDuckComplianceCheck>
+      <Enabled>false</Enabled>
+      <CodeCenterApplicationName>$(BD_APPLICATION_NAME)</CodeCenterApplicationName>
+      <CodeCenterApplicationVersion>$(BD_APPLICATION_VERSION)</CodeCenterApplicationVersion>
+      <ComplianceReportRecipients>
+        <!--<Recipient email="address@jfrog.com"/>-->
+      </ComplianceReportRecipients>
+      <ScopesForLicenseAnalysis>
+        <!--<Scope value="Debug"/>-->
+      </ScopesForLicenseAnalysis>
+      <IncludePublishedArtifacts>false</IncludePublishedArtifacts>
+      <AutoCreateMissingComponent>false</AutoCreateMissingComponent>
+      <AutoDiscardStaleComponent>false</AutoDiscardStaleComponent>   
+    </BlackDuckComplianceCheck>
+    
     <!--
         If the build is not running under TFS, uncomment the two elements below. 
         The build name and number can be passed as build/environment variables.
