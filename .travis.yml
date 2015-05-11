@@ -1,3 +1,0 @@
-language: java
-
-script: cd maven-example && mvn clean install && dpl --provider=bintray --user=BINTRAY_USER
