@@ -1,5 +1,6 @@
 ## Gradle Artifactory Plugin Examples
 Sample projects that use the Gradle Artifactory Plugin.
+The plugin adds the "artifactoryPublish" task.
 The Plugin documenation is available at:
 https://www.jfrog.com/confluence/display/RTF/Gradle+Artifactory+Plugin
 

@@ -14,24 +14,14 @@
  * limitations under the License.
  */
 
-
-/**
- * There are 2 ways to activate the Artifactory Build-Info plugin.
- * 1. use apply from directly from the build.gradle as shown below.
- * 2. use the init script "gradle --init-script init.gradle" ATTENTION: Check the URL inside this init.gradle
- * 3. Copy the init.gradle to your ~/.gradle directory and execute normally. ATTENTION: Now the Artifactory URL will
- * always be applied to all your projects.
- *
- * Check the URL that apply uses to get the remote script
- *
- */
-
 buildscript {
     repositories {
-	maven { url 'http://jcenter.bintray.com' }
+	    maven {
+            url 'http://jcenter.bintray.com'
+        }
     }
     dependencies {
-        classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '3.0.1')
+        classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '3.1.0')
     }
     configurations.classpath {
         resolutionStrategy {
@@ -75,7 +65,7 @@ configure(javaProjects()) {
         publications {
             mavenJava(MavenPublication) {
                 from components.java
-                artifact(file("$rootDir/gradle.properties")) // deploy arbitrary file
+                artifact(file("$rootDir/gradle.properties"))
             }
         }
     }
@@ -93,11 +83,11 @@ project('api') {
                     extension "txt"
                     type "text"
                 }
-		// The config below will add a extra attribute to the ivy.xml
-		// See http://ant.apache.org/ivy/history/latest-milestone/concept.html#extra
-		descriptor.withXml {
-		    asNode().info[0].attributes().put('e:architecture', 'amd64')
-		}
+                // The config below will add a extra attribute to the ivy.xml
+                // See http://ant.apache.org/ivy/history/latest-milestone/concept.html#extra
+                descriptor.withXml {
+                    asNode().info[0].attributes().put('e:architecture', 'amd64')
+                }
             }
         }
     }
@@ -115,24 +105,23 @@ artifactoryPublish.skip = true
 artifactory {
     clientConfig.setIncludeEnvVars(true)
     clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new java.util.Date().toString())
-    //clientConfig.info.setBuildName('new-strange-name')
-    //clientConfig.info.setBuildNumber(new java.util.Random(System.currentTimeMillis()).nextInt(20000).toString())
 
-    //contextUrl = 'http://repo.jfrog.org/artifactory'
     contextUrl = 'http://localhost:8081/artifactory'
     publish {
         repository {
             repoKey = 'gradle-snapshot-local'
-            username = 'admin'
-            password = 'password'
+            username = "${artifactory_user}" // The publisher user name
+            password = "${artifactory_password}" // The publisher password
             ivy {
                 ivyLayout = '[organization]/[module]/ivy-[revision].xml'
             }
         }
         defaults {
-            //publishIvy & publishPom are true by default
-            publishArtifacts = true
+            // Reference to Gradle publications defined in the build script.
+            // This is how we tell the Artifactory Plugin which artifacts should be
+            // published to Artifactory.
             publications('mavenJava')
+            publishArtifacts = true
             properties = ['qa.level': 'basic']
             properties {
                 archives 'org.jfrog:*:*:*@*', key1: 'val1 only on jars', key2: 'val2 only on jars'
