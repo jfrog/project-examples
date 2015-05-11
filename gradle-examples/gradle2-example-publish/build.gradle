@@ -15,10 +15,12 @@
  */
 
 buildscript {
-	repositories {
-		jcenter()
-	}
-	
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '3.1.0')
+    }
     configurations.classpath {
         resolutionStrategy {
             cacheDynamicVersionsFor 0, 'seconds'
@@ -27,52 +29,48 @@ buildscript {
     }
 }
 
-plugins {
-	id 'com.jfrog.artifactory' version '3.0.1'
-}
+import java.text.SimpleDateFormat
 
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'maven-publish'
-
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			groupId 'org.jfrog.test.gradle.publish.java'
-			artifactId 'java-artifact'
-			version '1.1.x-SNAPSHOT'
-			
-			from components.java
-			artifact(file("$rootDir/gradle.properties")) // deploy arbitrary file
-		}
-		mavenWeb(MavenPublication) {
-			groupId 'org.jfrog.test.gradle.publish.web'
-			artifactId 'web-artifact'
-			version '1.2.x-SNAPSHOT'
-			
-			from components.web
-			artifact(file("$rootDir/gradle.properties")) // deploy arbitrary file
-		}		
-	}
-}
+def globalVersion = new Version('1.2.x-SNAPSHOT')
 
 def javaProjects() {
     subprojects.findAll { new File(it.projectDir, 'src').directory }
 }
 
+allprojects {
+    apply plugin: 'com.jfrog.artifactory'
+    group = 'org.jfrog.test.gradle.publish'
+    version = globalVersion
+    status = version.status
+}
+
+artifactoryPublish.skip = true
+
+project('services') {
+    artifactoryPublish.skip = true
+}
+
 configure(javaProjects()) {
     apply plugin: 'java'
+    apply plugin: 'maven-publish'
 
     dependencies {
         testCompile 'junit:junit:4.7'
-    }	
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                artifact(file("$rootDir/gradle.properties"))
+            }
+        }
+    }
 }
 
 project('api') {
-	version = '1.3.x-SNAPSHOT'
-	
     apply plugin: 'ivy-publish'
-	
+
     publishing {
         publications {
             ivyJava(IvyPublication) {
@@ -81,14 +79,12 @@ project('api') {
                     name "gradle-settings"
                     extension "txt"
                     type "text"
-                }				
-				descriptor.extraInfo 'http://my.namespace', 'myElement', 'Some value'
-
-				// The config below will add a extra attribute to the ivy.xml
-				// See http://ant.apache.org/ivy/history/latest-milestone/concept.html#extra
-				descriptor.withXml {
-					asNode().info[0].attributes().put('e:architecture', 'amd64')
-				}				
+                }
+                // The config below will add a extra attribute to the ivy.xml
+                // See http://ant.apache.org/ivy/history/latest-milestone/concept.html#extra
+                descriptor.withXml {
+                    asNode().info[0].attributes().put('e:architecture', 'amd64')
+                }
             }
         }
     }
@@ -99,35 +95,30 @@ project('api') {
             simpleFile '**:**:**:*@*', simpleFile: 'only on settings file'
         }
     }
-	
-	// Create the ivy.xml file (by the generateDescriptorFileForIvyJavaPublication task) before
-	// the execution of the artifactoryPublish task:
-	artifactoryPublish.dependsOn {
-		tasks.findAll { task -> task.name.startsWith('generateDescriptorFileFor') }
-	}		
 }
+
+artifactoryPublish.skip = true
 
 artifactory {
     clientConfig.setIncludeEnvVars(true)
     clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new java.util.Date().toString())
-    //clientConfig.info.setBuildName('new-strange-name')
-    //clientConfig.info.setBuildNumber(new java.util.Random(System.currentTimeMillis()).nextInt(20000).toString())
 
-    //contextUrl = 'http://repo.jfrog.org/artifactory'
     contextUrl = 'http://localhost:8081/artifactory'
     publish {
         repository {
-            repoKey = 'gradle-repo'
-            username = 'admin'
-            password = 'password'
+            repoKey = 'gradle-snapshot-local' // The Artifactory repository key to publish to
+            username = "${artifactory_user}" // The publisher user name
+            password = "${artifactory_password}" // The publisher password
             ivy {
                 ivyLayout = '[organization]/[module]/ivy-[revision].xml'
             }
         }
         defaults {
-            //publishIvy & publishPom are true by default
+            // Reference to Gradle publications defined in the build script.
+            // This is how we tell the Artifactory Plugin which artifacts should be
+            // published to Artifactory.
+            publications('mavenJava')
             publishArtifacts = true
-            publications('mavenJava','mavenWeb')
             properties = ['qa.level': 'basic']
             properties {
                 archives 'org.jfrog:*:*:*@*', key1: 'val1 only on jars', key2: 'val2 only on jars'
@@ -140,7 +131,35 @@ artifactory {
     }
     resolve {
         repoKey = 'repo'
-		username = 'admin'
-		password = 'password'		
+    }
+}
+
+class Version {
+    String originalVersion
+    String thisVersion
+    String status
+    Date buildTime
+
+    Version(String versionValue) {
+        buildTime = new Date()
+        originalVersion = versionValue
+        if (originalVersion.endsWith('-SNAPSHOT')) {
+            status = 'integration'
+            thisVersion = originalVersion.substring(0, originalVersion.length() - 'SNAPSHOT'.length()) + getTimestamp()
+        } else {
+            status = 'release'
+            thisVersion = versionValue
+        }
+    }
+
+    String getTimestamp() {
+        // Convert local file timestamp to UTC
+        def format = new SimpleDateFormat('yyyyMMddHHmmss')
+        format.setCalendar(Calendar.getInstance(TimeZone.getTimeZone('UTC')));
+        return format.format(buildTime)
+    }
+
+    String toString() {
+        thisVersion
     }
 }

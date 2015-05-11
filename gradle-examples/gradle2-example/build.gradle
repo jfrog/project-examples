@@ -1,28 +1,28 @@
-/**
-* There are 2 ways to activate the Artifactory Build-Info plugin.
-* 1. use apply from directly from the build.gradle as shown below.
-* 2. use the init script "gradle --init-script init.gradle" ATTENTION: Check the URL inside this init.gradle
-* 3. Copy the init.gradle to your ~/.gradle directory and execute normally. ATTENTION: Now the Artifactory URL will
-* always be applied to all your projects.
-*
-* Check the URL that apply uses to get the remote script
-*
-*/
+/*
+ * Copyright (C) 2013 JFrog Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 buildscript {
-           repositories {
-			maven {
-				url "http://repo.jfrog.org/artifactory/gradle"
-			}
-			jcenter()
-			mavenLocal()
-            dependencies {
-                classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '3.0.1')
-            }
-         }
+  repositories {
+    jcenter()
+    dependencies {
+      classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '3.1.0')
+    }
+  }
 }
 
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 def globalVersion = new Version(currentVersion)
@@ -36,7 +36,6 @@ allprojects {
   group = 'org.jfrog.example.gradle'
   version = globalVersion
   status = version.status
-
 }
 
 artifactoryPublish.skip = true
@@ -55,7 +54,6 @@ subprojects {
     dependencies {
       testCompile 'junit:junit:4.7'
     }
-
     task sourceJar(type: Jar) {
       from sourceSets.main.allSource
       classifier = 'sources'
@@ -64,41 +62,39 @@ subprojects {
       classifier = 'javadoc'
       from javadoc.destinationDir
     }
-
     artifactoryPublish {
       dependsOn sourceJar, javadocJar
     }
-    // Add the sourceJars to non-extractor modules
     artifacts {
       published sourceJar
       published javadocJar
     }
   }
-
-
 }
 
 configurations {
   published
 }
 
-
 artifactory {
-  //contextUrl = 'http://repo.jfrog.org/artifactory'
-  contextUrl = 'http://localhost:8080/artifactory'
+  contextUrl = 'http://localhost:8081/artifactory'
   publish {
     repository {
-      repoKey = 'gradle-snapshot-local' //The Artifactory repository key to publish to
-      username = "${artifactory_user}" //The publisher user name
-      password = "${artifactory_password}" //The publisher password
+      repoKey = 'gradle-snapshot-local' // The Artifactory repository key to publish to
+      username = "${artifactory_user}" // The publisher user name
+      password = "${artifactory_password}" // The publisher password
       ivy {
-        //Optional section for configuring Ivy publication (when publishIvy = true). Assumes Maven repo layout if If not specified
+        // Optional section for configuring Ivy publication (when publishIvy = true).
+        // Assumes Maven repo layout if If not specified.
         ivyLayout = '[organization]/[module]/ivy-[revision].xml'
         artifactLayout = '[organization]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]'
         mavenCompatible = false //Convert any dots in an [organization] layout value to path separators, similar to Maven's groupId-to-path conversion. True if not specified
       }
     }
     defaults {
+      // Reference to Gradle configurations defined in the build script.
+      // This is how we tell the Artifactory Plugin which artifacts should be
+      // published to Artifactory.
       publishConfigs('archives', 'published')
       properties = ['build.status': "$it.project.status".toString()]
       publishPom = false //Publish generated POM files to Artifactory (true by default)
@@ -113,7 +109,6 @@ artifactory {
       maven = true     
     }
   }
-
 }
 
 task wrapper(type: Wrapper) {
