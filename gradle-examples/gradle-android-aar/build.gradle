@@ -11,6 +11,9 @@ buildscript {
     }
 }
 
+group = 'org.jfrog.example.android'
+version = currentVersion
+
 // Plugins
 apply plugin: 'android-library'
 apply plugin: 'com.jfrog.artifactory-upload'
