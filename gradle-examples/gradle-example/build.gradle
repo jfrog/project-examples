@@ -88,7 +88,7 @@ artifactory {
   }
   resolve {
     repository {
-      repoKey = 'libs-release' // The Artifactory (preferably virtual) repository key to resolve from
+      repoKey = 'repo' // The Artifactory (preferably virtual) repository key to resolve from
       username = "${artifactory_user}" // Optional resolver user name (leave out to use anonymous resolution)
       password = "${artifactory_password}" // The resolver password
       maven = true     
