@@ -27,8 +27,7 @@ In this example, the only Artifactory property configured is "artifactoryPublish
 
 #### Important notes for using this example from a CI Server:
 
-* Make sure to have the "Project uses the Artifactory Gradle Plugin" check box in the CI Server UI as
-unchecked, so that the CI Server Plugin automatically applies the Gradle Artifactory Plugin to your
+* Make sure to have the "Project uses the Artifactory Gradle Plugin" check box in the CI Server UI unchecked, so that the CI Server Plugin automatically applies the Gradle Artifactory Plugin to your
 build script.
 * In order to publish the build artifacts to Artifactory, the published arrtifacts are added to the archives Gradle configuration.
 
