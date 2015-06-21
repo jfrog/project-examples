@@ -17,8 +17,8 @@ and the gradle wrapper in Windows
 > gradlew.bat artifactoryPublish
 ```
 
-### gradle2-example-ci-server
-Gradle 2.x sample project to be used with one of the Artifactory CI Server Plugins (Jenkins, TeamCity or Bamboo).
+### gradle-example-ci-server
+Gradle sample project to be used with one of the Artifactory CI Server Plugins (Jenkins, TeamCity or Bamboo).
 The Artifactory configuration in this case (repositories, Artifactory credentials, etc.)
 is done from the CI Server UI.
 You can still add the artifactory closure to the build script and have default values configured there,
