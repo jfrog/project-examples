@@ -31,17 +31,11 @@ In this example, the only Artifactory property configured is "artifactoryPublish
 build script.
 * In order to publish the build artifacts to Artifactory, the published arrtifacts are added to the archives Gradle configuration.
 
-### gradle2-example
-Gradle 2.x sample project that uses Gradle Configurations.
-
-### gradle2-example-publish
-Gradle 2.x sample project that uses Gradle Publications.
-
 ### gradle-example
-Gradle 1.x sample project that uses Gradle Configurations.
+Sample project that uses the Gradle Artifactory Plugin with Gradle Configurations.
 
 ### gradle-example-publish
-Gradle 1.x sample project that uses Gradle Publications.
+Sample project that uses the Gradle Artifactory Plugin with Gradle Publications.
 
 ### gradle-android-aar
 Sample project that uses the Gradle Artifactory Plugin to deploy Android artifacts to Artifactory.

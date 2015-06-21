@@ -23,10 +23,6 @@ buildscript {
   }
 }
 
-import java.text.SimpleDateFormat
-
-def globalVersion = new Version(currentVersion)
-
 allprojects {
   apply plugin: 'com.jfrog.artifactory-upload'
   apply plugin: 'idea'
@@ -34,8 +30,8 @@ allprojects {
     apply plugin: 'java'
   }
   group = 'org.jfrog.example.gradle'
-  version = globalVersion
-  status = version.status
+  version = currentVersion
+  status = 'Integration'
 }
 
 artifactoryPublish.skip = true
@@ -80,15 +76,14 @@ artifactory {
   contextUrl = 'http://localhost:8081/artifactory'
   publish {
     repository {
-      repoKey = 'gradle-snapshot-local' // The Artifactory repository key to publish to
+      repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
       username = "${artifactory_user}" // The publisher user name
       password = "${artifactory_password}" // The publisher password
+      // This is an optional section for configuring Ivy publication (when publishIvy = true).
       ivy {
-        // Optional section for configuring Ivy publication (when publishIvy = true).
-        // Assumes Maven repo layout if If not specified.
         ivyLayout = '[organization]/[module]/ivy-[revision].xml'
         artifactLayout = '[organization]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]'
-        mavenCompatible = false //Convert any dots in an [organization] layout value to path separators, similar to Maven's groupId-to-path conversion. True if not specified
+        mavenCompatible = true //Convert any dots in an [organization] layout value to path separators, similar to Maven's groupId-to-path conversion. True if not specified
       }
     }
     defaults {
@@ -97,15 +92,15 @@ artifactory {
       // published to Artifactory.
       publishConfigs('archives', 'published')
       properties = ['build.status': "$it.project.status".toString()]
-      publishPom = false //Publish generated POM files to Artifactory (true by default)
-      publishIvy = true //Publish generated Ivy descriptor files to Artifactory (true by default)
+      publishPom = true // Publish generated POM files to Artifactory (true by default)
+      publishIvy = true // Publish generated Ivy descriptor files to Artifactory (true by default)
     }
   }
   resolve {
     repository {
-      repoKey = 'repo' //The Artifactory (preferably virtual) repository key to resolve from
-      username = "${artifactory_user}" //Optional resolver user name (leave out to use anonymous resolution)
-      password = "${artifactory_password}" //The resolver password
+      repoKey = 'repo' // The Artifactory (preferably virtual) repository key to resolve from
+      username = "${artifactory_user}" // Optional resolver user name (leave out to use anonymous resolution)
+      password = "${artifactory_password}" // The resolver password
       maven = true     
     }
   }
@@ -113,34 +108,4 @@ artifactory {
 
 task wrapper(type: Wrapper) {
   gradleVersion = '2.0'
-}
-
-class Version {
-  String originalVersion
-  String thisVersion
-  String status
-  Date buildTime
-
-  Version(String versionValue) {
-    buildTime = new Date()
-    originalVersion = versionValue
-    if (originalVersion.endsWith('-SNAPSHOT')) {
-      status = 'integration'
-      thisVersion = originalVersion.substring(0, originalVersion.length() - 'SNAPSHOT'.length()) + getTimestamp()
-    } else {
-      status = 'release'
-      thisVersion = versionValue
-    }
-  }
-
-  String getTimestamp() {
-    // Convert local file timestamp to UTC
-    def format = new SimpleDateFormat('yyyyMMddHHmmss')
-    format.setCalendar(Calendar.getInstance(TimeZone.getTimeZone('UTC')));
-    return format.format(buildTime)
-  }
-
-  String toString() {
-    thisVersion
-  }
 }

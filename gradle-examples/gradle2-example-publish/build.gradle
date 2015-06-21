@@ -29,10 +29,6 @@ buildscript {
     }
 }
 
-import java.text.SimpleDateFormat
-
-def globalVersion = new Version('1.2.x-SNAPSHOT')
-
 def javaProjects() {
     subprojects.findAll { new File(it.projectDir, 'src').directory }
 }
@@ -40,8 +36,8 @@ def javaProjects() {
 allprojects {
     apply plugin: 'com.jfrog.artifactory'
     group = 'org.jfrog.test.gradle.publish'
-    version = globalVersion
-    status = version.status
+    version = currentVersion
+    status = 'Integration'
 }
 
 artifactoryPublish.skip = true
@@ -106,11 +102,14 @@ artifactory {
     contextUrl = 'http://localhost:8081/artifactory'
     publish {
         repository {
-            repoKey = 'gradle-snapshot-local' // The Artifactory repository key to publish to
+            repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
             username = "${artifactory_user}" // The publisher user name
             password = "${artifactory_password}" // The publisher password
+            // This is an optional section for configuring Ivy publication (when publishIvy = true).
             ivy {
-                ivyLayout = '[organization]/[module]/ivy-[revision].xml'
+              ivyLayout = '[organization]/[module]/ivy-[revision].xml'
+              artifactLayout = '[organization]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]'
+              mavenCompatible = true //Convert any dots in an [organization] layout value to path separators, similar to Maven's groupId-to-path conversion. True if not specified
             }
         }
         defaults {
@@ -127,39 +126,11 @@ artifactory {
                 all 'org.jfrog:*:2.?:*@*', nokey1: 'noVal1'
                 foo 'org.jfrog:*:2.?:*@*', nokey1: 'noVal2'
             }
+            publishPom = true // Publish generated POM files to Artifactory (true by default)
+            publishIvy = true // Publish generated Ivy descriptor files to Artifactory (true by default)
         }
     }
     resolve {
         repoKey = 'repo'
-    }
-}
-
-class Version {
-    String originalVersion
-    String thisVersion
-    String status
-    Date buildTime
-
-    Version(String versionValue) {
-        buildTime = new Date()
-        originalVersion = versionValue
-        if (originalVersion.endsWith('-SNAPSHOT')) {
-            status = 'integration'
-            thisVersion = originalVersion.substring(0, originalVersion.length() - 'SNAPSHOT'.length()) + getTimestamp()
-        } else {
-            status = 'release'
-            thisVersion = versionValue
-        }
-    }
-
-    String getTimestamp() {
-        // Convert local file timestamp to UTC
-        def format = new SimpleDateFormat('yyyyMMddHHmmss')
-        format.setCalendar(Calendar.getInstance(TimeZone.getTimeZone('UTC')));
-        return format.format(buildTime)
-    }
-
-    String toString() {
-        thisVersion
     }
 }
