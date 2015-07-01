@@ -91,7 +91,22 @@ artifactory {
       // This is how we tell the Artifactory Plugin which artifacts should be
       // published to Artifactory.
       publishConfigs('archives', 'published')
-      properties = ['build.status': "$it.project.status".toString()]
+      // Properties to be attached to the published artifacts.
+      properties = ['qa.level': 'basic', 'dev.team' : 'core']
+      // You can also attach properties to published artifacts according to
+      // the following notation:
+      // <configuration name> <artifact spec>
+      // The <configuration name> should be the name of the relevant Gradle Configuration or 'all'
+      // (for all configurations).
+      // Artifact spec has the following structure:
+      // group:artifact:version:classifier@ext
+      // Any element in the artifact spec notation can contain the * and ? wildcards.
+      // For example:
+      // org.acme:*:1.0.?_*:*@tgz
+      properties {
+        all '*:*:1.*:*@*', key1: 'val1', key2: 'val2'
+        all 'org.jfrog.*:*:1.*:*@jar*', key3: 'val3', key4: 'val4'
+      }
       publishPom = true // Publish generated POM files to Artifactory (true by default)
       publishIvy = true // Publish generated Ivy descriptor files to Artifactory (true by default)
     }

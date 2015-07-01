@@ -17,6 +17,9 @@ and the gradle wrapper in Windows
 > gradlew.bat artifactoryPublish
 ```
 
+### gradle-example-minimal
+A minimal sample project that uses the Gradle Artifactory Plugin to resolve and publish artifacts to Artifactory.
+
 ### gradle-example-ci-server
 Gradle sample project to be used with one of the Artifactory CI Server Plugins (Jenkins, TeamCity or Bamboo).
 The Artifactory configuration in this case (repositories, Artifactory credentials, etc.)

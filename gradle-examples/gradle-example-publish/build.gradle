@@ -118,14 +118,8 @@ artifactory {
             // published to Artifactory.
             publications('mavenJava')
             publishArtifacts = true
-            properties = ['qa.level': 'basic']
-            properties {
-                archives 'org.jfrog:*:*:*@*', key1: 'val1 only on jars', key2: 'val2 only on jars'
-                all 'org.jfrog:shared:1.?:*@*', key3: 'val3 only in shared', key4: 'val4 only in shared'
-                all 'org.jfrog:*:1.?:*@*', key5: 'val5 on everything published', key6: 'val6 on everything published'
-                all 'org.jfrog:*:2.?:*@*', nokey1: 'noVal1'
-                foo 'org.jfrog:*:2.?:*@*', nokey1: 'noVal2'
-            }
+            // Properties to be attached to the published artifacts.
+            properties = ['qa.level': 'basic', 'dev.team' : 'core']
             publishPom = true // Publish generated POM files to Artifactory (true by default)
             publishIvy = true // Publish generated Ivy descriptor files to Artifactory (true by default)
         }
