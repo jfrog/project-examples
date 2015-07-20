@@ -8,15 +8,11 @@ https://www.jfrog.com/confluence/display/RTF/Gradle+Artifactory+Plugin
 ```console
 > gradle artifactoryPublish
 
-or in order to use the gradle wrapper, first download gradle-wrapper.jar by running
-
-> gradle wrapper
-
-and then use it by running the following in Unix
+or with the gradle wrapper in Unix
 
 > ./gradlew artifactoryPublish
 
-or in Windows
+and the gradle wrapper in Windows
 
 > gradlew.bat artifactoryPublish
 ```
