@@ -113,7 +113,7 @@ artifactory {
   }
   resolve {
     repository {
-      repoKey = 'repo' // The Artifactory (preferably virtual) repository key to resolve from
+      repoKey = 'jcenter' // The Artifactory (preferably virtual) repository key to resolve from
       username = "${artifactory_user}" // Optional resolver user name (leave out to use anonymous resolution)
       password = "${artifactory_password}" // The resolver password
       maven = true     

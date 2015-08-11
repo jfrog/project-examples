@@ -78,7 +78,7 @@ artifactory {
     }
     resolve {
         repository {
-            repoKey = 'repo'
+            repoKey = 'jcenter'
             username = "${artifactory_user}" // The resolver user name
             password = "${artifactory_password}" // The resolver password
         }

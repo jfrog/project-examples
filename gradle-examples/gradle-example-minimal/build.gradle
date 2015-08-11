@@ -62,6 +62,6 @@ artifactory {
         }
     }
     resolve {
-        repoKey = 'repo'
+        repoKey = 'jcenter'
     }
 }
