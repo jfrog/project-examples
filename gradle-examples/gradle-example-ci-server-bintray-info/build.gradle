@@ -20,6 +20,8 @@ buildscript {
   }
 }
 
+apply plugin: 'java'
+
 task sourceJar(type: Jar) {
   from sourceSets.main.allSource
   classifier = 'sources'
