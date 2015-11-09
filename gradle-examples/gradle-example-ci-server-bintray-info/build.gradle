@@ -20,33 +20,9 @@ buildscript {
   }
 }
 
-allprojects {
-  apply plugin: 'java'
-  apply plugin: 'maven'
-}
-
-task sourceJar(type: Jar) {
-  from sourceSets.main.allSource
-  classifier = 'sources'
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-  classifier = 'javadoc'
-  from javadoc.destinationDir
-}
-
 def projectUrl = 'https://github.com/eyalbe4/project-examples'
 def bintrayInfoFile = file("$rootDir/bintray-info.json")
 def pomFile = file("$rootDir/newpom.pom")
-
-artifacts {
-  archives sourceJar
-  archives javadocJar
-  artifacts {
-    archives file: bintrayInfoFile, name: 'bintray-info', type: 'json'
-    archives file: pomFile, name: project.name, type: 'pom'
-  }
-}
 
 task createBintrayInfoFile(type:Exec) {
   println 'Creating bintray-info.json.'
@@ -93,9 +69,31 @@ task writeNewPom(type:Exec) {
 
 allprojects {
   apply plugin: 'java'
+  apply plugin: 'maven'
 
   group = 'org.jfrog.example.gradle'
   version = currentVersion
+}
+
+subprojects {
+  task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+  }
+
+  task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+  }
+
+  artifacts {
+    archives sourceJar
+    archives javadocJar
+    artifacts {
+      archives file: bintrayInfoFile, name: 'bintray-info', type: 'json'
+      archives file: pomFile, name: project.name, type: 'pom'
+    }
+  }
 }
 
 // Setting this property to true will make the artifactoryPublish task
