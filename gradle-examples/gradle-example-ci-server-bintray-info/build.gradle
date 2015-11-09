@@ -17,34 +17,7 @@
 buildscript {
   repositories {
     jcenter()
-    dependencies {
-      classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '3.1.2')
-    }
   }
-}
-
-group = 'org.jfrog.gradle-example-bintray-info'
-version = currentVersion
-def projectUrl = 'https://github.com/eyalbe4/project-examples'
-
-apply plugin: 'com.jfrog.artifactory-upload'
-apply plugin: 'idea'
-apply plugin: 'java'
-apply plugin: 'maven'
-
-dependencies {
-  testCompile 'junit:junit:4.7'
-}
-task sourceJar(type: Jar) {
-  from sourceSets.main.allSource
-  classifier = 'sources'
-}
-task javadocJar(type: Jar, dependsOn: javadoc) {
-  classifier = 'javadoc'
-  from javadoc.destinationDir
-}
-artifactoryPublish {
-  dependsOn sourceJar, javadocJar
 }
 
 def bintrayInfoFile = file("$rootDir/bintray-info.json")
@@ -102,33 +75,18 @@ task writeNewPom(type:Exec) {
   }.writeTo("$rootDir/newpom.pom")
 }
 
-artifactory {
-  contextUrl = 'http://localhost:8080/artifactory'
-  publish {
-    repository {
-      repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
-      username = "${artifactory_user}" // The publisher user name
-      password = "${artifactory_password}" // The publisher password
-    }
-    defaults {
-      // Reference to Gradle configurations defined in the build script.
-      // This is how we tell the Artifactory Plugin which artifacts should be
-      // published to Artifactory.
-      publishConfigs('archives')
-      publishPom = false
-      publishIvy = false
-    }
-  }
-  resolve {
-    repository {
-      repoKey = 'jcenter' // The Artifactory (preferably virtual) repository key to resolve from
-      username = "${artifactory_user}" // Optional resolver user name (leave out to use anonymous resolution)
-      password = "${artifactory_password}" // The resolver password
-      maven = true     
-    }
-  }
+allprojects {
+  apply plugin: 'java'
+
+  group = 'org.jfrog.example.gradle'
+  version = '1.0'
+  status = 'integration'
 }
 
+// Setting this property to true will make the artifactoryPublish task
+// skip this module (in our case, the root module):
+artifactoryPublish.skip = true
+
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.0'
+  gradleVersion = '2.4'
 }
