@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.jfrog.test</groupId>
         <artifactId>multi</artifactId>
-        <version>3.27-SNAPSHOT</version>
+        <version>3.27</version>
     </parent>
 
     <properties>
@@ -33,7 +33,7 @@
     </developers>
 
     <artifactId>multi2</artifactId>
-    <version>3.27-SNAPSHOT</version>
+    <version>3.27</version>
     <packaging>jar</packaging>
     <name>Multi 2</name>
 
