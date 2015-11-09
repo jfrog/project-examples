@@ -35,6 +35,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
   from javadoc.destinationDir
 }
 
+def projectUrl = 'https://github.com/eyalbe4/project-examples'
 def bintrayInfoFile = file("$rootDir/bintray-info.json")
 def pomFile = file("$rootDir/newpom.pom")
 
