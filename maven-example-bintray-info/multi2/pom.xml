@@ -11,6 +11,26 @@
         <daversion>${project.parent.version}</daversion>
     </properties>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/shikloshi/project-examples.git</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>Shikloshi</id>
+            <name>Shikloshi</name>
+            <email>aviads@jfrog.com</email>
+        </developer>
+    </developers>
+
     <artifactId>multi2</artifactId>
     <version>3.0</version>
     <packaging>jar</packaging>
