@@ -4,7 +4,7 @@
     <groupId>org.jfrog.test</groupId>
     <artifactId>multi</artifactId>
     <description>Maven Push to Bintray example</description>
-    <version>3.18-SNAPSHOT</version>
+    <version>3.18</version>
     <packaging>pom</packaging>
     <name>Simple Multi Modules Build</name>
     <url>https://github.com/shikloshi/project-examples.git</url>
