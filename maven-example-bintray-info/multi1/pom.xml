@@ -8,6 +8,7 @@
     </parent>
 
     <artifactId>multi1</artifactId>
+    <description>Maven Push to Bintray example</description>
     <packaging>jar</packaging>
     <name>Multi 1</name>
 
