@@ -49,6 +49,30 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <ignoreMissingFile>false</ignoreMissingFile>
+                    <file>bintray-info/bintray-info.tmpl.json</file>
+                    <outputFile>
+                        bintray-info/bintray-info.json
+                    </outputFile>
+                    <regex>false</regex>
+                    <token>$VERSION$</token>
+                    <value>"3.0"</value>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
