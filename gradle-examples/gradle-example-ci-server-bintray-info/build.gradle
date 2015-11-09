@@ -22,7 +22,6 @@ buildscript {
 
 def projectUrl = 'https://github.com/eyalbe4/project-examples'
 def bintrayInfoFile = file("$rootDir/bintray-info.json")
-def pomFile = file("$rootDir/newpom.pom")
 
 allprojects {
   apply plugin: 'java'
@@ -43,6 +42,7 @@ subprojects {
     from javadoc.destinationDir
   }
 
+  def pomFile = file("$rootDir/${project.name}/newpom.pom")
   artifacts {
     archives sourceJar
     archives javadocJar
@@ -85,7 +85,7 @@ subprojects {
           }
         }
       }
-    }.writeTo("$rootDir/newpom.pom")
+    }.writeTo("$rootDir/${project.name}/newpom.pom")
   }
 }
 
