@@ -88,7 +88,7 @@
                     </outputFile>
                     <regex>false</regex>
                     <token>$VERSION$</token>
-                    <value>"3.0"</value>
+                    <value>${project.version}</value>
                 </configuration>
             </plugin>
 
