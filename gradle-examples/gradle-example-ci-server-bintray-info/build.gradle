@@ -20,6 +20,16 @@ buildscript {
   }
 }
 
+task sourceJar(type: Jar) {
+  from sourceSets.main.allSource
+  classifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
 def bintrayInfoFile = file("$rootDir/bintray-info.json")
 def pomFile = file("$rootDir/newpom.pom")
 
