@@ -7,6 +7,7 @@
     <version>3.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Simple Multi Modules Build</name>
+    <url>https://github.com/shikloshi/project-examples.git</url>
 
     <modules>
         <module>multi1</module>
