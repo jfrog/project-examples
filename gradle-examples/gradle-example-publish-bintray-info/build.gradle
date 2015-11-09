@@ -24,6 +24,8 @@ buildscript {
 }
 
 version = currentVersion
+def projectUrl = 'https://github.com/eyalbe4/project-examples'
+def bintrayInfoFileName = 'bintray-descriptor.bintray-info.json'
 
 apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'java'
@@ -49,7 +51,37 @@ publishing {
             from components.java
             artifact sourceJar
             artifact javadocJar
-            artifact(file("$rootDir/bintray-info.json"))
+            artifact("$rootDir/$bintrayInfoFileName") {
+                extension "bintray-info.json"
+            }
+
+            pom.withXml {
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name 'project-name'
+                    description 'description for project'
+                    url projectUrl
+                    scm {
+                        url projectUrl
+                        connection projectUrl
+                        developerConnection projectUrl
+                    }
+                    licenses {
+                        license {
+                            name 'The Apache Software License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            distribution 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JFrog'
+                            name 'JFrogDev'
+                            email 'jfrogdev@jfrog.com'
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -58,7 +90,7 @@ task createBintrayInfoFile(type:Exec) {
     println 'Creating bintray-info.json'
     String fileContent = new File("$rootDir/bintray-info-template.json").getText('UTF-8')
     fileContent = fileContent.replace('$VERSION$', currentVersion)
-    (new File("$rootDir/bintray-info.json")).write(fileContent)
+    (new File("$rootDir/$bintrayInfoFileName")).write(fileContent)
 }
 
 artifactory {

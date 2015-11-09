@@ -25,6 +25,7 @@ buildscript {
 
 group = 'org.jfrog.gradle-example-bintray-info'
 version = currentVersion
+def projectUrl = 'https://github.com/eyalbe4/project-examples'
 
 apply plugin: 'com.jfrog.artifactory-upload'
 apply plugin: 'idea'
@@ -50,24 +51,58 @@ artifactoryPublish {
 }
 
 def bintrayInfoFile = file("$rootDir/bintray-info.json")
+def pomFile = file("$rootDir/newpom.pom")
 
 artifacts {
   published sourceJar
   published javadocJar
   artifacts {
-    archives file: bintrayInfoFile, name: bintrayInfoFile.getName(), type: 'json'
+    archives file: bintrayInfoFile, name: 'bintray-info', type: 'json'
+    archives file: pomFile, name: project.name, type: 'pom'
   }
 }
 
-configurations {
-  published
-}
-
 task createBintrayInfoFile(type:Exec) {
-  println 'Creating bintray-info.json'
+  println 'Creating bintray-info.json.'
   String fileContent = new File("$rootDir/bintray-info-template.json").getText('UTF-8')
   fileContent = fileContent.replace('$VERSION$', currentVersion)
   (new File("$rootDir/bintray-info.json")).write(fileContent)
+}
+
+task writeNewPom(type:Exec) {
+  println "Creating pom file at $rootDir/newpom.xml"
+  pom {
+    project {
+      name 'project-name'
+      description 'description for project'
+      url projectUrl
+      inceptionYear '2015'
+      scm {
+        url projectUrl
+        connection projectUrl
+        developerConnection projectUrl
+      }
+      licenses {
+        license {
+          name 'The Apache Software License, Version 2.0'
+          url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          distribution 'repo'
+        }
+      }
+      developers {
+        developer {
+          id 'JFrog'
+          name 'JFrogDev'
+          email 'jfrogdev@jfrog.com'
+          url projectUrl
+          roles{
+            role 'Developer'
+          }
+          timezone '+2'
+        }
+      }
+    }
+  }.writeTo("$rootDir/newpom.pom")
 }
 
 artifactory {
@@ -83,6 +118,7 @@ artifactory {
       // This is how we tell the Artifactory Plugin which artifacts should be
       // published to Artifactory.
       publishConfigs('archives', 'published')
+      publishPom = false
       publishIvy = false
     }
   }
