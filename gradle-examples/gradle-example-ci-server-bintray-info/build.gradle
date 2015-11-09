@@ -20,8 +20,10 @@ buildscript {
   }
 }
 
-apply plugin: 'java'
-apply plugin: 'maven'
+allprojects {
+  apply plugin: 'java'
+  apply plugin: 'maven'
+}
 
 task sourceJar(type: Jar) {
   from sourceSets.main.allSource
@@ -92,8 +94,7 @@ allprojects {
   apply plugin: 'java'
 
   group = 'org.jfrog.example.gradle'
-  version = '1.0'
-  status = 'integration'
+  version = currentVersion
 }
 
 // Setting this property to true will make the artifactoryPublish task
