@@ -21,6 +21,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'maven'
 
 task sourceJar(type: Jar) {
   from sourceSets.main.allSource
