@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 JFrog Ltd.
+ * Copyright (C) 2011 JFrog Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,14 @@
  * limitations under the License.
  */
 
-buildscript {
-  repositories {
-    jcenter()
-  }
-}
+package org.gradle.api;
 
-allprojects {
-  apply plugin: 'java'
-  apply plugin: 'maven'
+import java.util.Date;
 
-  group = 'org.jfrog.example.gradle'
-  version = '1.0'
-  status = 'integration'
-}
+public class PersonList {
+    private Date date = null;
 
-// Setting this property to true will make the artifactoryPublish task
-// skip this module (in our case, the root module):
-artifactoryPublish.skip = true
-
-task wrapper(type: Wrapper) {
-  gradleVersion = '2.4'
+    public void doSomething() {
+        date = new Date();
+    }
 }

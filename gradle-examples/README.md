@@ -34,6 +34,10 @@ In this example, the only Artifactory property configured is "artifactoryPublish
 build script.
 * In order to publish the build artifacts to Artifactory, the published arrtifacts are added to the archives Gradle configuration.
 
+### gradle-example-ci-server-bintray-info
+Same as *gradle-example-ci-server*, but also creates a bintray-info descriptor file and adds to the build artifacts
+to be deployed to Artifactory, so that the build artifacts can be later published to Bintray from Artifactory.
+
 ### gradle-example
 Sample project that uses the Gradle Artifactory Plugin with Gradle Configurations.
 
@@ -42,6 +46,16 @@ Sample project that uses the Gradle Artifactory Plugin with Gradle Publications.
 
 ### gradle-android-aar
 Sample project that uses the Gradle Artifactory Plugin to deploy Android artifacts to Artifactory.
+
+### gradle-example-bintray-info
+Sample project that uses the Gradle Artifactory Plugin with Gradle Configurations.
+The project creates a bintray-info descriptor file and adds to the build artifacts to be deployed to Artifactory,
+so that the build artifacts can be later published to Bintray from Artifactory.
+
+### gradle-example-publish-bintray-info
+Sample project that uses the Gradle Artifactory Plugin with Gradle Publications.
+The project creates a bintray-info descriptor file and adds to the build artifacts to be deployed to Artifactory,
+so that the build artifacts can be later published to Bintray from Artifactory.
 
 ### gradle-jcenter-resolve
 Resolves a dependency from jcenter.
