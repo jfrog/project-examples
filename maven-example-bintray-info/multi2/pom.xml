@@ -33,7 +33,7 @@
     </developers>
 
     <artifactId>multi2</artifactId>
-    <version>3.31-SNAPSHOT</version>
+    <version>3.0</version>
     <packaging>jar</packaging>
     <name>Multi 2</name>
 
