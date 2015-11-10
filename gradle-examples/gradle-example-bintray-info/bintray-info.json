@@ -16,7 +16,7 @@
      				   {"name": "att5", "values" : ["2014-12-28T19:43:37+0100"], "type": "date"}]
  	},
 	"version": {
-		"name": "0.5",
+		"name": "1.0-SNAPSHOT",
 		"desc": "This is a version",
 		"released": "2015-01-04",
 		"vcs_tag": "0.5",
@@ -25,8 +25,5 @@
 					   {"name": "VerAtt3", "values" : ["2015-01-01T19:43:37+0100"], "type": "date"}],
 		"gpgSign": false
 	},
-	"applyToFiles": ["repo1/org/jfrog/*.*", "repo2/org/jfrog/test/module*/*.jar", "repo3/org/jfrog/test/**/*.*", "repo2/org/jfrog/test/**/art.?ar"],
-	"applyToRepoFiles": ["/org/jfrog/*.*,  jfrog/test/**/*.*"],
-	"applyToProps": [{"upload.prop1": ["val1", "val2"]}, {"upload.prop2": ["*"]}, {"*":   ["valueRegardlessOfProperty"]}],
 	"publish": true
 }

@@ -110,7 +110,7 @@ artifactory {
             // Properties to be attached to the published artifacts.
             properties = ['qa.level': 'basic', 'dev.team' : 'core']
             // Publish generated POM files to Artifactory (true by default)
-            publishPom = true
+            publishPom = false
         }
     }
     resolve {

@@ -4,19 +4,33 @@
     <parent>
         <groupId>org.jfrog.test</groupId>
         <artifactId>multi</artifactId>
-        <version>3.0</version>
+        <version>3.3</version>
     </parent>
 
     <artifactId>multi1</artifactId>
+    <description>Maven Push to Bintray example</description>
     <packaging>jar</packaging>
     <name>Multi 1</name>
 
     <licenses>
         <license>
-            <name>apache</name>
-            <comments>none</comments>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <scm>
+        <url>https://github.com/shikloshi/project-examples.git</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>JFrog</id>
+            <name>JFrogDev</name>
+            <email>jfrogdev@jfrog.com</email>
+        </developer>
+    </developers>
 
     <build>
         <plugins>

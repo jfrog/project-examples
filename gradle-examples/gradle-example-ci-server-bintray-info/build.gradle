@@ -47,8 +47,10 @@ subprojects {
     archives sourceJar
     archives javadocJar
     artifacts {
-      archives file: bintrayInfoFile, name: 'bintray-info', type: 'json'
       archives file: pomFile, name: project.name, type: 'pom'
+      if ('api'.equals(project.name)) {
+        archives file: bintrayInfoFile, name: 'bintray-info', type: 'json'
+      }
     }
   }
 

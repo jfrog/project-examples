@@ -3,9 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jfrog.test</groupId>
     <artifactId>multi</artifactId>
-    <version>3.0</version>
+    <description>Maven Push to Bintray example</description>
+    <version>3.3</version>
     <packaging>pom</packaging>
     <name>Simple Multi Modules Build</name>
+    <url>https://github.com/shikloshi/project-examples.git</url>
 
     <modules>
         <module>multi1</module>
@@ -17,6 +19,26 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/shikloshi/project-examples.git</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>JFrog</id>
+            <name>JFrogDev</name>
+            <email>jfrogdev@jfrog.com</email>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>
@@ -49,6 +71,30 @@
         </pluginManagement>
         <plugins>
             <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <ignoreMissingFile>false</ignoreMissingFile>
+                    <file>bintray-info/bintray-info.tmpl.json</file>
+                    <outputFile>
+                        bintray-info/bintray-info.json
+                    </outputFile>
+                    <regex>false</regex>
+                    <token>$VERSION$</token>
+                    <value>${project.version}</value>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
@@ -65,6 +111,30 @@
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
