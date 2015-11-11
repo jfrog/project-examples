@@ -12,7 +12,7 @@
     </properties>
 
     <artifactId>bintray-info</artifactId>
-    <version>3.31-SNAPSHOT</version>
+    <version>3.0</version>
     <packaging>pom</packaging>
     <name>bintray-info</name>
 
