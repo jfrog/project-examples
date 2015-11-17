@@ -7,6 +7,8 @@
     <packaging>pom</packaging>
     <name>Simple Multi Modules Build</name>
 
+
+
     <modules>
         <module>multi1</module>
         <module>multi2</module>
