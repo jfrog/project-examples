@@ -2,14 +2,14 @@
 
 ## Overview
 
-Artifactory Maven plugin example is using the Artifactory Maven plugin for deployment the artifacts and using the Build-Info ability with Artifactory. You can run this plugin (after changing the configuration to match your Artifactory server) just by runnung:
+This example is using the Artifactory Maven plugin for deployment the artifacts and using the Build-Info ability with Artifactory. You can run this plugin (after changing the configuration to match your Artifactory server) just by runnung:
 
 ```console
 > mvn deploy
 
 ```
 
-This would deploy the produced artifacts to the configured Artifactory:
+This would deploy the produced artifacts to the configured Artifactory server:
 
 ```console
  Artifactory Build Info Recorder: Saving Build Info to '**\artifactory-maven-plugin-example\target\build-info.json'
@@ -28,10 +28,9 @@ This would deploy the produced artifacts to the configured Artifactory:
 
 ```
 
-
 ## Using -D parameter for different values like username and password
 
-The username and password can be passed using the -D parameter:
+You can use the Maven ability to pass parameters to the pom file. This would allow you flexible configuration ability. For example to pass the username and password using the -D parameter:
 
 ```console
 > mvn deploy -Dusername=admin -Dpassword=MyPassword
