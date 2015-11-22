@@ -70,8 +70,8 @@
                             </artifactory>
                             <publisher>
                                 <contextUrl>{{ARTIFACTORY_CONTEXT_URL|"http://localhost:8081/artifactory"}}</contextUrl>
-                                <username>deployer</username>
-                                <password>{DESede}0XIOf5RBEyFKbzWU1h2XGQ==</password>
+                                <username>${username}</username>
+                                <password>${password}</password>
                                 <excludePatterns>*-tests.jar</excludePatterns>
                                 <repoKey>libs-release-local</repoKey>
                                 <snapshotRepoKey>libs-snapshot-local</snapshotRepoKey>
