@@ -28,7 +28,7 @@ This would deploy the produced artifacts to the configured Artifactory server:
 
 ```
 
-## Using -D parameter for different values like username and password
+## Passing parameters to the pom file (like username and password)
 
 You can use the Maven ability to pass parameters to the pom file. This would allow you flexible configuration ability. For example to pass the username and password using the -D parameter:
 
