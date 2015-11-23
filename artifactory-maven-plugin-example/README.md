@@ -1,41 +1,42 @@
-### Artifactory Maven Plugin
+# Maven Artifactory Plugin
 
 ## Overview
 
-This example is using the Artifactory Maven plugin for deployment the artifacts and using the Build-Info ability with Artifactory. You can run this plugin (after changing the configuration to match your Artifactory server) just by runnung:
+This example is using the Maven Artifactory Plugin for artifacts abd build-info deployment to Artifactory. 
 
+## Running this example
+
+To run this example, please do the following:
+1. Edit the pom.xml file and set the value of the *contextUrl* with your Artifactory URL, as well as the other Artifactory properties.
+For more configuration information see the [Maven Artifactory Plugin documentation](https://www.jfrog.com/confluence/display/RTF/Maven+Artifactory+Plugin).
+2. CD to the project directory and run the following command (replace *admin* and *password* with your Artifactory credentials):
 ```console
-> mvn deploy
-
+> mvn deploy -Dusername=admin -Dpassword=password
 ```
 
 This would deploy the produced artifacts to the configured Artifactory server:
 
 ```console
- Artifactory Build Info Recorder: Saving Build Info to '**\artifactory-maven-plugin-example\target\build-info.json'
- Artifactory Build Info Recorder: Deploying artifacts to http://localhost:8081/artifactory/libs-release-local
- Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi/2.17-SNAPSHOT/multi-2.17-SNAPSHOT.pom
- Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi1/2.17-SNAPSHOT/multi1-2.17-SNAPSHOT.jar
- Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi1/2.17-SNAPSHOT/multi1-2.17-SNAPSHOT.pom
- Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi1/2.17-SNAPSHOT/multi1-2.17-SNAPSHOT-sources.jar
- Artifactory Build Info Recorder: Skipping the deployment of 'org/jfrog/test/multi1/2.17-SNAPSHOT/multi1-2.17-SNAPSHOT-tests.jar' due to the defined include-exclude patterns.
- Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi2/2.17-SNAPSHOT/multi2-2.17-SNAPSHOT.jar
- Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi2/2.17-SNAPSHOT/multi2-2.17-SNAPSHOT.pom
- Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi3/2.17-SNAPSHOT/multi3-2.17-SNAPSHOT.war
- Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi3/2.17-SNAPSHOT/multi3-2.17-SNAPSHOT.pom
- Artifactory Build Info Recorder: Deploying build info ...
- Deploying build info to: http://localhost:8081/artifactory/api/build
-
+ [INFO] Artifactory Build Info Recorder: Saving Build Info to 'C:\dev\project-examples\artifactory-maven-plugin-example\target\build-info.json'
+ [INFO] Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi3/2.17-SNAPSHOT/multi3-2.17-SNAPSHOT.war
+ [INFO] Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi3/2.17-SNAPSHOT/multi3-2.17-SNAPSHOT.pom
+ [INFO] Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi/2.17-SNAPSHOT/multi-2.17-SNAPSHOT.pom
+ [INFO] Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi1/2.17-SNAPSHOT/multi1-2.17-SNAPSHOT.jar
+ [INFO] Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi1/2.17-SNAPSHOT/multi1-2.17-SNAPSHOT.pom
+ [INFO] Artifactory Build Info Recorder: Skipping the deployment of 'org/jfrog/test/multi1/2.17-SNAPSHOT/multi1-2.17-SNAPSHOT-tests.jar' due to the defined include-exclude patterns.
+ [INFO] Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi1/2.17-SNAPSHOT/multi1-2.17-SNAPSHOT-sources.jar
+ [INFO] Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi2/2.17-SNAPSHOT/multi2-2.17-SNAPSHOT.jar
+ [INFO] Deploying artifact: http://localhost:8081/artifactory/libs-snapshot-local/org/jfrog/test/multi2/2.17-SNAPSHOT/multi2-2.17-SNAPSHOT.pom
+ [INFO] Artifactory Build Info Recorder: Deploying build info ...
+ [INFO] Deploying build descriptor to: http://localhost:8081/artifactory/api/build
+ [INFO] Build successfully deployed. Browse it in Artifactory under http://localhost:8081/artifactory/webapp/builds/plugin-demo/1
 ```
 
-## Passing parameters to the pom file (like username and password)
+## Sending parameters to the pom file
 
-You can use the Maven ability to pass parameters to the pom file. This would allow you flexible configuration ability. For example to pass the username and password using the -D parameter:
+You can send parameters as system properties, and then use them inside the pom file, the same way the *username* and *password*
+properties are sent as shown above.
 
-```console
-> mvn deploy -Dusername=admin -Dpassword=MyPassword
+## Plugin documentation
 
-```
-
-This would set the username to "admin" and the password to "MyPassword"
-
+The full plugin documentation is available [here](https://www.jfrog.com/confluence/display/RTF/Maven+Artifactory+Plugin).
