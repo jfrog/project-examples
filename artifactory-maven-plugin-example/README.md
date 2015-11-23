@@ -7,9 +7,9 @@ This example is using the Maven Artifactory Plugin for artifacts abd build-info 
 ## Running this example
 
 To run this example, please do the following:
-1. Edit the pom.xml file and set the value of the *contextUrl* with your Artifactory URL, as well as the other Artifactory properties.
+* Edit the pom.xml file and set the value of the *contextUrl* with your Artifactory URL, as well as the other Artifactory properties.
 For more configuration information see the [Maven Artifactory Plugin documentation](https://www.jfrog.com/confluence/display/RTF/Maven+Artifactory+Plugin).
-2. CD to the project directory and run the following command (replace *admin* and *password* with your Artifactory credentials):
+* CD to the project directory and run the following command (replace *admin* and *password* with your Artifactory credentials):
 ```console
 > mvn deploy -Dusername=admin -Dpassword=password
 ```
