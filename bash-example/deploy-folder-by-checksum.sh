@@ -14,7 +14,7 @@ if [ -z "$dir" ]; then echo "Please specify a directory to recursively upload fr
 if [ ! -x "`which sha1sum`" ]; then echo "You need to have the 'sha1sum' command in your path."; exit 1; fi
 
 # Upload by checksum all files from the source dir to the target repo
-find "$dir" -type f | while read f; do
+find "$dir" -type f | sort | while read f; do
     rel="$(echo "$f" | sed -e "s#$dir##" -e "s# /#/#")";
     sha1=$(sha1sum "$f")
     sha1="${sha1:0:40}"
