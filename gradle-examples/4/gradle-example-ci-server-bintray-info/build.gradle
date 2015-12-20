@@ -1,0 +1,107 @@
+/*
+ * Copyright (C) 2013 JFrog Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+buildscript {
+  repositories {
+    jcenter()
+  }
+}
+
+def projectUrl = 'https://github.com/eyalbe4/project-examples'
+def bintrayInfoFile = file("$rootDir/bintray-info.json")
+
+allprojects {
+  apply plugin: 'java'
+  apply plugin: 'maven'
+
+  group = 'org.jfrog.example.gradle'
+  version = currentVersion
+}
+
+subprojects {
+  task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+  }
+
+  task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+  }
+
+  def pomFile = file("$rootDir/${project.name}/newpom.pom")
+  artifacts {
+    archives sourceJar
+    archives javadocJar
+    artifacts {
+      archives file: pomFile, name: project.name, type: 'pom'
+      if ('api'.equals(project.name)) {
+        archives file: bintrayInfoFile, name: 'bintray-info', type: 'json'
+      }
+    }
+  }
+
+  task writeNewPom(type:Exec) {
+    println "Creating pom file at $rootDir/newpom.xml"
+    pom {
+      project {
+        name 'project-name'
+        description 'description for project'
+        url projectUrl
+        inceptionYear '2015'
+        scm {
+          url projectUrl
+          connection projectUrl
+          developerConnection projectUrl
+        }
+        licenses {
+          license {
+            name 'The Apache Software License, Version 2.0'
+            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            distribution 'repo'
+          }
+        }
+        developers {
+          developer {
+            id 'JFrog'
+            name 'JFrogDev'
+            email 'jfrogdev@jfrog.com'
+            url projectUrl
+            roles{
+              role 'Developer'
+            }
+            timezone '+2'
+          }
+        }
+      }
+    }.writeTo("$rootDir/${project.name}/newpom.pom")
+  }
+}
+
+task createBintrayInfoFile(type:Exec) {
+  println 'Creating bintray-info.json.'
+  String fileContent = new File("$rootDir/bintray-info-template.json").getText('UTF-8')
+  fileContent = fileContent.replace('$VERSION$', currentVersion)
+  (new File("$rootDir/bintray-info.json")).write(fileContent)
+}
+
+// Setting this property to true will make the artifactoryPublish task
+// skip this module (in our case, the root module):
+artifactoryPublish.skip = true
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.4'
+}

@@ -1,61 +1,16 @@
 ## Gradle Artifactory Plugin Examples
-Sample projects that use the Gradle Artifactory Plugin.
-The plugin adds the "artifactoryPublish" task.
-The Plugin documenation is available at:
-https://www.jfrog.com/confluence/display/RTF/Gradle+Artifactory+Plugin
 
-#### Running the examples
-```console
-> gradle artifactoryPublish
+### Overview
+The Gradle Artifactory Plugin allows you to deploy your build artifacts and build information to Artifactory also resolve
+your build dependencies for Artifactory.
+The Plugin documentation is available [here](https://www.jfrog.com/confluence/display/RTF/Gradle+Artifactory+Plugin)
+We have included a few sample projects to help you get started using the plugin.
 
-or with the gradle wrapper in Unix
-
-> ./gradlew artifactoryPublish
-
-and the gradle wrapper in Windows
-
-> gradlew.bat artifactoryPublish
-```
-
-### gradle-example-minimal
-A minimal sample project that uses the Gradle Artifactory Plugin to resolve and publish artifacts to Artifactory.
-
-### gradle-example-ci-server
-Gradle sample project to be used with one of the Artifactory CI Server Plugins (Jenkins, TeamCity or Bamboo).
-The Artifactory configuration in this case (repositories, Artifactory credentials, etc.)
-is done from the CI Server UI.
-You can still add the artifactory closure to the build script and have default values configured there,
-but the values configured in the CI Server override them.
-In this example, the only Artifactory property configured is "artifactoryPublish.skip = true".
-
-#### Important notes for using this example from a CI Server:
-
-* Make sure to have the "Project uses the Artifactory Gradle Plugin" check box in the CI Server UI unchecked, so that the CI Server Plugin automatically applies the Gradle Artifactory Plugin to your
-build script.
-* In order to publish the build artifacts to Artifactory, the published arrtifacts are added to the archives Gradle configuration.
-
-### gradle-example-ci-server-bintray-info
-Same as *gradle-example-ci-server*, but also creates a bintray-info descriptor file and adds to the build artifacts
-to be deployed to Artifactory, so that the build artifacts can be later published to Bintray from Artifactory.
-
-### gradle-example
-Sample project that uses the Gradle Artifactory Plugin with Gradle Configurations.
-
-### gradle-example-publish
-Sample project that uses the Gradle Artifactory Plugin with Gradle Publications.
-
-### gradle-android-aar
-Sample project that uses the Gradle Artifactory Plugin to deploy Android artifacts to Artifactory.
-
-### gradle-example-bintray-info
-Sample project that uses the Gradle Artifactory Plugin with Gradle Configurations.
-The project creates a bintray-info descriptor file and adds to the build artifacts to be deployed to Artifactory,
-so that the build artifacts can be later published to Bintray from Artifactory.
-
-### gradle-example-publish-bintray-info
-Sample project that uses the Gradle Artifactory Plugin with Gradle Publications.
-The project creates a bintray-info descriptor file and adds to the build artifacts to be deployed to Artifactory,
-so that the build artifacts can be later published to Bintray from Artifactory.
-
-### gradle-jcenter-resolve
-Resolves a dependency from jcenter.
+### Plugin Versions
+Version 4.0.0 of the Gradle Artifactory Plugin has been recently released.
+Before version 4, the plugin included two plugin IDs: *com.jfrog.artifactory-upload* when using Gradle Configurations
+and *com.jfrog.artifactory* when using Gradle Publications.
+To make it easier to configure the plugin, version 4 has only one plugin ID: *com.jfrog.artifactory* allowing you to use both Configurations and Publication in the same build script.
+We therefore split the Gradle examples 
+into [version 3 examples](https://github.com/jfrogde/project-examples/tree/master/gradle-examples/3) 
+and [version 4 examples](https://github.com/jfrogde/project-examples/tree/master/gradle-examples/4).  
