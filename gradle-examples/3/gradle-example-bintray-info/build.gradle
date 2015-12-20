@@ -1,0 +1,137 @@
+/*
+ * Copyright (C) 2013 JFrog Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+buildscript {
+  repositories {
+    jcenter()
+    dependencies {
+      classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '3.2.0')
+    }
+  }
+}
+
+group = 'org.jfrog.gradle-example-bintray-info'
+version = currentVersion
+def projectUrl = 'https://github.com/eyalbe4/project-examples'
+
+apply plugin: 'com.jfrog.artifactory-upload'
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'maven'
+
+dependencies {
+  testCompile 'junit:junit:4.7'
+}
+
+task sourceJar(type: Jar) {
+  from sourceSets.main.allSource
+  classifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+artifactoryPublish {
+  dependsOn sourceJar, javadocJar
+}
+
+def bintrayInfoFile = file("$rootDir/bintray-info.json")
+def pomFile = file("$rootDir/newpom.pom")
+
+artifacts {
+  archives sourceJar
+  archives javadocJar
+  artifacts {
+    archives file: bintrayInfoFile, name: 'bintray-info', type: 'json'
+    archives file: pomFile, name: project.name, type: 'pom'
+  }
+}
+
+task createBintrayInfoFile(type:Exec) {
+  println 'Creating bintray-info.json.'
+  String fileContent = new File("$rootDir/bintray-info-template.json").getText('UTF-8')
+  fileContent = fileContent.replace('$VERSION$', currentVersion)
+  (new File("$rootDir/bintray-info.json")).write(fileContent)
+}
+
+task writeNewPom(type:Exec) {
+  println "Creating pom file at $rootDir/newpom.xml"
+  pom {
+    project {
+      name 'project-name'
+      description 'description for project'
+      url projectUrl
+      inceptionYear '2015'
+      scm {
+        url projectUrl
+        connection projectUrl
+        developerConnection projectUrl
+      }
+      licenses {
+        license {
+          name 'The Apache Software License, Version 2.0'
+          url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          distribution 'repo'
+        }
+      }
+      developers {
+        developer {
+          id 'JFrog'
+          name 'JFrogDev'
+          email 'jfrogdev@jfrog.com'
+          url projectUrl
+          roles{
+            role 'Developer'
+          }
+          timezone '+2'
+        }
+      }
+    }
+  }.writeTo("$rootDir/newpom.pom")
+}
+
+artifactory {
+  contextUrl = 'http://localhost:8081/artifactory'
+  publish {
+    repository {
+      repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
+      username = "${artifactory_user}" // The publisher user name
+      password = "${artifactory_password}" // The publisher password
+    }
+    defaults {
+      // Reference to Gradle configurations defined in the build script.
+      // This is how we tell the Artifactory Plugin which artifacts should be
+      // published to Artifactory.
+      publishConfigs('archives')
+      publishPom = false
+      publishIvy = false
+    }
+  }
+  resolve {
+    repository {
+      repoKey = 'jcenter' // The Artifactory (preferably virtual) repository key to resolve from
+      username = "${artifactory_user}" // Optional resolver user name (leave out to use anonymous resolution)
+      password = "${artifactory_password}" // The resolver password
+      maven = true     
+    }
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.0'
+}

@@ -1,0 +1,15 @@
+configurations {
+    spi
+}
+
+dependencies {
+    compile project(':shared')
+    compile module("commons-lang:commons-lang:2.4") {
+        dependency("commons-io:commons-io:1.2")
+    }
+    compile group: 'org.apache.wicket', name: 'wicket', version: '1.3.7'
+
+}
+
+// Just a smoke test that using this option does not lead to any exception
+compileJava.options.compilerArgs = ['-Xlint:unchecked']
