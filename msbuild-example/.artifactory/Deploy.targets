@@ -1,6 +1,6 @@
 <Project ToolsVersion="4.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <pluginVersion>2.0.0</pluginVersion>
+    <pluginVersion>2.1.0</pluginVersion>
   </PropertyGroup>
   <Import Project="$(solutionDir)\.artifactory\Artifactory.build" Condition="'$(NuGetToolsPath)' == '' And Exists('$(solutionDir)\.artifactory\Artifactory.build')" />
   <PropertyGroup>
