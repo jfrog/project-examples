@@ -18,6 +18,8 @@ do
   mkdir $dir
 done
 
+set -x 
+echo rpmbuild/BUILD/$1.war
 
 # Put the training spec in the SPEC folder
 cd ..
