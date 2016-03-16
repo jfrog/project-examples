@@ -4,8 +4,8 @@
 # $1 = GitHub user name
 # $2 = Build Number that is passed by Jenkins
 
-STUDENT_DEFINE="'_ghubid $1'"
-BUILD_DEFINE="'_build_number $2'"
+STUDENT_DEFINE="_ghubid $1"
+BUILD_DEFINE="_build_number $2"
 
 wardir=org/jfrog/test/multi3/*/multi3-*.war
 
