@@ -25,5 +25,6 @@ echo rpmbuild/BUILD/$1.war
 cd ..
 cp $wardir rpmbuild/BUILD/$1.war
 cp training.spec rpmbuild/SPECS/.
+cd rpmbuild
 
 rpmbuild --define "$STUDENT_DEFINE" --define "$BUILD_DEFINE" -ba SPECS/training.spec
