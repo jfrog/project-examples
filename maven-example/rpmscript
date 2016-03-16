@@ -21,7 +21,7 @@ done
 
 # Put the training spec in the SPEC folder
 cd ..
-cp $wardir $1.war
+cp $wardir rpmbuild/BUILD/$1.war
 cp training.spec rpmbuild/SPECS/.
 
 rpmbuild --define $STUDENT_DEFINE --define $BUILD_DEFINE -ba SPECS/training.spec
