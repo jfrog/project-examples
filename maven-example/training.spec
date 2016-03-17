@@ -3,6 +3,8 @@
 #
 # Usage - RPMBUILD --define _ghubid --define _build_number -ba SPECS/_ghubid.spec
 #
+%define _rpmfilename %%{NAME}.%%{OS}.%%{ARCH}.rpm
+
 Summary: Simple Maven example web application
 Name: stanleyf
 Version: 1.0.0
