@@ -26,7 +26,7 @@ echo rpmbuild/BUILD/$1.war
 
 # Put the training spec in the SPEC folder
 cp $wardir rpmbuild/BUILD/$1.war
-cp workingDir/maven-example/training.spec rpmbuild/SPECS/.
+cp $workingDir/maven-example/training.spec rpmbuild/SPECS/.
 
 # remove the *.war file else it will reuse the first one it finds. 
 rm -rf org
