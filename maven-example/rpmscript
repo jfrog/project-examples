@@ -6,6 +6,7 @@
 
 STUDENT_DEFINE="_ghubid $1"
 BUILD_DEFINE="_build_number $2"
+RPMDIR_DEFINE="_topdir $3"
 
 wardir=org/jfrog/test/multi3/*/multi3-*.war
 
@@ -27,4 +28,4 @@ cp $wardir rpmbuild/BUILD/$1.war
 cp training.spec rpmbuild/SPECS/.
 cd rpmbuild
 
-rpmbuild --define "$STUDENT_DEFINE" --define "$BUILD_DEFINE" -ba SPECS/training.spec
+rpmbuild --define "$RPMDIR_DEFINE" --define "$STUDENT_DEFINE" --define "$BUILD_DEFINE" -ba SPECS/training.spec
