@@ -3,12 +3,14 @@
 # Inputs
 # $1 = GitHub user name
 # $2 = Build Number that is passed by Jenkins
+# $3 = Current worksapce
 
 STUDENT_DEFINE="_ghubid $1"
 BUILD_DEFINE="_build_number $2"
-RPMDIR_DEFINE="_topdir $3"
+RPMDIR_DEFINE="_topdir $3/rpmbuild"
 
 wardir=org/jfrog/test/multi3/*/multi3-*.war
+workdingDir=$3
 
 # Setup rpmbuild environment
 mkdir -p rpmbuild
@@ -23,9 +25,11 @@ set -x
 echo rpmbuild/BUILD/$1.war
 
 # Put the training spec in the SPEC folder
-cd ..
 cp $wardir rpmbuild/BUILD/$1.war
-cp training.spec rpmbuild/SPECS/.
+cp workingDir/maven-example/training.spec rpmbuild/SPECS/.
+
+# remove the *.war file else it will reuse the first one it finds. 
+rm -rf org
 cd rpmbuild
 
 rpmbuild --define "$RPMDIR_DEFINE" --define "$STUDENT_DEFINE" --define "$BUILD_DEFINE" -ba SPECS/training.spec
