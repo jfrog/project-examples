@@ -1,0 +1,31 @@
+#!/bin/bash
+# this script sets up Jenkins job to create rpm per name
+# Inputs
+# $1 = GitHub user name
+# $2 = Build Number that is passed by Jenkins
+
+STUDENT_DEFINE="_ghubid $1"
+BUILD_DEFINE="_build_number $2"
+RPMDIR_DEFINE="_topdir $3"
+
+wardir=org/jfrog/test/multi3/*/multi3-*.war
+
+# Setup rpmbuild environment
+mkdir -p rpmbuild
+cd rpmbuild
+for dir in BUILD RPMS SOURCES SPECS SRPMS
+do
+ [[ -d $dir ]] && rm -Rf $dir
+  mkdir $dir
+done
+
+set -x 
+echo rpmbuild/BUILD/$1.war
+
+# Put the training spec in the SPEC folder
+cd ..
+cp $wardir rpmbuild/BUILD/$1.war
+cp training.spec rpmbuild/SPECS/.
+cd rpmbuild
+
+rpmbuild --define "$RPMDIR_DEFINE" --define "$STUDENT_DEFINE" --define "$BUILD_DEFINE" -ba SPECS/training.spec
