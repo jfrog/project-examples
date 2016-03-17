@@ -28,6 +28,9 @@ cd $workingDir
 cp $wardir rpmbuild/BUILD/$1.war
 cp $workingDir/maven-example/training.spec rpmbuild/SPECS/.
 
+# Parse the release version
+
+
 # remove the *.war file else it will reuse it the next time.
 rm -Rf $wardir
 cd rpmbuild
