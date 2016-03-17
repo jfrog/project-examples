@@ -9,8 +9,10 @@ STUDENT_DEFINE="_ghubid $1"
 BUILD_DEFINE="_build_number $2"
 RPMDIR_DEFINE="_topdir $3/rpmbuild"
 
+workingDir=$3
+cd $workingDir
+
 wardir=org/jfrog/test/multi3/*/multi3-*.war
-workdingDir=$3
 
 # Setup rpmbuild environment
 mkdir -p rpmbuild
