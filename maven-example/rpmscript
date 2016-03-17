@@ -32,7 +32,7 @@ cp $workingDir/maven-example/training.spec rpmbuild/SPECS/.
 
 
 # remove the *.war file else it will reuse it the next time.
-#rm -Rf $wardir
+rm -Rf $wardir
 cd rpmbuild
 
 rpmbuild --define "$RPMDIR_DEFINE" --define "$STUDENT_DEFINE" --define "$BUILD_DEFINE" -ba SPECS/training.spec
