@@ -21,18 +21,54 @@ buildscript {
 }
 
 allprojects {
+  repositories {
+      jcenter() 
+  }
   apply plugin: 'java'
   apply plugin: 'maven'
 
   group = 'org.jfrog.example.gradle'
-  version = '1.0'
-  status = 'integration'
+/* use currentVersion from gradle.properties
+ *  configure CI to update this property on release build
+ *  TeamCity Relase Management Gradle Plugin example  
+ *  set both 'Release properties:' and 'Next Integration Properties'
+ *  to 'currentVersion'
+ */
+  version = currentVersion
+  // Maven style integration status 
+  if( version.endsWith("-SNAPSHOT" ) )
+    status = 'integration'
+  else
+    status = 'release'
 }
-
-// Setting this property to true will make the artifactoryPublish task
-// skip this module (in our case, the root module):
-artifactoryPublish.skip = true
+ 
+/* Setting the task 'artifactoryPublish' property 'skip to 'true'
+ * to true will make the artifactoryPublish task  skip this module 
+ * (in our case, the root module): Otherwise a jar file with a 
+ * manifest only will be published.
+ * If running standalone without the artifactory plugin applied 
+ * you cannot refernce the property directly withhout error.
+ * the task is created very late in the lifecycle so wait until
+ * the root project is evaluted then check if the artifactoryPublish
+ * task exists - only then set the task property 'skip' to "true"
+ */
+afterEvaluate  { p ->
+  Task t = p.tasks.findByPath(":artifactoryPublish") 
+  if( t != null ){
+      println "HAS artifactoryPublish task -- setting 'skip' to 'true'"
+      t.setProperty("skip","true")
+  } else {
+     // Running without artifcatory -- need a resolving repository
+     println "DOES NOT HAVE artifactoryPublish -- adding jcenter repository"
+     rootProject.allprojects {
+       repositories { 
+         jcenter() 
+       }
+    }
+  }
+}
+  
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.4'
+  gradleVersion = '2.11' // modern version 
 }
