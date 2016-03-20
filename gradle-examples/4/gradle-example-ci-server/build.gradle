@@ -42,11 +42,6 @@ allprojects {
     status = 'release'
 }
  
-// Services is a war project without its own build.gradle
-project(':services') {
-  apply plugin: 'war'
-}
-
 /* Setting the task 'artifactoryPublish' property 'skip to 'true'
  * to true will make the artifactoryPublish task  skip this module 
  * (in our case, the root module): Otherwise a jar file with a 
