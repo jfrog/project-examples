@@ -1,19 +1,19 @@
 #
 # Description - Example spec file rpm builds. 
 #
-# Usage - RPMBUILD --define _webappname --define _build_number -ba SPECS/_rpm.spec
+# Usage - RPMBUILD --define _topdir --define _webappname --define _build_number --define _release_number -ba SPECS/_rpm.spec
+#   _webappname - packages the war file to /usr/local/tomcat7/webapps directory
+#   _build_number - build number
+#   _rpm.spec - rpm specification file
+#   _topdir - root directory for the rpmbuild
+#   _release_number - webappname release number
+#
 # Assumes -
-# 1. the war file is stored on Jenkins workspace
-#
-# Inputs - passed by Jenkins / CI Servers
-#
-# _webappname - packages the war file to /usr/local/tomcat7/webapps directory
-# _build_number - build number
-# _rpm.spec - rpm specification file
+# 1. the war file is stored in the rpmbuild/BUILD directory
 # 
 Summary: Generic RPM packaging  
 Name: %{_webappname}
-Version: 1.0.0
+Version: %{_release_number}
 Release: %{_build_number}%{?dist}
 License: commerical
 Group: Applications/Web Applications

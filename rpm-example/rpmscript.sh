@@ -20,10 +20,17 @@ done
 cd $workingDir
 
 # Put the training spec in the SPEC folder and source in Build folder
-mv $workingDir/SOURCE/*.war rpmbuild/BUILD/$1.war
+for warfile in `find SOURCE -name '*.war'` 
+do
+    #extract the revision number
+    warname=$(basename $warfle)
+    rev="$(echo $warname | cut -d'-' -f2)"
+    RELEASE_DEFINE="_release_number $rev"
+
+    mv $warfile rpmbuild/BUILD/$1.war
+    break
+done
 cp $workingDir/rpm.spec rpmbuild/SPECS/.
 
-# Parse the release version
-
 cd rpmbuild
-rpmbuild --define "$RPMDIR_DEFINE" --define "$WEBAPP_DEFINE" --define "$BUILD_DEFINE" -ba SPECS/rpm.spec
+rpmbuild --define "$RPMDIR_DEFINE" --define "$WEBAPP_DEFINE" --define "$BUILD_DEFINE" --define "$RELEASE_DEFINE" -ba SPECS/rpm.spec
