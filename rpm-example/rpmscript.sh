@@ -23,7 +23,7 @@ cd $workingDir
 for warfile in `find SOURCE -name '*.war'` 
 do
     #extract the revision number
-    warname=$(basename $warfle)
+    warname=$(basename $warfile)
     rev="$(echo $warname | cut -d'-' -f2)"
     RELEASE_DEFINE="_release_number $rev"
 

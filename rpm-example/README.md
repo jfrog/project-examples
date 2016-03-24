@@ -1,4 +1,4 @@
-RPM-EXAMPLE Project Example
+RPM-Example Project Example
 ==========================
 	
 ### Configuration 
@@ -11,11 +11,10 @@ Builds RPM package from war file. Two files are included in this folder.
 ### Jenkins Configuration  
 1. Create a freestype project and enable Generic-Artifactory Integration
 2. Enter in "Published Artifacts" ${WORKSPACE}/rpmbuild/RPMS/noarch/*rpm -- location of the rpm file from rpmbuild
-3. Enter in "Resolved Artifacts" <location of war file>=>$WORKSPACE/SOURCE
+3. Enter in "Resolved Artifacts" <location of war file>=>$WORKSPACE/$JOB_NAME/SOURCE
 4. For the Build Step - Execute shell with the following commands 
-     cd $WORKSPACE/rpm-example
-     mv $WORKSPACE/SOURCE .    -- move the war file to rpm-example directory
-     bash rpm-example/rpmscript.sh <rpm-name> $BUILD_NUMBER
+  1. cd $WORKSPACE/$JOB_NAME
+  3. bash rpmscript.sh <rpm-name> $BUILD_NUMBER
 
    where rpm-name is the name of the webapp to be deployed in /tomcat7/webapps directory 
 
