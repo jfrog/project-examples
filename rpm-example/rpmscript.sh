@@ -6,7 +6,7 @@
 
 WEBAPP_DEFINE="_webappname $1"
 BUILD_DEFINE="_build_number $2"
-RPMDIR_DEFINE="_topdir $(pwd)/rpmbuild
+RPMDIR_DEFINE="_topdir $(pwd)/rpmbuild"
 workingDir=$(pwd)
 
 # Setup rpmbuild environment
