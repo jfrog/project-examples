@@ -27,8 +27,9 @@ Packager: jenkins <soleng-team@jfrog.com>
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 
-%define tomcat_webapps /usr/local/tomcat7/webapps
+%define tomcat_webapps usr/local/tomcat7/webapps
 %define namespace %{_webappname}
+%define builddir rpmbuild/BUILD
 
 %description
 Builds rpm package from a war file ...
@@ -37,7 +38,7 @@ Builds rpm package from a war file ...
 # Expansion of source tar balls are done in this section
 # Check if the WAR file has been created
 %prep
-%__rm -rf ${_builddir}
+exit 0
 
 # fetch the war file from artifactory
 %build
@@ -49,7 +50,7 @@ exit 0
 %install
 %__rm -rf %{buildroot}
 %__mkdir -p %{buildroot}/%{tomcat_webapps}/
-%__cp %{_builddir}/%{namespace}.war  %{buildroot}/%{tomcat_webapps}/%{namespace}.war
+%__cp %{builddir}/%{namespace}.war  %{buildroot}/%{tomcat_webapps}/%{namespace}.war
 
 %clean
 exit 0
