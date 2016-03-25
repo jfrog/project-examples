@@ -50,7 +50,7 @@ exit 0
 %install
 %__rm -rf %{buildroot}
 %__mkdir -p %{buildroot}/%{tomcat_webapps}/
-%__cp %{builddir}/%{namespace}.war  %{buildroot}/%{tomcat_webapps}/%{namespace}.war
+%__cp %{_builddir}/%{namespace}.war  %{buildroot}/%{tomcat_webapps}/%{namespace}.war
 
 %clean
 exit 0
