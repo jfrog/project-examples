@@ -1,12 +1,12 @@
 #!/bin/bash
-# this script sets up Jenkins job to create rpm per name
+# this script sets up Jenkins job to create rpm per name - on entry @rpm-exmaple directory
 # Inputs
 # $1 = webapp name to use for tomcat7/webapps directory
 # $2 = Build Number that is passed by Jenkins
 
 WEBAPP_DEFINE="_webappname $1"
 BUILD_DEFINE="_build_number $2"
-RPMDIR_DEFINE="_topdir $3/rpmbuild"
+RPMDIR_DEFINE="_topdir $(pwd)/rpmbuild
 workingDir=$(pwd)
 
 # Setup rpmbuild environment
