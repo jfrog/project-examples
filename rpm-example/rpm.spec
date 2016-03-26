@@ -17,7 +17,7 @@ Version: %{_release_number}
 Release: %{_build_number}%{?dist}
 License: commerical
 Group: Applications/Web Applications
-Requires: tomcat
+Requires: tomcat7
 
 URL: http://www.jfrog.com
 Distribution: WSS Linux
