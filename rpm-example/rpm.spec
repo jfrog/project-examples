@@ -17,8 +17,9 @@ Version: %{_release_number}
 Release: %{_build_number}%{?dist}
 License: commerical
 Group: Applications/Web Applications
+Requires: apache-tomcat
 
-URL: http://www.jfrog.com
+URL: https://github.com/JFrogDev/project-examples/rpm-example
 Distribution: WSS Linux
 Vendor: JFrog, Inc.
 Packager: jenkins <soleng-team@jfrog.com>
