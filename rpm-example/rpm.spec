@@ -27,7 +27,7 @@ Packager: jenkins <soleng-team@jfrog.com>
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 
-%define tomcat_webapps /usr/local/tomcat7/webapps
+%define tomcat_webapps /usr/share/tomcat/webapps
 %define namespace %{_webappname}
 %define builddir rpmbuild/BUILD
 
