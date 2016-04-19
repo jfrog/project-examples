@@ -1,78 +1,77 @@
 buildscript {
     repositories {
-        maven {
-            mavenLocal()
-            url 'http://jcenter.bintray.com'
-        }
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.2'
-        classpath 'com.github.dcendents:android-maven-plugin:1.0'
-        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:2.0.0'
+        //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.1.1'
     }
 }
-
-group = 'org.jfrog.example.android'
-version = currentVersion
 
 // Plugins
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
+
 apply plugin: 'com.jfrog.artifactory'
 
-// We need the patched maven plugin since 'install' task is overriden by 'installDebugTest', see: https://github.com/dcendents/android-maven-plugin
-apply plugin: 'android-maven'
+apply plugin: 'maven-publish'
 
-// Android
-android {
-    compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+def artifactVersion = '1.0-SNAPSHOT'
 
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 19
-    }
-}
+publishing {
+    publications {
+        aar(MavenPublication) {
+            groupId = 'org.jfrog.example.android'
+            artifactId project.name
+            version = artifactVersion
+            artifact "${project.buildDir}/outputs/aar/${project.name}-release.aar"
 
-configurations {
-  published
-}
-
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java
-    classifier "sources"
-}
-
-artifactoryPublish {
-    dependsOn sourceJar
-}
-
-artifacts {
-    published sourceJar
-}
-
-configure(install.repositories.mavenInstaller) {
-        pom.project {
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
-                }
+            pom.withXml {
+                def root = asNode()
+                def license = root.appendNode('licenses').appendNode('license')
+                license.appendNode('name', 'The Apache Software License, Version 2.0')
+                license.appendNode('url', 'http://www.apache.org/licenses/LICENSE-2.0.txt')
+                license.appendNode('distribution', 'repo')
             }
         }
     }
+}
+
+// Android
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 23
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    jcenter()
+}
 
 artifactory {
-    contextUrl = 'http://localhost:8081/artifactory'
+    contextUrl = "${artifactory_contextUrl}"
     publish {
         repository {
-            repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
+            // The Artifactory repository key to publish to
+            repoKey = artifactVersion.endsWith('SNAPSHOT') ? 'libs-snapshot-local' : 'libs-release-local'
             username = "${artifactory_user}" // The publisher user name
             password = "${artifactory_password}" // The publisher password
+            maven = true
         }
         defaults {
-            publishConfigs('archives', 'published')
-            properties = ['build.status': "$it.project.status".toString()]
+            publishArtifacts = true
+            publications('aar')
             publishPom = true //Publish generated POM files to Artifactory (true by default)
             publishIvy = false //Publish generated Ivy descriptor files to Artifactory (true by default)
         }
@@ -86,18 +85,11 @@ artifactory {
     }
 }
 
-repositories {
-    jcenter()
-}
-
 // Our project dependencies
 dependencies {
     compile 'joda-time:joda-time:2.3'
-    
-    // Backward compatibility for andoird <http://developer.android.com/tools/support-library/index.html>  
-    // compile 'com.android.support:support-v4:19.1.+'
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
+    gradleVersion = '2.10'
 }
