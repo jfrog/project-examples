@@ -152,5 +152,5 @@ You can also use [AQL](https://www.jfrog.com/confluence/display/RTF/Artifactory+
 ## Examples
 We included a few examples to help you get started using the Artifactory DSL in your Pipeline scripts.
 
-* The [props-example](props-example]) downloads and uploads files to Artifactory with properties. It also uses a placeholder when uploading.
-* The [aql-example](aql-example]) uses [AQL](https://www.jfrog.com/confluence/display/RTF/Artifactory+Query+Language) in its download spec.
+* The [props-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/props-example]) downloads and uploads files to Artifactory with properties. It also uses a placeholder when uploading.
+* The [aql-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/aql-example]) uses [AQL](https://www.jfrog.com/confluence/display/RTF/Artifactory+Query+Language) in its download spec.
