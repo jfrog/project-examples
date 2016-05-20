@@ -1,22 +1,22 @@
 node {
     git url: 'https://github.com/jfrogdev/project-examples.git'
-    def filePathPrefix = 'jenkins-pipeline-examples/props-example/'
+    def filePathPrefix = 'aql-example/'
 
     // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
     def server = Artifactory.server SERVER_ID
 
+    def buildInfo = Artifactory.newBuildInfo()
+    // You can set the build name and number.
+    buildInfo.setName 'holyFrog'
+    buildInfo.setNumber '42'
+
     // Read the upload spec which was downloaded from github.
     def uploadSpec = readFile "${filePathPrefix}upload.json"
     // Upload to Artifactory.
-    def buildInfo1 = server.upload uploadSpec
+    server.upload uploadSpec, buildInfo
 
-    // Read the upload spec and upload files to Artifactory.
+    // The download file contains pattern for downloading artifacts to the root directory by setting recursive=false
     def downloadSpec = readFile "${filePathPrefix}download.json"
-    def buildInfo2 = server.download downloadSpec
-
-    // Merge the upload and download build-info objects.
-    buildInfo1.append buildInfo2
-
-    // Publish the build to Artifactory
-    server.publishBuildInfo buildInfo1
+    server.download downloadSpec, buildInfo
+    server.publishBuildInfo buildInfo
 }

@@ -1,0 +1,14 @@
+{
+  "files": [
+    {
+      "pattern": "files/*Artifactory*.zip",
+      "target": "libs-snapshot-local/",
+      "recursive": "false"
+    },
+    {
+      "pattern": "files/*ArtifactoryPipelineNoFlat.zip",
+      "target": "libs-snapshot-local",
+      "flat" :"false"
+    }
+  ]
+}
