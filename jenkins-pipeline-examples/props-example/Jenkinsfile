@@ -11,8 +11,8 @@ node {
     def buildInfo1 = server.upload uploadSpec
 
     // Read the upload spec and upload files to Artifactory.
-    def resolveJson = readFile "${filePathPrefix}download.json"
-    def buildInfo2 = server.download resolveJson
+    def downloadSpec = readFile "${filePathPrefix}download.json"
+    def buildInfo2 = server.download downloadSpec
 
     // Merge the upload and download build-info objects.
     buildInfo1.append buildInfo2
