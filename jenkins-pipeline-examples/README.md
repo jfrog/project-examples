@@ -28,6 +28,12 @@ Then, you can create your Artifactory server instance by adding the following li
 ```
 def server = Artifactory.server('my-server-id')
 ```
+You also have the option of creating an Artifactory instance, even if the server is not pre-defined in Jenkins. To create an Artifactory instance, add the following line to your script:
+```
+def server = Artifactory.newServer('artifactory-url', 'username', 'password')
+```
+We recommend using variables, rather than plain text, to specify the Artifactory server details.
+
 ### Uploading and Downloading Files To and From Artifactory
 Once you have created an Artifactory server instance, you are ready to download files from an Artifactory server. First, you need to create a spec, 
 which is a json string. 
