@@ -21,7 +21,7 @@ In the meantime, we encourage you to try out the plugin snapshot.
 ## Using the Artifactory DSL
 ### Creating an Artifactory Server Instance
 To upload or download files to and from your Artifactory server, first you need to
-create an Artifactory server instance in your PipeLine script. 
+create an Artifactory server instance in your Pipeline script. 
 If your Artifactory server is pre-defined in Jenkins, all you need is the server ID. 
 To obtain or set your Artifactory server ID, go to Manage --> Configure System.
 Then, you can create your Artifactory server instance by adding the following line to your script:
@@ -68,7 +68,7 @@ server.upload(uploadSpec)
 The code shown above uploads all zip files that include *froggy* in their names into the *froggy-files* foldder in the *bazinga-repo* Artifactory repository.
 
 ### Publishing Build-Info to Artifactory
-Both the *download* and *upload* methods return a build-info object, which can be published 
+Both the download and upload methods return a build-info object, which can be published 
 to Artifactory. Below is an example code sample:
 ```
 def buildInfo1 = server.download(downloadSpec)
@@ -149,7 +149,7 @@ You can also use [AQL](https://www.jfrog.com/confluence/display/RTF/Artifactory+
 }
 ```
 ## Examples
-The example below are meant to help you get started using the Artifactory DSL in your Pipeline scripts.
+The examples below are meant to help you get started using the Artifactory DSL in your Pipeline scripts.
 
 * The [props-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/props-example]) download and upload files to Artifactory with properties. The props-example also uses a placeholder when uploading.
 * The [aql-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/aql-example]) uses [AQL](https://www.jfrog.com/confluence/display/RTF/Artifactory+Query+Language) in its download spec.
