@@ -1,0 +1,22 @@
+node {
+    git url: 'https://github.com/jfrogdev/project-examples.git'
+    def filePathPrefix = 'aql-example/'
+
+    // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
+    def server = Artifactory.server SERVER_ID
+
+    def buildInfo = Artifactory.newBuildInfo()
+    // You can set the build name and number.
+    buildInfo.setName 'holyFrog'
+    buildInfo.setNumber '42'
+
+    // Read the upload spec which was downloaded from github.
+    def uploadSpec = readFile "${filePathPrefix}upload.json"
+    // Upload to Artifactory.
+    server.upload uploadSpec, buildInfo
+
+    // The download file contains pattern for downloading artifacts to the root directory by setting recursive=false
+    def downloadSpec = readFile "${filePathPrefix}download.json"
+    server.download downloadSpec, buildInfo
+    server.publishBuildInfo buildInfo
+}
