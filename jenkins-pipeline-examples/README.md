@@ -87,7 +87,7 @@ Below is a second example:
 def buildInfo = Artifactory.newBuildInfo()
 server.download(artifactoryDownloadDsl, buildInfo)
 server.upload(artifactoryDownloadDsl, buildInfo)
-server.publishBuildInfo(buildInfo1)
+server.publishBuildInfo(buildInfo)
 ```
 
 ## Advanced Upload Options
