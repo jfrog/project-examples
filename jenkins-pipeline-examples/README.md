@@ -12,7 +12,7 @@ In the meantime, we encourage you to try out the plugin snapshot.
 
 ## Installing the Plugin Snapshot
 1. Ensure that the Pipeline Plugin is installed on your Jenkins instance.
-2. Download the the Artifactory Plugin snapshot from [this link](https://bintray.com/jfrog/jfrog-jars/download_file?file_path=artifactory.hpi).
+2. Download the the Artifactory Plugin snapshot from [this link](https://bintray.com/jfrog/jfrog-jars/download_file?file_path=1.0.1/artifactory.hpi).
 3. To install the Artifactory Plugin you downloaded, follow these steps:
   * Go to ‘Manage Jenkins’ --> ‘Manage Plugins’ --> ‘Advanced’ tab.
   * In the ‘Upload Plugin’ section, select the path to the artifactory.hpi file and click ‘Upload’.
