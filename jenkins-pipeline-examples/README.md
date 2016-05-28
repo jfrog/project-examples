@@ -40,14 +40,14 @@ which is a json string.
 The spec defines the files that you want to download and the target path for the files. 
 See the example below:
 ```
-def downloadSpec = '{
+def downloadSpec = """{
  "files": [
   {
       "pattern": "bazinga-repo/*.zip",
       "target": "bazinga/"
     }
  ]
-}'
+}"""
 ```
 The above spec defines the following:
 Downloads all zip files in the *bazinga-repo* Artifactory repository into the 
@@ -61,14 +61,14 @@ Piece of cake, right?
 
 The process of uploading files is similar to downloading files. First, create a spec and then use this spec to upload files to the Artifactory server:
 ```
-def uploadSpec = '{
+def uploadSpec = """{
   "files": [
     {
       "pattern": "bazinga/*froggy*.zip",
       "target": "bazinga-repo/froggy-files"
     }
  ]
-}'
+}"""
 server.upload(uploadSpec)
 ```
 The code shown above uploads all zip files that include *froggy* in their names into the *froggy-files* foldder in the *bazinga-repo* Artifactory repository.
