@@ -24,6 +24,11 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+           <groupId>org.nightlabs</groupId>
+           <artifactId>org.nightlabs.eclipse.ui.pdfviewer.extension</artifactId>
+           <version>0.9.6.200810092200</version>
+        </dependency>
     </dependencies>
 
     <build>
