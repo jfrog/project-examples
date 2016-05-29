@@ -86,7 +86,7 @@ Below is a second example:
 ```
 def buildInfo = Artifactory.newBuildInfo()
 server.download(artifactoryDownloadDsl, buildInfo)
-server.upload(artifactoryDownloadDsl, buildInfo)
+server.upload(artifactoryUploadDsl, buildInfo)
 server.publishBuildInfo(buildInfo)
 ```
 
@@ -98,7 +98,7 @@ In the following example, for each .tgz file in the source directory, a correspo
 is created in the target repository and the file is created in the corresponding directory. 
 For example, a file called froggy.tgz is uploaded to my-local-rep/froggy/froggy.tgz.
 ```
-def uploadSpec = '{
+def uploadSpec = """{
   "files": [
     {
       "pattern": "(*).tgz",
@@ -106,13 +106,13 @@ def uploadSpec = '{
       "recursive": "false"
     }
  ]
-}'
+}"""
 ```
 ### Using Regular Expressions
 You have the option of using a regular expression rather than wildcard patterns to define the upload pattern. Add *"regexp": "true"* to the spec. 
 See the example below:
 ```
-def uploadSpec = '{
+def uploadSpec = """{
   "files": [
     {
       "pattern": "(.*).tgz",
@@ -121,7 +121,7 @@ def uploadSpec = '{
       "regexp": "true"
     }
  ]
-}'
+}"""
 ```
 
 ## The Download Spec Schema
