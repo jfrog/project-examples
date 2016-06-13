@@ -5,7 +5,7 @@ The Pipeline Jenkins Plugin allows you to create a script that defines your buil
 For those not familiar with Jenkins Pipeline, check out the [Pipeline Tutorial](https://github.com/jenkinsci/pipeline-plugin/blob/master/TUTORIAL.md) or the [Getting Started With Pipeline](https://jenkins.io/doc/pipeline/) documentation.
 
 The Artifactory Pipeline DSL documentation is available [here](https://wiki.jenkins-ci.org/display/JENKINS/Working+With+the+Pipeline+Jenkins+Plugin).
-```
+
 ## Examples
 The examples below are meant to help you get started using the Artifactory DSL in your Pipeline scripts.
 You can run the examples by following one of the two methods described below.
