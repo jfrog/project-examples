@@ -1,6 +1,5 @@
 node {
     git url: 'https://github.com/jfrogdev/project-examples.git'
-    def filePathPrefix = 'jenkins-pipeline-examples/props-example/'
 
     // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
     def server = Artifactory.server SERVER_ID
@@ -9,19 +8,19 @@ node {
     def uploadSpec = """{
         "files": [
                 {
-                    "pattern": "jenkins-pipeline-examples/files/ArtifactoryPipeline.zip",
+                    "pattern": "jenkins-pipeline-examples/resources/ArtifactoryPipeline.zip",
                     "target": "libs-snapshot-local",
                     "props": "p1=v1;p2=v2"
                 },
                 {
-                    "pattern": "jenkins-pipeline-examples/files/ArtifactoryPipelineNoProps.zip",
+                    "pattern": "jenkins-pipeline-examples/resources/ArtifactoryPipelineNoProps.zip",
                     "target": "libs-snapshot-local"
                 }
             ]
         }"""
 
     // Upload to Artifactory.
-    def buildInfo1 = server.upload uploadSpec
+    def buildInfo1 = server.upload spec: uploadSpec
 
     // Create the download spec.
     def downloadSpec = """{
@@ -35,7 +34,7 @@ node {
         }"""
 
     // Download from Artifactory.
-    def buildInfo2 = server.download downloadSpec
+    def buildInfo2 = server.download spec: downloadSpec
 
     // Merge the upload and download build-info objects.
     buildInfo1.append buildInfo2

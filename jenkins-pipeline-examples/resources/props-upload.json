@@ -1,0 +1,13 @@
+{
+  "files": [
+    {
+      "pattern": "jenkins-pipeline-examples/resources/ArtifactoryPipeline.zip",
+      "target": "libs-snapshot-local",
+      "props": "p1=v1;p2=v2"
+    },
+    {
+      "pattern": "jenkins-pipeline-examples/resources/ArtifactoryPipelineNoProps.zip",
+      "target": "libs-snapshot-local"
+    }
+  ]
+}
