@@ -8,16 +8,37 @@ The Artifactory Pipeline DSL documentation is available [here](https://wiki.jenk
 
 ## Examples
 The examples below are meant to help you get started using the Artifactory DSL in your Pipeline scripts.
-You can run the examples by following one of the two methods described below.
-In your Jenkins job configuration, set *Definition* to "Pipeline script", 
+Follow the below steps to run the examples.
+
+### Step 1 - Configure Artifactory Server for the Examples
+All examples use an Artifactory server defined in Manage Jenkins, Configure System.
+The server is retrieved by the examples as follows:
+```
+def server = Artifactory.server SERVER_ID
+```
+To set server ID for examples, follow these steps:
+* Find or configure an Artifactory server in Jenkins through Manage Jenkins, Configure System.
+* In the configuration of the Jenkins job that runs the example, check the *This project is parameterized* option.
+* Click *Add Parameter* and then select *String Parameter*.
+* Set the *Name* as *SERVER_ID* and the *Default Value* as the Artifactory Server ID configured in *Manage Jenkins*.
+
+### Step 2 - Complete the Job Configuration
+
+You cancomplete the job configuration by following one of the two methods described below.
+#### Method 1:
+In your Jenkins job configuration, set *Definition* to "Pipeline script",
 and then copy the content of the example's Jenkinsfile into the *Script* text-area.
-Alternatively, you can do the following:
+#### Method 2:
+In your Jenkins job configuration, set the following:
 * Set *Definition* to "Pipeline script from SCM".
 * Set *SCM* to *Git*.
 * Set *Repository URL* to *https://github.com/JFrogDev/project-examples.git*
 * Set *Script Path* to the relative path to the example's Jenkinsfile. For example, for the below *props-example*, set *Script Path* to *jenkins-pipeline-examples/props-example/Jenkinsfile* 
 
+### Available Examples
 Here are the available examples.
 * The [props-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/props-example) downloads and uploads files to Artifactory with properties. The props-example also uses a placeholder when uploading.
 * The [props-single-file-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/props-single-file-example) is the same as the [props-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/props-example), but has the specs embedded inside the Groovy script.
-* The [aql-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/aql-example) uses [AQL](https://www.jfrog.com/confluence/display/RTF/Artifactory+Query+Language) in its download spec.
+* The [props-single-file-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/props-single-file-example) is the same as the [props-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/props-example), but has the specs embedded inside the Groovy script.
+* The [promotion-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/promotion-example) demonstrates how to promote a build in Artifactory.
+* The [vars-build-retention-example](https://github.com/jfrogdev/project-examples/tree/master/jenkins-pipeline-examples/vars-build-retention-example) demonstrates capturing environment variables and build retention in Artifactory.
