@@ -1,0 +1,34 @@
+node {
+    stage 'Build'
+        git url: 'https://github.com/jfrogdev/project-examples.git'
+
+    stage 'Define new Artifactory server'
+        def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
+
+    stage 'Artifactory configuration'
+        def artifactoryGradle = Artifactory.newGradleBuild()
+        artifactoryGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
+        artifactoryGradle.deployer repo:'libs-snapshot-local',  server: server
+        artifactoryGradle.resolver repo:'remote-repos', server: server
+
+    withEnv(['DONT_COLLECT=FOO']){
+        stage 'Config Build Info'
+            def buildInfo = Artifactory.newBuildInfo()
+            buildInfo.env.capture = true
+            buildInfo.env.filter.addInclude("*")
+            buildInfo.env.filter.addExclude("DONT_COLLECT*")
+
+        stage 'Extra gradle configurations'
+            artifactoryGradle.deployer.artifactDeploymentPatterns.addExclude("*.war")
+            artifactoryGradle.deployer.usesPlugin = true // Artifactory plugin already defined in build script
+
+        stage 'Exec Gradle'
+            artifactoryGradle.run rootDir: "gradle-examples/4/gradle-example/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo: buildInfo
+
+        stage 'Publish build info'
+            server.publishBuildInfo buildInfo
+    }
+}
+
+
+
