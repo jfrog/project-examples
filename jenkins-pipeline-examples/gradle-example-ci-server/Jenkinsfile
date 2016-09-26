@@ -6,8 +6,8 @@ node {
         def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
         def artifactoryGradle = Artifactory.newGradleBuild()
         artifactoryGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
-        artifactoryGradle.deployer releaseRepo:'ext-release-local',  server: server
-        artifactoryGradle.resolver releaseRepo:'remote-repos', server: server
+        artifactoryGradle.deployer repo:'ext-release-local', server: server
+        artifactoryGradle.resolver repo:'remote-repos', server: server
 
     stage 'Exec Gradle'
         def buildInfo = artifactoryGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
