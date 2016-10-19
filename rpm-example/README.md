@@ -11,7 +11,7 @@ Builds RPM package from war file. Two files are included in this folder.
 
 ### Jenkins Configuration  
 1. Create a freestype project and enable Generic-Artifactory Integration
-2. Enter in "Published Artifacts" ${WORKSPACE}/rpmbuild/RPMS/noarch/*rpm -- location of the rpm file from rpmbuild
+2. Enter in "Published Artifacts" ${WORKSPACE}/rpm-example/rpmbuild/RPMS/noarch/*rpm -- location of the rpm file from rpmbuild
 3. Enter in "Resolved Artifacts" <location of war file>=>$WORKSPACE/rpm-example/SOURCE
 4. For the Build Step - Execute shell with the following commands 
   * cd $WORKSPACE/rpm-example
