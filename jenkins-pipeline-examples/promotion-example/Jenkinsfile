@@ -32,6 +32,7 @@ node {
         'sourceRepo'         : 'libs-snapshot-local',
         'status'             : 'Released',
         'includeDependencies': true,
+        'failFast'           : true,
         'copy'               : true
     ]
 

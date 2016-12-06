@@ -19,7 +19,7 @@ node {
 
         stage 'Extra gradle configurations'
             rtGradle.deployer.artifactDeploymentPatterns.addExclude("*.war")
-            rtGradle.deployer.usesPlugin = true // Artifactory plugin already defined in build script
+            rtGradle.usesPlugin = true // Artifactory plugin already defined in build script
 
         stage 'Exec Gradle'
             rtGradle.run rootDir: "gradle-examples/4/gradle-example/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo: buildInfo
