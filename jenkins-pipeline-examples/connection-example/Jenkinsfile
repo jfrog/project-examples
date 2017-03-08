@@ -1,0 +1,20 @@
+node {
+    git url: 'https://github.com/jfrogdev/project-examples.git'
+
+    // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
+    def server = Artifactory.server arti5
+   
+    // Sets the timeout and retry values 
+    server.connection.timeout = 10
+    server.connection.retry = 5
+    
+    def buildInfo = Artifactory.newBuildInfo()
+
+    // Read the upload spec which was downloaded from github.
+    def uploadSpec = readFile 'jenkins-pipeline-examples/resources/recursive-flat-upload.json'
+    // Upload to Artifactory.
+    server.upload spec: uploadSpec, buildInfo: buildInfo
+
+    // Publish build info.
+    server.publishBuildInfo buildInfo
+}
