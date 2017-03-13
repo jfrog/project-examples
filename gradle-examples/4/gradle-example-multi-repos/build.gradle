@@ -1,0 +1,130 @@
+/*
+ * Copyright (C) 2013 JFrog Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '4.+')
+    }
+    configurations.classpath {
+        resolutionStrategy {
+            cacheDynamicVersionsFor 0, 'seconds'
+            cacheChangingModulesFor 0, 'seconds'
+        }
+    }
+}
+
+def javaProjects() {
+    subprojects.findAll { new File(it.projectDir, 'src').directory }
+}
+
+allprojects {
+    apply plugin: 'com.jfrog.artifactory'
+    group = 'org.jfrog.test.gradle.publish'
+    version = currentVersion
+    status = 'Integration'
+}
+
+artifactoryPublish.skip = true
+
+project('services') {
+    artifactoryPublish.skip = true
+}
+
+configure(javaProjects()) {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+
+    dependencies {
+        testCompile 'junit:junit:4.7'
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                artifact(file("$rootDir/gradle.properties"))
+            }
+        }
+    }
+}
+
+project('api') {
+    apply plugin: 'ivy-publish'
+
+    publishing {
+        publications {
+            ivyJava(IvyPublication) {
+                from components.java
+                artifact(file("$rootDir/settings.gradle")) {
+                    name "gradle-settings"
+                    extension "txt"
+                    type "text"
+                }
+                // The config below will add a extra attribute to the ivy.xml
+                // See http://ant.apache.org/ivy/history/latest-milestone/concept.html#extra
+                descriptor.withXml {
+                    asNode().info[0].attributes().put('e:architecture', 'amd64')
+                }
+            }
+        }
+    }
+
+    artifactoryPublish {
+        publications(publishing.publications.ivyJava)
+        properties {
+            simpleFile '**:**:**:*@*', simpleFile: 'only on settings file'
+        }
+    }
+}
+
+artifactoryPublish.skip = true
+
+artifactory {
+    clientConfig.setIncludeEnvVars(true)
+    clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new java.util.Date().toString())
+
+    contextUrl = 'http://localhost:8081/artifactory'
+    publish {
+        repository {
+            repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
+            username = "${artifactory_user}" // The publisher user name
+            password = "${artifactory_password}" // The publisher password
+            // This is an optional section for configuring Ivy publication (when publishIvy = true).
+            ivy {
+              ivyLayout = '[organization]/[module]/ivy-[revision].xml'
+              artifactLayout = '[organization]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]'
+              mavenCompatible = true //Convert any dots in an [organization] layout value to path separators, similar to Maven's groupId-to-path conversion. True if not specified
+            }
+        }
+        defaults {
+            // Reference to Gradle publications defined in the build script.
+            // This is how we tell the Artifactory Plugin which artifacts should be
+            // published to Artifactory.
+            publications('mavenJava')
+            publishArtifacts = true
+            // Properties to be attached to the published artifacts.
+            properties = ['qa.level': 'basic', 'dev.team' : 'core']
+            publishPom = true // Publish generated POM files to Artifactory (true by default)
+            publishIvy = true // Publish generated Ivy descriptor files to Artifactory (true by default)
+        }
+    }
+    resolve {
+        repoKey = 'jcenter'
+    }
+}
