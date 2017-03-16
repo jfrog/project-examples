@@ -4,12 +4,12 @@
   <servers>
     <server>
       <username>admin</username>
-      <password>*** Insert encrypted password here ***</password>
+      <password>password</password>
       <id>central</id>
     </server>
     <server>
       <username>admin</username>
-      <password>*** Insert encrypted password here ***</password>
+      <password>password</password>
       <id>snapshots</id>
     </server>
   </servers>
