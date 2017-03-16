@@ -34,7 +34,7 @@
         <dependency>
             <groupId>org.jfrog.test</groupId>
             <artifactId>multi3</artifactId>
-            <version>6.12-20170315.220033-1</version>
+            <version>6.12-SNAPSHOT</version>
             <type>war</type>
         </dependency>
     </dependencies>
