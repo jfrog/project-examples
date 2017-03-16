@@ -44,6 +44,12 @@ Sample project that uses the Gradle Artifactory Plugin with Gradle Configuration
 ### gradle-example-publish
 Sample project that uses the Gradle Artifactory Plugin with Gradle Publications.
 
+### gradle-example-multi-repos
+Sample project that uses the Gradle Artifactory Plugin and publishes the artifacts produces
+by the sub-projects to different Artifactory repositories.
+For more information, read the "Controlling Resolution and Publication in Sub-Projects" section in the
+[Gradle Artifactory Plugin User Guide](https://www.jfrog.com/confluence/display/RTF/Gradle+Artifactory+Plugin)
+
 ### gradle-android-aar
 Sample project that uses the Gradle Artifactory Plugin to deploy Android artifacts to Artifactory.
 

@@ -99,8 +99,8 @@ artifactory {
     clientConfig.setIncludeEnvVars(true)
     clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new java.util.Date().toString())
 
-    contextUrl = 'http://localhost:8081/artifactory'
     publish {
+        contextUrl = 'http://localhost:8081/artifactory'
         repository {
             repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
             username = "${artifactory_user}" // The publisher user name
@@ -125,6 +125,7 @@ artifactory {
         }
     }
     resolve {
+        contextUrl = 'http://localhost:8081/artifactory'
         repoKey = 'jcenter'
     }
 }

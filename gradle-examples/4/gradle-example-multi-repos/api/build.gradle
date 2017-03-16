@@ -15,8 +15,8 @@ dependencies {
 compileJava.options.compilerArgs = ['-Xlint:unchecked']
 
 artifactory {
-    contextUrl = 'http://localhost:8081/artifactory'
     publish {
+        contextUrl = 'http://localhost:8081/artifactory'
         repository {
             repoKey = 'ext-snapshot-local' // The Artifactory repository key to publish to
             username = "${artifactory_user}" // The publisher user name
