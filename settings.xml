@@ -22,13 +22,13 @@
           </snapshots>
           <id>central</id>
           <name>libs-release</name>
-          <url>http://104.198.13.92/artifactory/libs-release</url>
+          <url>http://jfrog.local/artifactory/libs-release</url>
         </repository>
         <repository>
           <snapshots />
           <id>snapshots</id>
           <name>libs-snapshot</name>
-          <url>http://104.198.13.92/artifactory/libs-snapshot</url>
+          <url>http://jfog.local/artifactory/libs-snapshot</url>
         </repository>
       </repositories>
       <pluginRepositories>
