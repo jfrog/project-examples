@@ -28,7 +28,7 @@
           <snapshots />
           <id>snapshots</id>
           <name>libs-snapshot</name>
-          <url>http://jfog.local/artifactory/libs-snapshot</url>
+          <url>http://jfrog.local/artifactory/libs-snapshot</url>
         </repository>
       </repositories>
       <pluginRepositories>
