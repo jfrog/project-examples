@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0          http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0          http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jfrog.test</groupId>
     <artifactId>multi</artifactId>
-    <version>2.17-SNAPSHOT</version>
+    <version>6.12-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Simple Multi Modules Build</name>
 
@@ -24,12 +23,6 @@
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jfrog.test</groupId>
-            <artifactId>multi3</artifactId>
-            <version>6.12-SNAPSHOT</version>
-            <type>war</type>
         </dependency>
     </dependencies>
 
@@ -54,50 +47,6 @@
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.jfrog.buildinfo</groupId>
-                <artifactId>artifactory-maven-plugin</artifactId>
-                <version>2.4.1</version>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <id>build-info</id>
-                        <goals>
-                            <goal>publish</goal>
-                        </goals>
-                        <configuration>
-                            <deployProperties>
-                                <gradle>awesome</gradle>
-                            </deployProperties>
-                            <artifactory>
-                                <includeEnvVars>true</includeEnvVars>
-                                <timeoutSec>60</timeoutSec>
-                                <propertiesFile>publish.properties</propertiesFile>
-                            </artifactory>
-                            <publisher>
-                                <contextUrl>https://jfrog.local/artifactory</contextUrl>
-                                <username>${username}</username>
-                                <password>${password}</password>
-                                <excludePatterns>*-tests.jar</excludePatterns>
-                                <repoKey>libs-release</repoKey>
-                                <snapshotRepoKey>libs-snapshot-local</snapshotRepoKey>
-                            </publisher>
-                            <buildInfo>
-                                <buildName>circle-ci-demo</buildName>
-                                <buildNumber>${buildNumber}</buildNumber>
-                                <buildUrl>${buildUrl}</buildUrl>
-                            </buildInfo>
-                            <licenses>
-                                <autoDiscover>true</autoDiscover>
-                                <includePublishedArtifacts>false</includePublishedArtifacts>
-                                <runChecks>true</runChecks>
-                                <scopes>compile,runtime</scopes>
-                                <violationRecipients>build@organisation.com</violationRecipients>
-                            </licenses>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
