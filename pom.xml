@@ -25,12 +25,6 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
-<!--         <dependency>
-            <groupId>composite-servlet3</groupId>
-            <artifactId>composite-servlet3</artifactId>
-            <version>composite-servlet3</version>
-            <type>war</type>
-        </dependency> -->
         <dependency>
             <groupId>org.jfrog.test</groupId>
             <artifactId>multi3</artifactId>
