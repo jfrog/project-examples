@@ -24,7 +24,7 @@ To set server ID for examples, follow these steps:
 
 ### Step 2 - Complete the Job Configuration
 
-You cancomplete the job configuration by following one of the two methods described below.
+You can complete the job configuration by following one of the two methods described below.
 #### Method 1:
 In your Jenkins job configuration, set *Definition* to "Pipeline script",
 and then copy the content of the example's Jenkinsfile into the *Script* text-area.
