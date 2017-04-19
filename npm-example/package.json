@@ -1,0 +1,30 @@
+{
+  "name": "npm-example",
+  "version": "1.0.0",
+  "description": "Artifactory NPM example",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JFrogDev/project-examples.git"
+  },
+  "keywords": [
+    "NPM"
+  ],
+  "author": "jainish shah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JFrogDev/project-examples/issues"
+  },
+  "homepage": "https://github.com/JFrogDev/project-examples#readme",
+  "dependencies": {
+    "colors": "latest",
+    "assert": "latest"
+  },
+  "devDependencies": {},
+  "directories": {
+    "test": "test"
+  }
+}
