@@ -1,6 +1,6 @@
 # NPM Example
 
-This is a sample project that resolve a dependency from Artifactory and deploys the build artifacts to Artifactory.
+This is a sample project that resolves a dependency from Artifactory and deploys the build artifacts to Artifactory.
 
 Running this example:
 ### Install dependencies
