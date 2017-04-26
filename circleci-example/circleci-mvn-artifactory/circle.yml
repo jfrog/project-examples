@@ -1,0 +1,9 @@
+machine:
+  java:
+    version: openjdk7
+dependencies:
+  override:
+    - mvn --fail-never dependency:go-offline || true
+compile:
+  override:
+    - mvn deploy -Dusername=$ARTIFACTORY_USERNAME -Dpassword=$ARTIFACTORY_PASSWORD -DbuildNumber=$CIRCLE_BUILD_NUM -DbuildUrl=$CIRCLE_BUILD_URL

@@ -1,0 +1,20 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker info
+    - docker build --rm=false -t $ARTIFACTORY_DOCKER_REPOSITORY/artifactory-alpine:$CIRCLE_BUILD_NUM .
+
+test:
+  override:
+    - docker run -d -p 8081:8081 $ARTIFACTORY_DOCKER_REPOSITORY/artifactory-alpine:$CIRCLE_BUILD_NUM; sleep 10
+    - curl --retry 10 --retry-delay 5 -v http://localhost:8081
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $ARTIFACTORY_EMAIL -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD $ARTIFACTORY_DOCKER_REPOSITORY
+      - docker push $ARTIFACTORY_DOCKER_REPOSITORY/artifactory-alpine:$CIRCLE_BUILD_NUM
