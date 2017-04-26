@@ -1,0 +1,13 @@
+machine:
+  python:
+    version: 2.7.7
+dependencies:
+  pre:
+    - ./circleci-credential.sh
+    - pip install -r requirements.txt
+deployment:
+  master:
+    branch: master
+    commands:
+    - python setup.py sdist upload -r local
+    - python setup.py bdist_wheel upload -r local

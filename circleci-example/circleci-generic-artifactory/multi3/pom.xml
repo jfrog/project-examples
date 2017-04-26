@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jfrog.test</groupId>
+        <artifactId>multi</artifactId>
+        <version>2.17-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>multi3</artifactId>
+    <packaging>war</packaging>
+    <name>Multi 3</name>
+
+    <dependencies>
+        <!-- depends on another project (should include transitive) -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>multi1</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- runtime dependency -->
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.10</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- provided dependency -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>assembly</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>2.2-beta-5</version>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>make-assembly</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-war-plugin</artifactId>
+                            <configuration>
+                                <archive>
+                                    <addMavenDescriptor>false</addMavenDescriptor>
+                                </archive>
+                            </configuration>
+                        </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
