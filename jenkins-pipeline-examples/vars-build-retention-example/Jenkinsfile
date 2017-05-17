@@ -1,0 +1,23 @@
+node {
+    def server = Artifactory.server SERVER_ID
+    def buildInfo = Artifactory.newBuildInfo()
+
+    stage 'Collect env vars'
+    // By default the filter is configured to exclude "*password*,*secret*,*key*"
+    buildInfo.env.filter.addInclude("*")
+    buildInfo.env.filter.addExclude("DONT_COLLECT*")
+
+    withEnv(['DO_COLLECT_FOO=BAR', 'DONT_COLLECT_FOO=BAR']) {
+        buildInfo.env.collect()
+    }
+
+    stage 'Access build info env vars'
+    echo buildInfo.env.vars['DO_COLLECT_FOO']   //BAR
+    echo buildInfo.env.vars['DONT_COLLECT_FOO'] //null
+
+    stage 'Set build retention'
+    buildInfo.retention maxBuilds: 1, maxDays: 2, doNotDiscardBuilds: ["3"], deleteBuildArtifacts: true
+
+    stage 'Publish buildInfo'
+    server.publishBuildInfo buildInfo
+}

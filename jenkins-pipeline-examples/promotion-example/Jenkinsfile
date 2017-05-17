@@ -1,0 +1,41 @@
+node {
+    stage 'Build'
+    git url: 'https://github.com/jfrogdev/project-examples.git'
+
+    // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
+    def server = Artifactory.server SERVER_ID
+
+    // Create the upload spec.
+    def uploadSpec = readFile 'jenkins-pipeline-examples/resources/props-upload.json'
+
+    // Upload to Artifactory.
+    def buildInfo = server.upload spec: uploadSpec
+
+    // Create the download spec.
+    def downloadSpec = readFile 'jenkins-pipeline-examples/resources/props-download.json'
+
+    // Download from Artifactory.
+    server.download spec: downloadSpec, buildInfo: buildInfo
+
+    // Publish the build to Artifactory
+    server.publishBuildInfo buildInfo
+
+    stage 'Promotion'
+    def promotionConfig = [
+        //Mandatory parameters
+        'buildName'          : buildInfo.name,
+        'buildNumber'        : buildInfo.number,
+        'targetRepo'         : 'libs-release-local',
+
+        //Optional parameters
+        'comment'            : 'this is the promotion comment',
+        'sourceRepo'         : 'libs-snapshot-local',
+        'status'             : 'Released',
+        'includeDependencies': true,
+        'failFast'           : true,
+        'copy'               : true
+    ]
+
+    // Promote build
+    server.promote promotionConfig
+}

@@ -1,0 +1,14 @@
+{
+  "files": [
+    {
+      "pattern": "jenkins-pipeline-examples/resources/*Artifactory*.zip",
+      "target": "libs-snapshot-local/",
+      "recursive": "false"
+    },
+    {
+      "pattern": "jenkins-pipeline-examples/resources/*ArtifactoryPipelineNoFlat.zip",
+      "target": "libs-snapshot-local",
+      "flat" :"false"
+    }
+  ]
+}

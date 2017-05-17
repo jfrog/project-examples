@@ -1,0 +1,18 @@
+node {
+    def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
+    def rtGradle = Artifactory.newGradleBuild()
+
+    stage 'Build'
+        git url: 'https://github.com/jfrogdev/project-examples.git'
+
+    stage 'Artifactory configuration'
+        rtGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
+        rtGradle.deployer repo:'ext-release-local', server: server
+        rtGradle.resolver repo:'remote-repos', server: server
+
+    stage 'Exec Gradle'
+        def buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
+
+    stage 'Publish build info'
+        server.publishBuildInfo buildInfo
+}
