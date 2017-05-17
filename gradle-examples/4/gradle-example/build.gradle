@@ -18,7 +18,7 @@ buildscript {
   repositories {
     jcenter()
     dependencies {
-      classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '4.0.0')
+      classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '4.+')
     }
   }
 }
@@ -122,5 +122,5 @@ artifactory {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.0'
+  gradleVersion = '2.4'
 }

@@ -1,35 +1,44 @@
 #
-# Example spec file for maven example web app...
+# Description - Example spec file rpm builds. 
 #
-# Usage - RPMBUILD --define _ghubid --define _build_number -ba SPECS/_ghubid.spec
+# Usage - RPMBUILD --define _topdir --define _webappname --define _build_number --define _release_number -ba SPECS/_rpm.spec
+#   _webappname - packages the war file to /usr/local/tomcat7/webapps directory
+#   _build_number - build number
+#   _rpm.spec - rpm specification file
+#   _topdir - root directory for the rpmbuild
+#   _release_number - webappname release number
 #
-Summary: Simple Maven example web application
-Name: stanleyf
-Version: 1.0.0
+# Assumes -
+# 1. the war file is stored in the rpmbuild/BUILD directory
+# 
+Summary: Generic RPM packaging  
+Name: %{_webappname}
+Version: %{_release_number}
 Release: %{_build_number}%{?dist}
 License: commerical
 Group: Applications/Web Applications
-#Requires: apache-tomcat
+Requires: tomcat
 
-URL: http://www.jfrog.com
+URL: https://github.com/JFrogDev/project-examples/rpm-example
 Distribution: WSS Linux
 Vendor: JFrog, Inc.
-Packager: Stanley Fong <stanleyf@jfrog.com>
+Packager: jenkins <soleng-team@jfrog.com>
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch: noarch
 
-%define tomcat_webapps /usr/local/tomcat7/webapps
-%define namespace %{_ghubid}
+%define tomcat_webapps /usr/share/tomcat/webapps
+%define namespace %{_webappname}
+%define builddir rpmbuild/BUILD
 
 %description
-It is a web app maven example ...
+Builds rpm package from a war file ...
 
 # Prep is used to set up the environment for building the rpm package
 # Expansion of source tar balls are done in this section
 # Check if the WAR file has been created
 %prep
-%__rm -rf ${_builddir}
+exit 0
 
 # fetch the war file from artifactory
 %build

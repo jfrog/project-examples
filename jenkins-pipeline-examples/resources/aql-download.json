@@ -1,0 +1,38 @@
+{
+ "files": [
+  {
+    "aql": {
+      "items.find": {
+        "repo": "libs-snapshot-local",
+        "$or": [
+          {
+            "$and": [
+              {
+                "path": {
+                  "$match": "."
+                },
+                "name": {
+                  "$match": "​*Pipeline.zip"
+                }
+              }
+            ]
+          },
+          {
+            "$and": [
+              {
+                "path": {
+                  "$match": "*​"
+                },
+                "name": {
+                  "$match": "*Pipeline.zip"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+      "target": "Bazinga/Artifactory/"
+    }
+ ]
+}

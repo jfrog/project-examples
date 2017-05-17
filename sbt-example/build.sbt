@@ -7,7 +7,7 @@ lazy val root = (project in file(".")).
 
   resolvers += "Artifactory" at "http://localhost:8081/artifactory/jcenter"
 
-  publishTo := Some("Artifactory Realm" at "http://localhost:8081/artifactory/libs-snapshot-local")
+  publishTo := Some("Artifactory Realm" at "http://localhost:8081/artifactory/libs-snapshot-local;build.timestamp=" + new java.util.Date().getTime)
 
   credentials += Credentials(new File("credentials.properties"))
 
