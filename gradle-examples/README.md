@@ -15,3 +15,12 @@ To make it easier to configure the plugin, version 4 has removed the *com.jfrog.
 We therefore split the Gradle examples 
 into [Version 4 Examples](https://github.com/JFrogDev/project-examples/tree/master/gradle-examples/4) 
 and [Version 3 Examples](https://github.com/JFrogDev/project-examples/tree/master/gradle-examples/3).  
+
+### A note about publishing.
+These examples assume that you are running artifactory on localhost at port 8081.
+However, they have a property that allows you to point at a different artifactory URL.
+
+You can pass -Partifactory_url=http://artifactory.your.company:8081/artifactory to point at a different artifactory server.
+If you're using artifactory SAAS, the url is a little bit different, it'll be -Partifactory_url=https://example.jfrog.io/example
+Notice that the url ends with the name of your artifactory instance instead of /artifactory when using artifactory SAAS.
+
