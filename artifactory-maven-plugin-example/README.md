@@ -2,7 +2,7 @@
 
 ## Overview
 
-This example is using the Maven Artifactory Plugin for artifacts abd build-info deployment to Artifactory. 
+This example is using the Maven Artifactory Plugin for artifacts and build-info deployment to Artifactory. 
 
 ## Running this example
 
