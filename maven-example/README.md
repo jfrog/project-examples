@@ -1,6 +1,13 @@
 ## Maven Artifactory Plugin Examples
 
 ### Overview
+This repo contains 2 directories:
+
+pull-from-artifactory:  this is an example for how to setup maven to pull things from artifactory
+
+publish-to-artifactory: this is an example for how to setup maven to publish to bintray or artifactory.
+
+### publish-to-artifactory
 The Maven Artifactory Plugin allows you to deploy your build artifacts and build information to Artifactory and also to resolve
 your build dependencies from Artifactory.
 The Plugin documentation is available [here](https://www.jfrog.com/confluence/display/RTF/Maven+Artifactory+Plugin).
