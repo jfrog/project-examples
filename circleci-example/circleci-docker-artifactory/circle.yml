@@ -1,0 +1,38 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    # Install JFrog CLI
+    - wget https://dl.bintray.com/jfrog/jfrog-cli-go/1.7.1/jfrog-cli-linux-amd64/jfrog
+    - chmod +x jfrog
+  override:
+    # Docker client info
+    - docker info
+    # Configure Artifactory instance with JFrog CLI
+    - ./jfrog rt config --url $ARTIFACTORY_URL --user $ARTIFACTORY_USERNAME --apikey $ARTIFACTORY_PASSWORD
+
+compile:
+  override:
+    # Build docker image
+    - docker build --rm=false -t $ARTIFACTORY_DOCKER_REPOSITORY/artifactory-alpine:$CIRCLE_BUILD_NUM .
+
+test:
+  override:
+    # Test created docker image
+    - docker run -d -p 8081:8081 $ARTIFACTORY_DOCKER_REPOSITORY/artifactory-alpine:$CIRCLE_BUILD_NUM; sleep 10
+    - curl --retry 10 --retry-delay 5 -v http://localhost:8081
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      # Login to Artifactory docker registry
+      - docker login -e $ARTIFACTORY_EMAIL -u $ARTIFACTORY_USERNAME -p $ARTIFACTORY_PASSWORD $ARTIFACTORY_DOCKER_REPOSITORY
+      # Push docker image to Artifactory
+      - docker push $ARTIFACTORY_DOCKER_REPOSITORY/artifactory-alpine:$CIRCLE_BUILD_NUM
+      # Collect build environment variables and build tools information using JFrog CLI
+      - ./jfrog rt bce circleci-docker-artifactory $CIRCLE_BUILD_NUM
+      # Publish build information to Artifactory
+      - ./jfrog rt bp circleci-docker-artifactory $CIRCLE_BUILD_NUM
