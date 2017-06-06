@@ -1,0 +1,21 @@
+machine:
+  node:
+    version: 5.0.0
+dependencies:
+  pre:
+    # Install JFrog CLI
+    - wget https://dl.bintray.com/jfrog/jfrog-cli-go/1.7.1/jfrog-cli-linux-amd64/jfrog
+    - chmod +x jfrog
+    # Configure Npm client to fetch packages from Artifactory
+    - npm config set registry https://gcartifactory-us.jfrog.info/artifactory/api/npm/circleci-npm
+    - curl -u$ARTIFACTIRY_USERNAME:$ARTIFACTORY_PASSWORD https://gcartifactory-us.jfrog.info/artifactory/api/npm/auth >> ~/.npmrc
+    - npm install
+deployment:
+  master:
+    branch: master
+    commands:
+      - npm publish --registry https://gcartifactory-us.jfrog.info/artifactory/api/npm/circleci-npm
+      # Collect build environment variables and build tools information using JFrog CLI
+      - ./jfrog rt bce circleci-npm-artifactory $CIRCLE_BUILD_NUM
+      # Publish build information to Artifactory
+      - ./jfrog rt bp circleci-npm-artifactory $CIRCLE_BUILD_NUM

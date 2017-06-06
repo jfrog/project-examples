@@ -1,0 +1,31 @@
+machine:
+  environment:
+    SBT_VERSION: 0.13.12
+    SBT_OPTS: "-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled
+-XX:MaxPermSize=256M"
+dependencies:
+  cache_directories:
+    - "~/.sbt"
+  pre:
+    - wget --output-document=$HOME/bin/sbt-launch.jar
+      https://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/"$SBT_VERSION"/sbt-launch.jar
+    - echo "java $SBT_OPTS -jar \`dirname \$0\`/sbt-launch.jar \"\$@\""
+      > $HOME/bin/sbt
+    - chmod u+x $HOME/bin/sbt
+    # Install JFrog CLI
+    - wget https://dl.bintray.com/jfrog/jfrog-cli-go/1.7.1/jfrog-cli-linux-amd64/jfrog
+    - chmod +x jfrog
+
+deployment:
+  master:
+    branch: master
+    commands:
+    - chmod u+x circleci-credentials.sh
+    - ./circleci-credentials.sh
+    - sbt clean compile package publish
+    # Configure Artifactory instance with JFrog CLI
+    - ./jfrog rt config --url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_PASSWORD
+    # Collect build environment variables and build tools information using JFrog CLI
+    - ./jfrog rt bce circleci-sbt-artifactory $CIRCLE_BUILD_NUM
+    # Publish build information to Artifactory
+    - ./jfrog rt bp circleci-sbt-artifactory $CIRCLE_BUILD_NUM

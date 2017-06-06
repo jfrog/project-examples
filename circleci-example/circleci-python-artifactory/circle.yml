@@ -1,0 +1,24 @@
+machine:
+  python:
+    version: 2.7.7
+dependencies:
+  pre:
+    - ./circleci-credential.sh
+    - pip install -r requirements.txt
+    # Install JFrog CLI
+    - wget https://dl.bintray.com/jfrog/jfrog-cli-go/1.7.1/jfrog-cli-linux-amd64/jfrog
+    - chmod +x jfrog
+
+deployment:
+  master:
+    branch: master
+    commands:
+    - python setup.py sdist upload -r local
+    - python setup.py bdist_wheel upload -r local
+    # Configure Artifactory instance with JFrog CLI
+    - ./jfrog rt config --url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_PASSWORD
+    # Collect build environment variables and build tools information using JFrog CLI
+    - ./jfrog rt bce circleci-python-artifactory $CIRCLE_BUILD_NUM
+    # Publish build information to Artifactory
+    - ./jfrog rt bp circleci-python-artifactory $CIRCLE_BUILD_NUM
+
