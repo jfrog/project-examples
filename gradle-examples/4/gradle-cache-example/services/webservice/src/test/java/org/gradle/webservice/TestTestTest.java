@@ -22,6 +22,7 @@ import junit.framework.TestCase;
  */
 public class TestTestTest extends TestCase {
     public void testClasspath() throws InterruptedException {
+        System.out.println("Executing heavy fake test");
         Thread.sleep(10000);
         new TestTest().method();
     }
