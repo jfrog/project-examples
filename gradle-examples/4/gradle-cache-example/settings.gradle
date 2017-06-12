@@ -1,0 +1,17 @@
+include "shared", "api", "services:webservice"
+
+ext.isPush = Boolean.valueOf(getProperty('gradle.cache.push'))
+
+buildCache {
+  local {
+    enabled = !isPush
+  }
+  remote(HttpBuildCache) {
+    url = "${artifactory_url}/gradle-cache-example/"
+    credentials {
+      username = "${artifactory_user}"
+      password = "${artifactory_password}"
+    }
+    push = isPush
+  }
+}
