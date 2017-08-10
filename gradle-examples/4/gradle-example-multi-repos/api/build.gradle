@@ -1,0 +1,43 @@
+configurations {
+    spi
+}
+
+dependencies {
+    compile project(':shared')
+    compile module("commons-lang:commons-lang:2.4") {
+        dependency("commons-io:commons-io:1.2")
+    }
+    compile group: 'org.apache.wicket', name: 'wicket', version: '1.3.7'
+
+}
+
+// Just a smoke test that using this option does not lead to any exception
+compileJava.options.compilerArgs = ['-Xlint:unchecked']
+
+artifactory {
+    publish {
+        contextUrl = 'http://localhost:8081/artifactory'
+        repository {
+            repoKey = 'ext-snapshot-local' // The Artifactory repository key to publish to
+            username = "${artifactory_user}" // The publisher user name
+            password = "${artifactory_password}" // The publisher password
+            // This is an optional section for configuring Ivy publication (when publishIvy = true).
+            ivy {
+                ivyLayout = '[organization]/[module]/ivy-[revision].xml'
+                artifactLayout = '[organization]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]'
+                mavenCompatible = true //Convert any dots in an [organization] layout value to path separators, similar to Maven's groupId-to-path conversion. True if not specified
+            }
+        }
+        defaults {
+            // Reference to Gradle publications defined in the build script.
+            // This is how we tell the Artifactory Plugin which artifacts should be
+            // published to Artifactory.
+            publications('mavenJava')
+            publishArtifacts = true
+            // Properties to be attached to the published artifacts.
+            properties = ['qa.level': 'basic', 'dev.team' : 'core']
+            publishPom = true // Publish generated POM files to Artifactory (true by default)
+            publishIvy = true // Publish generated Ivy descriptor files to Artifactory (true by default)
+        }
+    }
+}
