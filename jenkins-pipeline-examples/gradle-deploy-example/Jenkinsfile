@@ -3,11 +3,12 @@ node {
     def buildInfo
     def rtGradle
     
-    stage ('Build') {
+    stage ('Clone') {
         git url: 'https://github.com/jfrogdev/project-examples.git'
     }
  
     stage ('Artifactory configuration') {
+        // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
         server = Artifactory.server SERVER_ID
 
         rtGradle = Artifactory.newGradleBuild()

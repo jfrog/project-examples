@@ -1,18 +1,23 @@
 node {
     def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
     def rtGradle = Artifactory.newGradleBuild()
+    def buildInfo
 
-    stage 'Build'
+    stage ('Clone') {
         git url: 'https://github.com/jfrogdev/project-examples.git'
+    }
 
-    stage 'Artifactory configuration'
+    stage ('Artifactory configuration') {
         rtGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
-        rtGradle.deployer repo:'ext-release-local', server: server
-        rtGradle.resolver repo:'remote-repos', server: server
+        rtGradle.deployer repo: 'libs-release-local', server: server
+        rtGradle.resolver repo: 'jcenter', server: server
+    }
 
-    stage 'Exec Gradle'
-        def buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
+    stage ('Exec Gradle') {
+        buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
+    }
 
-    stage 'Publish build info'
+    stage ('Publish build info') {
         server.publishBuildInfo buildInfo
+    }
 }
