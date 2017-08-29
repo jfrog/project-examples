@@ -2,7 +2,7 @@ node {
     stage 'Build'
     git url: 'https://github.com/jfrogdev/project-examples.git'
 
-    // Get Artifactory server instance, defined in the Artifactory Plugin administration page.
+    // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
     def server = Artifactory.server SERVER_ID
 
     // Create the upload spec.
