@@ -1,0 +1,10 @@
+{
+  "files": [
+    {
+      "pattern": "jenkins-pipeline-examples/resources/",
+      "target": "libs-snapshot-local",
+      "regexp": "true",
+      "excludePatterns": [".*.zip", "jenkins-pipeline-examples/resources/props.*"]
+    }
+  ]
+}
