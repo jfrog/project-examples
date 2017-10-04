@@ -15,3 +15,5 @@ obj
 *.user
 packages
 *.tmp
+
+gradle-examples/*/gradle-example*/build
