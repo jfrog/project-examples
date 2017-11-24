@@ -112,8 +112,12 @@ artifactory {
     }
   }
   resolve {
+    // this should be set to your local Artifactory instance e.g. http://localhost:8081/artifactory .  Using jcenter here so the project builds.
+    contextUrl = 'https://jcenter.bintray.com'
+    // contextUrl = 'http://localhost:8081/artifactory'
     repository {
-      repoKey = 'jcenter' // The Artifactory (preferably virtual) repository key to resolve from
+      repoKey = '/' // The Artifactory (preferably virtual) repository key to resolve from. This is '/' to use jcenter for this build.
+      // repoKey = 'jcenter' // The Artifactory (preferably virtual) repository key to resolve from
       username = "${artifactory_user}" // Optional resolver user name (leave out to use anonymous resolution)
       password = "${artifactory_password}" // The resolver password
       maven = true     
