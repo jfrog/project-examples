@@ -1,0 +1,97 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.5.4'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+
+allprojects {
+    apply plugin: 'com.jfrog.artifactory'
+    apply plugin: 'maven-publish'
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+artifactoryPublish.skip = true
+
+project('app') {
+    artifactoryPublish.dependsOn('build')
+    publishing {
+        publications {
+            app(MavenPublication) {
+                groupId = group
+                artifactId = project.getName()
+                version = currentVersion
+
+                artifact("$buildDir/outputs/apk/release/app-release-unsigned.apk")
+            }
+        }
+    }
+
+    artifactoryPublish {
+        publications(publishing.publications.app)
+    }
+}
+
+project('library') {
+    artifactoryPublish.dependsOn('build')
+    publishing {
+        publications {
+            aar(MavenPublication) {
+                groupId = group
+                artifactId = project.getName()
+                version = currentVersion
+                // Tell maven to prepare the generated "*.aar" file for publishing
+                artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+            }
+        }
+    }
+
+    artifactoryPublish {
+        publications(publishing.publications.aar)
+    }
+}
+
+artifactory {
+    clientConfig.setIncludeEnvVars(true)
+    clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new Date().toString())
+
+    contextUrl = 'http://localhost:8081/artifactory'
+    publish {
+        repository {
+            repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
+            username = "${artifactory_user}" // The publisher user name
+            password = "${artifactory_password}" // The publisher password
+            // This is an optional section for configuring Ivy publication (when publishIvy = true).
+            ivy {
+                ivyLayout = '[organization]/[module]/ivy-[revision].xml'
+                artifactLayout = '[organization]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]'
+                mavenCompatible = true //Convert any dots in an [organization] layout value to path separators, similar to Maven's groupId-to-path conversion. True if not specified
+            }
+        }
+        defaults {
+            // Reference to Gradle publications defined in the build script.
+            // This is how we tell the Artifactory Plugin which artifacts should be
+            // published to Artifactory.
+            publishArtifacts = true
+            // Properties to be attached to the published artifacts.
+            properties = ['qa.level': 'basic', 'dev.team' : 'core']
+            publishPom = true // Publish generated POM files to Artifactory (true by default)
+        }
+    }
+    resolve {
+        repoKey = 'jcenter'
+    }
+}

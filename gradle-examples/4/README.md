@@ -44,8 +44,10 @@ Sample project that uses the Gradle Artifactory Plugin with Gradle Configuration
 ### gradle-example-publish
 Sample project that uses the Gradle Artifactory Plugin with Gradle Publications.
 
-### gradle-android-aar
-Sample project that uses the Gradle Artifactory Plugin to deploy Android artifacts to Artifactory.
+### gradle-android-example
+Sample project that uses the Gradle Artifactory Plugin to deploy Android application(apk) and library(aar) to Artifactory.
+
+Compatible with Android gradle plugin version 3.0.x
 
 ### gradle-example-bintray-info
 Sample project that uses the Gradle Artifactory Plugin with Gradle Configurations.
