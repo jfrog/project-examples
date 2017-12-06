@@ -1,0 +1,20 @@
+# This file is a template, and might need editing before it works on your project.
+image: maven:latest
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+
+# Cache downloaded dependencies and plugins between builds.
+# To keep cache across branches add 'key: "$CI_JOB_REF_NAME"'
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+deploy:
+  stage: deploy
+  script:
+    - mvn $MAVEN_CLI_OPTS deploy
+  only:
+    - master
