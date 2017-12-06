@@ -7,7 +7,7 @@
 
 #### Step 1:
 
-Configure the following Secret Variables in CI/CD Settings of your Maven project: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, ARTIFACTORY_DOCKER_REPOSITORY.
+Configure the following Secret Variables in CI/CD Settings of your Docker project: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, ARTIFACTORY_DOCKER_REPOSITORY.
 ![screenshot](img/Screen_Shot1.png)
 
 #### Step 2:
