@@ -4,13 +4,13 @@
 
 ### Steps to Integrate GitLab CI with Artifactory.
 
-Step 1:
+#### Step 1:
 
 Configure the following Secret Variables in CI/CD Settings of your Maven project: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, MAVEN_REPO_KEY.
 
 ![screenshot](img/Screen_Shot1.png)
 
-Step 2:
+#### Step 2:
 
 Configure artifactory-maven-plugin to your project by copying following to your pom.xml:
 ```
@@ -59,8 +59,11 @@ Configure artifactory-maven-plugin to your project by copying following to your 
 
 For more configuration information see the [Maven Artifactory Plugin documentation](https://www.jfrog.com/confluence/display/RTF/Maven+Artifactory+Plugin).
 
+#### Step 3:
 
-Step 3:
+Place a .gitlab-ci.yml in the root of your project, following this example.
+
+#### Step 4:
 
 You should be able to see published artifacts and build info in artifactory.
 
