@@ -3,7 +3,7 @@
 
 `To make this integration work you will need to have running Artifactory-pro/Artifactory SAAS.`
 
-### Steps to build docker images using Circle CI and push it to Artifactory.
+### Steps to build docker images using GitLab CI and push it to Artifactory.
 
 #### Step 1:
 
