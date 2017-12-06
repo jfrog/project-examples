@@ -1,0 +1,15 @@
+This is a demo python project
+Please follow these steps before you start resolving from Artifactory:
+1. Install PIP from http://pip.readthedocs.org/en/latest/installing.html
+2. Configure your Artifactory repositories as described here: http://www.jfrog.com/confluence/display/RTF/PyPI+Repositories
+3. Modify your setup.py with the right details 
+4. Modify requirements.txt with the right version dependencies 
+5. Run the following command to create the dist and egg folders:
+   python setup.py register -r pypi-local
+6. Run the following command to upload the project to Artifactory:
+   python setup.py sdist upload -r pypi-local
+7. Run the following command to download the dependencies from requirements.txt
+   pip install -r requirements.txt
+
+
+
