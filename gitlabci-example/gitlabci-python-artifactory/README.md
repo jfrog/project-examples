@@ -5,6 +5,7 @@
 ### Python example of using GitLab CI and with Artifactory.
 
 `To make this integration  work you will need to have running Artifactory-pro/Artifactory SAAS.`
+
 `This is a sample project that resolve a dependency from Artifactory and deploys the build artifacts to Artifactory.`
 
 #### Step 1:
