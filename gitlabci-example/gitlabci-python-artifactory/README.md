@@ -10,7 +10,7 @@
 
 #### Step 1:
 
-Configure the following Secret Variables in CI/CD Settings of your NPM project: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, ARTIFACTORY_PYTHON_REPOSITORY.
+Configure the following Secret Variables in CI/CD Settings of your Python project: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, ARTIFACTORY_PYTHON_REPOSITORY.
 ![screenshot](img/Screen_Shot1.png)
 
 #### Step 2:
