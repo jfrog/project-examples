@@ -2,7 +2,7 @@
 
 ## Store build information and build artifacts to JFrog Artifactory
 
-## Steps to Integrate GitLab CI with Artifactory.
+### Steps to Integrate GitLab CI with Artifactory.
 
 Step 1:
 
