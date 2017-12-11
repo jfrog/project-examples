@@ -34,5 +34,5 @@ allprojects {
 artifactoryPublish.skip = true
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.4'
+  gradleVersion = '4.3.1'
 }
