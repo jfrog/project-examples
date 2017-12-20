@@ -18,6 +18,9 @@ buildscript {
   repositories {
     jcenter()
   }
+  dependencies {
+    classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '4.+')
+  }
 }
 
 def projectUrl = 'https://github.com/eyalbe4/project-examples'
@@ -26,6 +29,7 @@ def bintrayInfoFile = file("$rootDir/bintray-info.json")
 allprojects {
   apply plugin: 'java'
   apply plugin: 'maven'
+  apply plugin: 'com.jfrog.artifactory'
 
   group = 'org.jfrog.example.gradle'
   version = currentVersion
