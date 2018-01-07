@@ -1,4 +1,4 @@
-package org.jfrog.artifactory-java-client-examples.maven-example;
+package org.jfrog.example;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;

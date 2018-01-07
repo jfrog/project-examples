@@ -1,7 +1,7 @@
 # Gradle Artifactory Java Client Example
 
 ## Introduction
-The Gradle example provides a project structure for using the Artifactory Java Client in a gradle project.
+This example provides a project structure for using the Artifactory Java Client in a gradle project.
 In this project you will find how to set up Artifactory, create new repositories, and perform basic
 operations - upload, download and search artifacts using the Java Client.
 
