@@ -1,0 +1,15 @@
+<settings>
+    <profiles>
+        <profile>
+            <id>artifactory-plugin-properties</id>
+            <properties>
+                <username>admin</username>
+                <password>password</password>
+            </properties>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>artifactory-plugin-properties</activeProfile>
+    </activeProfiles>
+</settings>

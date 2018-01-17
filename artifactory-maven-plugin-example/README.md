@@ -9,9 +9,17 @@ This example is using the Maven Artifactory Plugin for artifacts and build-info 
 To run this example, please do the following:
 * Edit the pom.xml file and set the value of the *contextUrl* with your Artifactory URL, as well as the other Artifactory properties.
 For more configuration information see the [Maven Artifactory Plugin documentation](https://www.jfrog.com/confluence/display/RTF/Maven+Artifactory+Plugin).
-* CD to the project directory and run the following command (replace *admin* and *password* with your Artifactory credentials):
+* CD to the project directory and run *mvn deploy*.
+
+You can define the Artifactory details inside the pom file using properties. These properties can be sent to maven as system properties: 
 ```console
-> mvn deploy -Dusername=admin -Dpassword=password
+mvn deploy -Dusername=admin -Dpassword=password -Dbuildnumber=1
+```
+
+Alternatively they can be defined in the settings xml as described [here](https://maven.apache.org/examples/injecting-properties-via-settings.html).
+
+```console
+mvn deploy -Dbuildnumber=1 -s settings.xml
 ```
 
 This would deploy the produced artifacts to the configured Artifactory server:
