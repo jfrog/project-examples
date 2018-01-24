@@ -1,3 +1,0 @@
-PyYAML==3.11
-django-rss-plugin==0.0.9
-nltk==3.0.1

@@ -3,7 +3,7 @@ image: maven:latest
 
 before_script:
   # Install JFrog CLI
-  - wget https://dl.bintray.com/jfrog/jfrog-cli-go/1.12.1/jfrog-cli-linux-amd64/jfrog
+  - wget https://dl.bintray.com/jfrog/jfrog-cli-go/1.13.1/jfrog-cli-linux-amd64/jfrog
   - chmod +x jfrog
   # Configure Artifactory instance with JFrog CLI
   - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
@@ -15,7 +15,11 @@ before_script:
 
 build:
   script:
+    # Run the MVN command
     - ./jfrog rt mvn "clean install" configuration.yml --build-name=gitlabci-maven-artifactory --build-number=$CI_JOB_ID
+    # Collect the environment variables
+    - ./jfrog rt bce gitlabci-maven-artifactory $CI_JOB_ID
+    # Pass the build information to Artifactory
     - ./jfrog rt bp gitlabci-maven-artifactory $CI_JOB_ID
   only:
     - master
