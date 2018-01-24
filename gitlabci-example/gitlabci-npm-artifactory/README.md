@@ -1,4 +1,4 @@
-# Artifactory Integration with GitLab CI
+# Artifactory Integration with GitLab CI using JFrog CLI
 ## Store build information and build artifacts to JFrog Artifactory
 ### NPM example of using GitLab CI and with Artifactory.
 
@@ -8,7 +8,7 @@
 
 #### Step 1:
 
-Configure the following Secret Variables in CI/CD Settings of your NPM project: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, ARTIFACTORY_NPM_REPOSITORY.
+Configure the following Secret Variables in CI/CD Settings of your NPM project: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, NPM_REPOSITORY.
 ![screenshot](img/Screen_Shot1.png)
 
 #### Step 2:
