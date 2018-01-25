@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+
+  <Target Name="SetJFrogProperties" BeforeTargets="DownloadDependencies;PrepareForBuild" Condition=" '$(ArtifactoryPublish)' == 'true' ">
+    <Message Text="Setting JFrog properties"/>
+    <!--Build name property-->
+    <CreateProperty Condition=" '$(BuildName)' == '' " Value="$(MSBuildProjectName)">
+      <Output TaskParameter="Value" PropertyName="BuildName" />
+    </CreateProperty>
+    <!--Build number property-->
+    <CreateProperty Condition=" '$(BuildNumber)' == '' " Value="$([System.DateTime]::UtcNow.Ticks)">
+      <Output TaskParameter="Value" PropertyName="BuildNumber" />
+    </CreateProperty>
+    <!--Build flags-->
+    <CreateProperty Value="--build-name=$(BuildName) --build-number=$(BuildNumber)">
+      <Output TaskParameter="Value" PropertyName="BuildFlags" />
+    </CreateProperty>
+    <!--Output path pattern fix, use this property to upload all the artifacts in build OutputPath-->
+    <CreateProperty Value="$([System.String]::Copy('$(OutputPath)').Replace('\','\\'))">
+      <Output TaskParameter="Value" PropertyName="ArtifatsPatternPath" />
+    </CreateProperty>
+  </Target>
+
+  <Target Name="DownloadDependencies" BeforeTargets="PrepareForBuild">
+    <Message Text="Downloading dependencies"/>
+    <!--Download dependencies from Artifactory using JFrog CLI-->
+    <!--Example:
+    <Exec Command="jfrog rt download repository/path/to/files destination\path\ $(BuildFlags)"/>
+    -->
+  </Target>
+
+  <Target Name="UploadArtifacts" AfterTargets="AfterBuild" Condition=" '$(ArtifactoryPublish)' == 'true' ">
+    <!--Upload artifacts-->
+    <!--Example:
+    <Exec Command="jfrog rt upload $(ArtifatsPatternPath) repository/destination/path $(BuildFlags)"/>
+    -->
+    
+    <Exec Command="jfrog rt upload $(ArtifatsPatternPath) msbuild-local/$(BuildName)/ --flat=false $(BuildFlags)"/>
+  </Target>
+
+  <Target Name="PublishBuildInfo" AfterTargets="AfterBuild;UploadArtifacts" Condition=" '$(ArtifactoryPublish)' == 'true' ">
+    <Message Text="Publishing build-info"/>
+    <!--Optional build info commands-->
+    <!--Example:
+    <Exec Command="jfrog rt build-add-git $(BuildName) $(BuildNumber)"/>
+    <Exec Command="jfrog rt build-collect-env $(BuildName) $(BuildNumber)"/>
+    -->
+
+    <!--Publish build-info to Artifactory using JFrog CLI-->
+    <Exec Command="jfrog rt build-publish $(BuildName) $(BuildNumber)"/>
+  </Target>
+
+  <!--Optional Target, perform JFrog Xray scan-->
+  <!--Example:
+  <Target Name="ScanBuild" AfterTargets="AfterBuild;PublishBuildInfo" Condition=" '$(ArtifactoryPublish)' == 'true' ">
+    <Message Text="Performing JFrog Xray build scan"/>
+    <Exec Command="jfrog rt build-scan $(BuildName) $(BuildNumber)"/>
+  </Target>
+  -->
+  
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C7BE00B6-A619-4FB9-8F19-A11793CF0F14}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MsbuildLibrary</RootNamespace>
+    <AssemblyName>MsbuildLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="LibraryExample.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
