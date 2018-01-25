@@ -3,8 +3,7 @@ image: maven:latest
 
 before_script:
   # Install JFrog CLI
-  - wget https://dl.bintray.com/jfrog/jfrog-cli-go/1.13.1/jfrog-cli-linux-amd64/jfrog
-  - chmod +x jfrog
+  - curl -fL https://getcli.jfrog.io | sh
   # Configure Artifactory instance with JFrog CLI
   - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
   - ./jfrog rt c show
