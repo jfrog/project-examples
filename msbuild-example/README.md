@@ -1,58 +1,63 @@
 MSBuild Project Example
 ==========================
 ## Overview
-This example uses JFrog CLI for downloading dependencies, uploading artifacts and publishing build info.<br/>
-The solution has two projects: _MsbuildExample_, _MsbuildLibrary_.<br/>
-_MsbuildLibrary_ project creates a library file: `MsbuildLibrary.dll` which is being used by _MsbuildExample_ project.
+This example demonstrates how to modify your .NET csproj file, so that it does the following:
+1. Download the project depedencies from Artifactory before the build.
+2. Upload the project artifacts to Artifactory after the build.
+3. Collect and publish build-info to Artifactory.
 
-Each project holds its own dependencies and artifacts configuration in the csproj files.
+To achive this, the project's csproj file includes targets, which use JFrog CLI.<br/>
 
-## Prequesites 
-* Download and add [JFrog CLI](https://jfrog.com/getcli/) executable to the search path (Add JFrog CLI to PATH env var).
-* Make sure msbuild installed. 
-* Configure Artifactory URL and credentials using the following command: 
+## Before You Start 
+* Download [JFrog CLI](https://jfrog.com/getcli/) and add it to the search path (add the *jfrog.exe* path to PATH environment variable).
+* Make sure msbuild installed, and add it to the search path (add the *msbuild.exe* path to PATH environment variable). 
+* Configure your Artifactory URL and credentials using the following command: 
 ```
 jfrog rt c
 ``` 
-* Create a local generic repository in Artifactory named msbuild-local
+* From the Artifactory UI, create a local generic repository named *msbuild-local*.
 
-## Running the example
+## Structure
+This solution includes two projects: _MsbuildExample_, _MsbuildLibrary_.<br/>
+The _MsbuildLibrary_ project creates a library file: *MsbuildLibrary.dll* which is used by _MsbuildExample_ project as a dependency.
+
+## Running the Example
 ### Build the MsbuildLibrary Project with Artifactory
-
-
-Run the build target using the following command line in _MsbuildLibrary_ folder: 
+CD to the *MsbuildLibrary* directory and run the build target using the following command.
+This will build the *MsbuildLibrary* project and generate the *MsbuildLibrary.dll* file.
 ```
 msbuild /t:build
 ```
-
-### Deploying MSbuildLibrary artifacts and build-info
-Use the following command line in _MsbuildLibrary_ folder:
+The next step should be publishing the *MsbuildLibrary.dll* file to Artifactory, along with
+its build-info.
+Run the following command to do this.
 ```
 msbuild /p:ArtifactoryPublish=true
 ```
-
-This command line will upload the project artifacts to Artifactory to be used later by _MsbuildExample_ project.<br/> 
-Build-info will be created and will be available in Artifactory.
-
-### Build the MSBuildExample Project with Artifactory
-In order to build _MsbuildExample_, _MsbuildLibrary_ project artifacts must be built and published to Artifactory.<br/>
-Run the build target using the following command line in _MsbuildExample_ folder:
+Now that we have our *MsbuildLibrary.dll* dependency ready in Artifactory, we can build
+the *MsbuildExample* projects.
+CD into the *MsbuildExample* directory and run the following command.
+This will download *MsbuildLibrary.dll* from Artifactory and run the build to create its artifacts.
 ``` 
 msbuild /t:build
 ```
-
-### Deploying MsbuildExample artifacts and build-info
-Use the following command line in _MsbuildExample_ folder:
+We're almost done. All that's left to do it to publish the artifacts created by the *MsbuildExample*
+project to Artifactory, along with its build-info.
 ```
 msbuild /p:ArtifactoryPublish=true
 ```
-This command line will upload the project artifacts to Artifactory.<br/> 
-Build-info will be created and will be available in Artifactory.
+## Understanding the Script
 
-## Build script details
+### Setting the Build Name, Build Number and Output Path  
+The following snippet from the scproj file does the following:
+1. Creates a variable namec *BuildFlags* with the following value *--build-name=$(BuildName) --build-number=$(BuildNumber)"*.
+The default values for the $(BuildName) and $(BuildNumber) are the project name and current time respectively.
+the build name and number can be set as arguments when running the msbuild command. For example:
+```
+msbuild /p:ArtifactoryPublish=true /p:BuildName=someBuildName /p:BuildNumber=10
+```
+2. Creates a variable named *ArtifatsPatternPath* with the project's output path as its value.
 
-### JFrog CLI properties: 
-The following snippet from the scproj file adds the default properties that JFrog CLI uses in order to download and upload artifacts and to publish build-info.
 ```
 <Target Name="SetJFrogProperties" BeforeTargets="DownloadDependencies;PrepareForBuild" Condition=" '$(ArtifactoryPublish)' == 'true' ">
     <Message Text="Setting JFrog properties"/>
@@ -75,18 +80,9 @@ The following snippet from the scproj file adds the default properties that JFro
 </Target>
 ```
 
-Build name and build number properties can be overridden by adding the following properties to the msbuild command:
-```
-/p:BuildName=someBuildName
-/p:BuildNumber=10
-```
-
-Default properties values: <br/>
-**BuildName**: project name. <br/>
-**BuildNumber**: current time in milliseconds. <br/>
-
-### Downloading dependencies:
-The following snippet from the scproj file configures which artifacts will downloaded in the build process and the download target path.
+### Downloading Dependencies:
+The following snippet downlaods the *MsbuildLibrary.dll* file from the *msbuild-local* Artifactory repository
+into the dependencies directory.
 ```
 <Target Name="DownloadDependencies" BeforeTargets="PrepareForBuild">
 	<Message Text="Downloading dependencies"/>
@@ -98,12 +94,8 @@ The following snippet from the scproj file configures which artifacts will downl
 	<Exec Command="jfrog rt download msbuild-local/MsbuildLibrary/bin/Debug/MsbuildLibrary.dll dependencies\ --flat=true $(BuildFlags)"/>
 </Target>
 ```
-
-In this example `MsbuildLibrary.dll` file will be downloaded to `dependencies` folder.<br/>
-It is important to add `$(BuildFlags)` variable to the CLI command lines in order to save dependencies information to create the build-info.
-
 ##### Note
-* Downloading dependecies might require adding _Reference_ to the downloaded artifacts, in this example we add `MsbuildLibrary.dll` as follows: 
+* The `MsbuildLibrary.dll` depedency should be added as a project *Refrence*. Here's how we did it.
 ```
 <ItemGroup>
 	<Reference Include="MsbuildLibrary">
@@ -112,8 +104,9 @@ It is important to add `$(BuildFlags)` variable to the CLI command lines in orde
 </ItemGroup>
 ```
 
-### Uploading artifacts:
-The following snippet from the scproj file configures which artifacts will be uploaded when adding `/p:ArtifactoryPublish=true` property.
+### Uploading Artifacts:
+The following snippet uploads the artifacts to Artifactory, when adding `/p:ArtifactoryPublish=true` to the command.
+We are using the `$(ArtifatsPatternPath)` property to upload all the artifacts built in the $(OutputPath).
 
 ```
 <Target Name="UploadArtifacts" AfterTargets="AfterBuild" Condition=" '$(ArtifactoryPublish)' == 'true' ">
@@ -129,10 +122,8 @@ The following snippet from the scproj file configures which artifacts will be up
 </Target>
 ```
 
-In this example we are using `$(ArtifatsPatternPath)` property to upload all the artifacts that were created in the $(OutputPath).
-
 ### Publishing build-info:
-The following snippet from the scproj file publishing build info to Artifactory, the build info will hold all the information about dependencies, artifacts, environment (optional) and git (optional). 
+The following snippet publishes the build-info to Artifactory. 
 
 ```
 <Target Name="PublishBuildInfo" AfterTargets="AfterBuild;UploadArtifacts" Condition=" '$(ArtifactoryPublish)' == 'true' ">
@@ -145,15 +136,5 @@ The following snippet from the scproj file publishing build info to Artifactory,
 	    
 	<!--Publish build-info to Artifactory using JFrog CLI-->
 	<Exec Command="jfrog rt build-publish $(BuildName) $(BuildNumber)"/>
-</Target>
-```
-
-### JFrog Xray build scan:
-The following snippet from the scproj file allows scanning build dependencies and artifacts using JFrog Xray to find security and license vulnerabilities.
-
-```
-<Target Name="ScanBuild" AfterTargets="AfterBuild;PublishBuildInfo" Condition=" '$(ArtifactoryPublish)' == 'true' ">
-	<Message Text="Performing JFrog Xray build scan"/>
-	<Exec Command="jfrog rt build-scan $(BuildName) $(BuildNumber)"/>
 </Target>
 ```
