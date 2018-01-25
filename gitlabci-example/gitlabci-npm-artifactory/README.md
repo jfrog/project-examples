@@ -1,5 +1,5 @@
-# Integrating Artifactory with GitLab CI using JFrog CLI
-## Store build information and build artifacts to JFrog Artifactory
+# Integrating JFrog Artifactory with GitLab CI using JFrog CLI
+## Store build information and build artifacts to Artifactory
 ### NPM example of using GitLab CI with Artifactory.
 #### Prerequisite
 Artifactory Pro / Artifactory SAAS version 5.5.2 and above.  
