@@ -1,4 +1,4 @@
-# Example projects to integrate Artifactory with GitLab CI
+# Example projects to integrate JFrog Artifactory with GitLab CI
 
 ## Projects for different package types:
 
