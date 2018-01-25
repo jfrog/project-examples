@@ -2,7 +2,7 @@
 ## Store build information and build artifacts to JFrog Artifactory
 ### Steps to Integrate GitLab CI with Artifactory.
 #### Prerequisite
-Artifactory Pro / Artifactory SAAS  
+Artifactory Pro / Artifactory SAAS.  
 This sample project resolves dependencies from Artifactory and deploys the build artifacts to Artifactory.
 
 #### Step 1:

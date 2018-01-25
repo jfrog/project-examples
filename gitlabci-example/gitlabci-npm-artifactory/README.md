@@ -1,22 +1,17 @@
-# Artifactory Integration with GitLab CI using JFrog CLI
+# Integrating Artifactory with GitLab CI using JFrog CLI
 ## Store build information and build artifacts to JFrog Artifactory
-### NPM example of using GitLab CI and with Artifactory.
-
-`To make this integration  work you will need to have running Artifactory-pro/Artifactory SAAS.`
-
-`This is a sample project that resolve a dependency from Artifactory and deploys the build artifacts to Artifactory.`
+### NPM example of using GitLab CI with Artifactory.
+#### Prerequisite
+Artifactory Pro / Artifactory SAAS version 5.5.2 and above.  
+This sample project resolves dependencies from Artifactory and deploys the build artifacts to Artifactory.
 
 #### Step 1:
-
-Configure the following Secret Variables in CI/CD Settings of your NPM project: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, ARTIFACTORY_NPM_REPOSITORY.
+In the NPM project, configure the following Artifactory credentials, under CI/CD Settings > Secret variables: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, and ARTIFACTORY_NPM_REPOSITORY
 ![screenshot](img/Screen_Shot1.png)
 
 #### Step 2:
-
-Place a .gitlab-ci.yml in the root of your project, following this example.
+Place a .gitlab-ci.yml in the root of your project, as used in this sample project.
 
 #### Step 3:
-
-You should be able to see published artifacts and build info in artifactory.
-
+You can view the published artifacts and build information in Artifactory.
 ![screenshot](img/Screen_Shot2.png)
