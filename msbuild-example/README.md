@@ -22,7 +22,6 @@ This solution includes two projects: _MsbuildExample_, _MsbuildLibrary_.<br/>
 The _MsbuildLibrary_ project creates a library file: *MsbuildLibrary.dll* which is used by _MsbuildExample_ project as a dependency.
 
 ## Running the Example
-### Build the MsbuildLibrary Project with Artifactory
 CD to the *MsbuildLibrary* directory and run the build target using the following command.
 This will build the *MsbuildLibrary* project and generate the *MsbuildLibrary.dll* file.
 ```
@@ -122,7 +121,7 @@ We are using the `$(ArtifatsPatternPath)` property to upload all the artifacts b
 </Target>
 ```
 
-### Publishing build-info:
+### Publishing Build-Info:
 The following snippet publishes the build-info to Artifactory. 
 
 ```
