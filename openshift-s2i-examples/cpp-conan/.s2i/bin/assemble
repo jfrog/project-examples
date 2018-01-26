@@ -1,0 +1,16 @@
+cp -Rf /tmp/src/. /opt/app-root/
+
+# conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
+#conan remote add conan-local $ART_CONAN_URL
+
+cd /opt/app-root/
+
+echo "Running conan install build missing"
+conan install . --build missing
+
+echo "Running cmake commands"
+cmake . -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake --build .
+
+# conan upload * --all -r conan-local --confirm
+
