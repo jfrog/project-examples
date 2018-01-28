@@ -15,6 +15,3 @@ Place a .gitlab-ci.yml file in the root of your project, as used in this sample 
 #### Step 3:
 View the published artifacts and build information in Artifactory.
 ![screenshot](img/Screen_Shot2.png)
-
-[2:06 PM]
-https://github.com/JFrogDev/project-examples/edit/master/gitlabci-example/gitlabci-npm-artifactory/README.md
