@@ -1,0 +1,30 @@
+{
+  "name": "gitlabci-npm-artifactory",
+  "version": "1.0.0",
+  "description": "GitlabCI CI/CD With Artifactory",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arielkjfrog/gitlab-npm-artifactory.git"
+  },
+  "keywords": [
+    "NPM"
+  ],
+  "author": "Ariel Kabov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arielkjfrog/gitlab-npm-artifactory/issues"
+  },
+  "homepage": "https://github.com/arielkjfrog/gitlab-npm-artifactory#readme",
+  "dependencies": {
+    "colors": "latest",
+    "assert": "latest"
+  },
+  "devDependencies": {},
+  "directories": {
+    "test": "test"
+  }
+}

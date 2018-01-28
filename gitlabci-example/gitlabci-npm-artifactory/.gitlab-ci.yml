@@ -1,0 +1,30 @@
+# This file is a template, and might need editing before it works on your project.
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+image: node:latest
+
+before_script:
+  # Install JFrog CLI
+  - curl -fL https://getcli.jfrog.io | sh
+  # Configure Artifactory instance with JFrog CLI
+  - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
+  - ./jfrog rt c show
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+  - node_modules/
+
+build:
+    script:
+    # Run the npm install command
+    - ./jfrog rt npmi $ARTIFACTORY_NPM_REPOSITORY --build-name=gitlabci-npm-artifactory --build-number=$CI_JOB_ID
+    # Collect the environment variables
+    - ./jfrog rt bce gitlabci-npm-artifactory $CI_JOB_ID
+    # Publish the package
+    - ./jfrog rt npmp $ARTIFACTORY_NPM_REPOSITORY --build-name=gitlabci-npm-artifactory --build-number=$CI_JOB_ID
+    # Pass the build information to Artifactory
+    - ./jfrog rt bp gitlabci-npm-artifactory $CI_JOB_ID
+    only:
+    - master
