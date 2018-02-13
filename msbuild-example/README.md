@@ -2,15 +2,15 @@ MSBuild Project Example
 ==========================
 ## Overview
 This example demonstrates how to modify your .NET csproj file, so that it does the following:
-1. Download the project depedencies from Artifactory before the build.
-2. Upload the project artifacts to Artifactory after the build.
-3. Collect and publish build-info to Artifactory.
+1. Downloads the project depedencies from Artifactory before the build.
+2. Uploads the project artifacts to Artifactory after the build.
+3. Collects and publish build-info to Artifactory.
 
-To achive this, the project's csproj file includes targets, which use JFrog CLI.<br/>
+To achive this, we'll add JFrog CLI commands into the project's csproj file.<br/>
 
 ## Before You Start 
-* Download [JFrog CLI](https://jfrog.com/getcli/) and add it to the search path (add the *jfrog.exe* path to PATH environment variable).
-* Make sure msbuild installed, and add it to the search path (add the *msbuild.exe* path to PATH environment variable). 
+* Download [JFrog CLI](https://jfrog.com/getcli/) and add it to the search path (add the path to *jfrog.exe* to the PATH environment variable).
+* Make sure msbuild is installed, and add it to the search path (add the *msbuild.exe* path to the PATH environment variable). 
 * Configure your Artifactory URL and credentials using the following command: 
 ```
 jfrog rt c
@@ -19,7 +19,7 @@ jfrog rt c
 
 ## Structure
 This solution includes two projects: _MsbuildExample_, _MsbuildLibrary_.<br/>
-The _MsbuildLibrary_ project creates a library file: *MsbuildLibrary.dll* which is used by _MsbuildExample_ project as a dependency.
+The _MsbuildLibrary_ project creates a library file: *MsbuildLibrary.dll* which is later used by _MsbuildExample_ project as a dependency.
 
 ## Running the Example
 CD to the *MsbuildLibrary* directory and run the build target using the following command.
@@ -49,8 +49,8 @@ msbuild /p:ArtifactoryPublish=true
 
 ### Setting the Build Name, Build Number and Output Path  
 The following snippet from the scproj file does the following:
-1. Creates a variable namec *BuildFlags* with the following value *--build-name=$(BuildName) --build-number=$(BuildNumber)"*.
-The default values for the $(BuildName) and $(BuildNumber) are the project name and current time respectively.
+1. Creates a variable named *BuildFlags* with the following value *--build-name=$(BuildName) --build-number=$(BuildNumber)"*.
+The default values for the $(BuildName) and $(BuildNumber) are the project name and the current time respectively.
 the build name and number can be set as arguments when running the msbuild command. For example:
 ```
 msbuild /p:ArtifactoryPublish=true /p:BuildName=someBuildName /p:BuildNumber=10
@@ -102,6 +102,7 @@ into the dependencies directory.
 	</Reference>
 </ItemGroup>
 ```
+* In this specific example we're downloading only a single file from Artifactory (MsbuildLibrary.dll). You can modify the *jfrog rt download* command to download multiple files. You can also use File Specs to define the files to be downloaded. Read more about the download command [here](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-DownloadingFiles).
 
 ### Uploading Artifacts:
 The following snippet uploads the artifacts to Artifactory, when adding `/p:ArtifactoryPublish=true` to the command.
@@ -120,6 +121,7 @@ We are using the `$(ArtifatsPatternPath)` property to upload all the artifacts b
 	<Exec Command="jfrog rt upload $(ArtifatsPatternPath) msbuild-local/$(BuildName)/ --flat=false $(BuildFlags)"/>
 </Target>
 ```
+Read more about the *jfrog rt upload* command [here](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-UploadingFiles).
 
 ### Publishing Build-Info:
 The following snippet publishes the build-info to Artifactory. 
@@ -137,3 +139,4 @@ The following snippet publishes the build-info to Artifactory.
 	<Exec Command="jfrog rt build-publish $(BuildName) $(BuildNumber)"/>
 </Target>
 ```
+You can read more about the JFrog CLI commands used in the above script [here](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory).
