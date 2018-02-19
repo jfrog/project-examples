@@ -120,7 +120,3 @@ artifactory {
     }
   }
 }
-
-task wrapper(type: Wrapper) {
-  gradleVersion = '4.0-milestone-2'
-}
