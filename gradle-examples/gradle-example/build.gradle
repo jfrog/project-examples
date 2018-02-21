@@ -76,7 +76,7 @@ artifactory {
   contextUrl = 'http://localhost:8081/artifactory'
   publish {
     repository {
-      repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
+      repoKey = 'libs-snapshots-local' // The Artifactory repository key to publish to
       username = "${artifactory_user}" // The publisher user name
       password = "${artifactory_password}" // The publisher password
       // This is an optional section for configuring Ivy publication (when publishIvy = true).
