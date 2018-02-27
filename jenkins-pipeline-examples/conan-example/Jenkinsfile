@@ -17,7 +17,7 @@
         String serverName = conanClient.remote.add server: server, repo: "conan-local"
 
         // Run a conan build. The 'buildInfo' instance is passed as an argument to the 'run' method:
-        conanClient.run(command: "install --build missing", buildInfo: buildInfo)
+        conanClient.run(command: "install . --build missing", buildInfo: buildInfo)
 
         // Create an upload command. The 'serverName' string is used as a conan 'remote', so that
         // the artifacts are uploaded into it:
