@@ -18,15 +18,14 @@ Follow the [instructions](https://github.com/openshift/source-to-image#installat
 * C++ dependencies including the transitive dependencies are pulled from conan-center. 
 * C++ packages can also be pulled from Artifactory since conan repositories are supported.
 
-Access tokens can be used to authenticate with Artifactory ($RT_URL) and access conan repositories
+Access tokens can be used to authenticate with Artifactory $RT_URL and access conan repositories
 
-``` 
-export RESPONSE=$(curl -H "X-JFrog-Art-Api:$RT_API_KEY" -XPOST "$RT_URL/api/security/token" -d "username=$RT_USER" -d "scope=member-of-groups:readers" -d "expires_in=600")
 
-export RT_ACCESS_TOKEN=$(echo "$RESPONSE"| jq -r .access_token)
+``` export RESPONSE=$(curl -H "X-JFrog-Art-Api:$RT_API_KEY" -XPOST "$RT_URL/api/security/token" -d "username=$RT_USER" -d "scope=member-of-groups:readers" -d "expires_in=600")
 
-s2i build https://github.com/memsharded/example-poco-timer cpp-conan-builder:0.1 timer-app:0.1 -e "RT_CONAN_URL=http://art-url/artifactory/api/conan/conan-local" -e "RT_USER=$RT_USER" -e "RT_ACCESS_TOKEN=$RT_ACCESS_TOKEN" ```
+export RT_ACCESS_TOKEN=$(echo "$RESPONSE"| jq -r .access_token) ```
 
+``` s2i build https://github.com/memsharded/example-poco-timer cpp-conan-builder:0.1 timer-app:0.1 -e "RT_CONAN_URL=http://art-url/artifactory/api/conan/conan-local" -e "RT_USER=$RT_USER" -e "RT_ACCESS_TOKEN=$RT_ACCESS_TOKEN" ```
 
 ## Run your C++ application ##
 ```docker run -it timer-app:0.1```
