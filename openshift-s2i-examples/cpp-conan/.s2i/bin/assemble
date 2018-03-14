@@ -1,7 +1,17 @@
 cp -Rf /tmp/src/. /opt/app-root/
 
-# conan remote add conan-community https://api.bintray.com/conan/conan-community/conan
-#conan remote add conan-local $ART_CONAN_URL
+if [ -z "$RT_CONAN_URL" ]
+then
+	echo "Using default Conan repository $RT_CONAN_URL"
+else
+	echo "About to add a remote Conan repository"
+	conan remote add conan-local $RT_CONAN_URL
+fi
+
+if [[ -n "$RT_ACCESS_TOKEN" && -n "$RT_USER" ]] ; then
+	echo "About to set conan-local $USERNAME $RT_ACCESS_TOKEN"
+	conan user -p $RT_ACCESS_TOKEN -r conan-local $RT_USER
+fi
 
 cd /opt/app-root/
 

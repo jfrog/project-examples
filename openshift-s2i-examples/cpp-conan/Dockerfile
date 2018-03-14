@@ -18,8 +18,12 @@ COPY ./.s2i/bin/ /usr/local/s2i
 
 LABEL io.openshift.s2i.scripts-url="image:///usr/local/s2i"
 RUN mkdir -p /opt/app-root && chown -R 1001:0 /opt/app-root
+
 ENV HOME=/opt/app-root
-ENV ART_CONAN_URL=
+ENV RT_CONAN_URL=
+ENV RT_ACCESS_TOKEN=
+ENV RT_USER=
+
 USER 1001
 WORKDIR ${HOME}
 CMD ["echo","S2I Builder image to build C++ application via Conan"]
