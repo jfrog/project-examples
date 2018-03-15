@@ -15,3 +15,5 @@ obj
 *.user
 packages
 *.tmp
+.idea
+*.DS_Store
