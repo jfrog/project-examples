@@ -1,14 +1,15 @@
-FROM alpine:3.4
+FROM node:6
 
-RUN apk update
-RUN apk upgrade
-RUN apk add openjdk8-jre-base bash curl zip wget
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-RUN wget https://dl.bintray.com/jfrog/artifactory-pro/org/artifactory/pro/jfrog-artifactory-pro/5.0.0/jfrog-artifactory-pro-5.0.0.zip && unzip jfrog-artifactory-pro-5.0.0.zip
+# Bundle app source
+COPY . /usr/src/app
 
-RUN rm jfrog-artifactory-pro-5.0.0.zip
+# Install app dependencies
+RUN npm install
 
-EXPOSE 8081
+EXPOSE 3000
 
-CMD ./artifactory-pro-5.0.0/bin/artifactory.sh
-
+CMD [ "npm", "start" ]
