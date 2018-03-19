@@ -13,8 +13,7 @@ dependencies:
       > $HOME/bin/sbt
     - chmod u+x $HOME/bin/sbt
     # Install JFrog CLI
-    - wget https://dl.bintray.com/jfrog/jfrog-cli-go/1.7.1/jfrog-cli-linux-amd64/jfrog
-    - chmod +x jfrog
+    - curl -fL https://getcli.jfrog.io | sh
 
 deployment:
   master:

@@ -1,0 +1,30 @@
+{
+  "name": "node-version",
+  "version": "2.2.13",
+  "description": "NodeJS example fo CI/CD",
+  "author": "Jainish Shah",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "node test/test.js"
+  },
+  "main": "./bin/www",
+  "bin": {
+    "node-version": "./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.15.5",
+    "hbs": "~4.0.1",
+    "morgan": "~1.9.0",
+    "serve-favicon": "~2.4.5",
+    "assert": "latest",
+    "semver-regex": "latest",
+    "jquery": "1.6.2"
+  },
+  "keywords": [
+    "npm-version"
+  ]
+}
