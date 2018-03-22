@@ -65,13 +65,13 @@ public class ClientExample {
     /**
      * This method creates an artifactory object
      */
-    private static Artifactory createArtifactory(String username, String password, String repoUrl) {
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(repoUrl)){
+    private static Artifactory createArtifactory(String username, String password, String artifactoryUrl) {
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password) || StringUtils.isEmpty(artifactoryUrl)){
             throw new IllegalArgumentException("Arguments passed to createArtifactory are not valid");
         }
 
         return ArtifactoryClientBuilder.create()
-                .setUrl(repoUrl)
+                .setUrl(artifactoryUrl)
                 .setUsername(username)
                 .setPassword(password)
                 .build();
