@@ -1,10 +1,10 @@
 {
   "files": [
     {
-      "pattern": "jenkins-pipeline-examples/resources/",
+      "pattern": "jenkins-examples/pipeline-examples/resources/",
       "target": "libs-snapshot-local",
       "regexp": "true",
-      "excludePatterns": [".*.zip", "jenkins-pipeline-examples/resources/props.*"]
+      "excludePatterns": [".*.zip", "jenkins-examples/pipeline-examples/resources/props.*"]
     }
   ]
 }

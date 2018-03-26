@@ -1,7 +1,7 @@
 def upSpec = """{
     "files": [
             {
-                "pattern": "jenkins-pipeline-examples/resources/ArtifactoryPipeline.zip",
+                "pattern": "jenkins-examples/pipeline-examples/resources/ArtifactoryPipeline.zip",
                 "target": "libs-snapshot-local"
             }
     ]
@@ -39,7 +39,7 @@ job("job-dsl-artifactory-freestyle-generic-example") {
 
             // === Specify which files to download ===
             downloadSpec {
-                filePath 'jenkins-pipeline-examples/resources/props-download.json' // Spec from a file source
+                filePath 'jenkins-examples/pipeline-examples/resources/props-download.json' // Spec from a file source
             }
 
             deployBuildInfo true // Check if you wish to publish build information to Artifactory.

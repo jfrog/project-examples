@@ -5,7 +5,7 @@ node {
     def server = Artifactory.server SERVER_ID
 
     // Read the upload spec which was downloaded from github.
-    def uploadSpec = readFile 'jenkins-pipeline-examples/resources/exclude-upload.json'
+    def uploadSpec = readFile 'jenkins-examples/pipeline-examples/resources/exclude-upload.json'
     // Upload to Artifactory.
     def buildInfo = server.upload spec: uploadSpec
 
