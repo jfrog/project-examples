@@ -1,0 +1,177 @@
+#!/usr/bin/env groovy
+
+node {
+    //Clone example project from GitHub repository
+    git url: 'https://github.com/jfrogtraining/kubernetes_example.git', branch : 'master'
+    def rtServer = Artifactory.server SERVER_ID
+    def rtDocker = Artifactory.docker server: rtServer
+    def buildInfo = Artifactory.newBuildInfo()
+    def tagName
+    buildInfo.env.capture = true
+    //Fetch all depensencies from Artifactory
+    stage('Dependencies') {
+        dir('docker-framework') {
+            try {
+                println "Gather Java and Tomcat"
+
+                def downloadSpec = """{
+                         "files": [
+                          {
+                           "pattern": "tomcat-local/java/jdk-8u91-linux-x64.tar.gz",
+                           "target": "jdk/jdk-8-linux-x64.tar.gz",
+                           "flat":"true"
+                          },
+                          {
+                           "pattern": "tomcat-local/org/apache/apache-tomcat/apache-tomcat-8.0.32.tar.gz",
+                           "target": "tomcat/apache-tomcat-8.tar.gz",
+                           "flat":"true"
+                          }
+                          ]
+                        }"""
+
+                rtServer.download (downloadSpec, buildInfo)
+                if (fileExists('jdk/jdk-8-linux-x64.tar.gz') && fileExists('tomcat/apache-tomcat-8.tar.gz')) {
+                    println "Downloaded dependencies"
+                } else {
+                    println "Missing Dependencies either jdk or tomcat - see listing below:"
+                    sh 'ls -d */*'
+                    throw new FileNotFoundException("Missing Dependencies")
+                }
+            } catch (Exception e) {
+                println "Caught exception during resolution.  Message ${e.message}"
+                throw e
+            }
+        }
+    }
+    //Build docker image named "docker-framework" with Java 8 and Tomcat
+    stage('Build') {
+        dir ('docker-framework') {
+                sh "sed -i 's/docker.artifactory/${ARTDOCKER_REGISTRY}/' Dockerfile"
+                tagName = "${ARTDOCKER_REGISTRY}/docker-framework:${env.BUILD_NUMBER}"
+                println "Docker Framework Build"
+                docker.build(tagName)
+                println "Docker pushing -->" + tagName + " To " + REPO
+                buildInfo = rtDocker.push(tagName, REPO, buildInfo)
+                println "Docker Buildinfo"
+                rtServer.publishBuildInfo buildInfo
+
+        }
+    }
+    //Test docker image
+    stage('Test') {
+        dir('docker-framework/framework-test') {
+
+            def gradleWarDownload = """{
+            "files": [
+                {
+                  "pattern": "gradle-release-local/org/jfrog/example/gradle/webservice/1.1.2/*.war",
+                  "target": "war/webservice.war",
+                  "props": "unit-test=pass",
+                  "flat": "true"
+                }
+              ]
+            }"""
+
+            rtServer.download(gradleWarDownload)
+            updateDockerFile()
+            def tagDockerFramework = "${ARTDOCKER_REGISTRY}/docker-framework-test:${env.BUILD_NUMBER}"
+            docker.build(tagDockerFramework)
+            if (testFramework(tagDockerFramework)) {
+                println "Setting property and promotion"
+                updateProperty ("functional-test=pass")
+                sh "docker rmi ${tagName}"
+            } else {
+                updateProperty ("functional-test=fail; failed-test=page-not-loaded")
+                currentBuild.result = 'UNSTABLE'
+                sh "docker rmi ${tagName}"
+                return
+            }
+        }
+    }
+    //Scan build's Artifacts in Xray
+    stage('Xray Scan') {
+        if (XRAY_SCAN == "YES") {
+            def xrayConfig = [
+                'buildName'     : env.JOB_NAME,
+                'buildNumber'   : env.BUILD_NUMBER,
+                'failBuild'     : false
+            ]
+            def xrayResults = rtServer.xrayScan xrayConfig
+            echo xrayResults as String
+        } else {
+            println "No Xray scan performed. To enable set XRAY_SCAN = YES"
+        }
+        sleep 60
+    }
+
+    //Promote image from local staging repositoy to production repository
+    stage ('Promote') {
+        dir ('docker-framework') {
+            def promotionConfig = [
+              'buildName'          : env.JOB_NAME,
+              'buildNumber'        : env.BUILD_NUMBER,
+              'targetRepo'         : PROMOTE_REPO,
+              'comment'            : 'Framework test with latest version of application',
+              'sourceRepo'         : SOURCE_REPO,
+              'status'             : 'Released',
+              'includeDependencies': false,
+              'copy'               : true
+            ]
+            rtServer.promote promotionConfig
+            reTagLatest (SOURCE_REPO)
+            reTagLatest (PROMOTE_REPO)
+         }
+    }
+}
+
+def updateDockerFile () {
+    def BUILD_NUMBER = env.BUILD_NUMBER
+    sh "sed -i 's/docker.artifactory/${ARTDOCKER_REGISTRY}/' Dockerfile"
+    sh 'sed -i "s/docker-framework:latest/docker-framework:$BUILD_NUMBER/" Dockerfile'
+}
+
+def reTagLatest (targetRepo) {
+     def BUILD_NUMBER = env.BUILD_NUMBER
+     sh 'sed -E "s/@/$BUILD_NUMBER/" retag.json > retag_out.json'
+     switch (targetRepo) {
+          case PROMOTE_REPO :
+              sh 'sed -E "s/TARGETREPO/${PROMOTE_REPO}/" retag_out.json > retaga_out.json'
+              break
+          case SOURCE_REPO :
+               sh 'sed -E "s/TARGETREPO/${SOURCE_REPO}/" retag_out.json > retaga_out.json'
+               break
+      }
+      sh 'cat retaga_out.json'
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+          def curlString = "curl -u " + env.USERNAME + ":" + env.PASSWORD + " " + SERVER_URL
+          def regTagStr = curlString +  "/api/docker/${SOURCE_REPO}/v2/promote -X POST -H 'Content-Type: application/json' -T retaga_out.json"
+          println "Curl String is " + regTagStr
+          sh regTagStr
+      }
+}
+
+//test docker image by runnning container
+def testFramework (tag) {
+    def result = true
+    docker.image(tag).withRun('-p 8181:8181') {c ->
+        sleep 10
+        //def stdout = sh(script: 'curl "http://localhost:8181/swampup/"', returnStdout: true)
+        //if (stdout.contains("Welcome Docker Lifecycle Training")) {
+            // println "*** Passed Test: " + stdout
+        //} else {
+         //   println "*** Failed Test: " + stdout
+        //    result = false
+        //}
+    }
+    sh "docker rmi ${tag}"
+    return true
+}
+
+def updateProperty (property) {
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+            def curlString = "curl -u " + env.USERNAME + ":" + env.PASSWORD + " " + "-X PUT " + SERVER_URL
+            def updatePropStr = curlString +  "/api/storage/${SOURCE_REPO}/docker-framework/${env.BUILD_NUMBER}?properties=${property}"
+            println "Curl String is " + updatePropStr
+            sh updatePropStr
+     }
+}

@@ -1,0 +1,11 @@
+{
+  "status": "Released",
+  "comment" : "App Image has passed test.",
+  "ciUser": "jfrog",
+  "dryRun" : false,
+  "targetRepo" : "gradle-release-local",
+  "sourceRepo" : "gradle-dev-local",
+  "includeDependencies" : false,
+  "copy" : false,
+  "failFast": false
+}

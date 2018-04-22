@@ -1,0 +1,25 @@
+node {
+
+    stage('Install helm') {
+        /* This installs helm client */
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+          sh "curl -u ${env.USERNAME}:${env.PASSWORD} -O ${SERVER_URL}/generic-local/helm"
+          sh "chmod 777 ./helm"
+        }
+
+    }
+
+    stage('Configure helm & add Artifactory repo') {
+        /* Configure helm client to point to k8s cluster */
+         sh './helm init'
+         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+           sh "./helm repo add artifactory ${SERVER_URL}/helm ${env.USERNAME} ${env.PASSWORD}"
+           sh "./helm repo update"
+         }
+    }
+
+    stage('Deploy chart pulling from Artifactory') {
+        /* Finally, we'll deploy the image to k8s using helm chart. */
+        sh "./helm upgrade my-docker-app --install artifactory/docker-app-chart"
+    }
+}
