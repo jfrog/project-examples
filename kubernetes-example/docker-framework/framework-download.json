@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "aql": {
+        "items.find": {
+          "repo": "tomcat-local",
+          "$and": [
+            {
+              "path": {"$match": "java"},
+              "name": {"$match": "jdk-8u91-linux-x64.tar.gz"},
+              "property.key" : {"$match" : "*.alert.topSeverity"},
+              "property.value" : {"$ne" : "Critical"}
+            }
+          ]
+        }
+      },
+      "target": "jdk/jdk-8-linux-x64.tar.gz",
+      "flat": "true"
+    },
+    {
+      "aql": {
+        "items.find": {
+          "repo": "tomcat-local",
+          "$and": [
+            {
+              "path": {"$match": "org/apache/apache-tomcat"},
+              "name": {"$match": "apache-tomcat-8.0.32.tar.gz"}
+            }
+          ]
+        }
+      },
+      "target": "tomcat/apache-tomcat-8.tar.gz",
+      "flat": "true"
+    }
+  ]
+}

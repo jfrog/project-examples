@@ -1,0 +1,10 @@
+<Server port="8015" shutdown="SHUTDOWN">
+
+    <Service name="Catalina">
+        <Connector port="8181"/>
+
+        <Engine name="Catalina" defaultHost="localhost">
+            <Host name="localhost" appBase="webapps"/>
+        </Engine>
+    </Service>
+</Server>

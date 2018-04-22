@@ -1,0 +1,8 @@
+
+{
+  "targetRepo" : "TARGETREPO",
+  "dockerRepository" : "docker-app",
+  "tag" : "@",
+  "targetTag" : "latest",
+  "copy": true
+}
