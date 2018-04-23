@@ -150,6 +150,7 @@ def reTagLatest (targetRepo) {
       }
 }
 
+// Following test will work only if you have jenkins running outside kubernetes.
 //test docker image by runnning container
 def testFramework (tag) {
     def result = true
