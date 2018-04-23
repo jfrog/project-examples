@@ -67,26 +67,26 @@ Cache docker images of jenkins master and agent in Artifactory by changing value
 ## Step 1. Create an application war file
 * Creates a sample application called ‘webservice-1.1.2.war’
 * Pushes it to a local repository in Artifactory
-* [gradle-example](/gradle-example)
+* [gradle-example](/kubernetes-example/gradle-example)
 
 ## Step 2. Create a template Docker image
 * Creates a base Docker image called ‘docker-framework’ using Ubuntu + Java + Tomcat
 * Pushes it to a local repository in Artifactory
-* [docker-framework](/docker-framework)
+* [docker-framework](/kubernetes-example/docker-framework)
 
 ## Step 3. Create a product Docker image
 * Downloads, from Artifactory, the ‘webservice-1.1.2.war’ file and the ‘docker-framework’ Docker image, that were created in the previous two pipelines
 * Creates a ‘docker-app’ production Docker image
 * Pushes it to Artifactory
 * Promotes it to a production repository in Artifactory
-* [docker-app](/docker-app)
+* [docker-app](/kubernetes-example/docker-app)
 
 ## Step 4. Create Helm chart of product Docker image
 * Create helm chart of `docker-app`
 * Push helm chart in local helm repository in Artifactory
-* [chart](/docker-app-chart)
+* [chart](/kubernetes-example/docker-app-chart)
 
 ## Step 5. Deploy `docker-app` in Kubernetes cluster using helm chart
 * Pull helm chart from Virtual helm repository of Artifactory
 * Deploy `docker-app` in Kubernetes using downloaded helm chart
-* [deploy](/deploy)
+* [deploy](/kubernetes-example/deploy)
