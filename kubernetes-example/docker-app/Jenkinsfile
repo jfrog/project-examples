@@ -98,6 +98,7 @@ node {
      }
 }
 
+// Following test will work only if you have jenkins running outside kubernetes.
 def testApp (tag) {
     docker.image(tag).withRun('-p 9191:8181') {c ->
         sleep 10
