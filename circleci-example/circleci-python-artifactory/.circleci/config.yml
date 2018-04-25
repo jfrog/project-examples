@@ -1,0 +1,24 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:2.7
+    steps:
+      - checkout
+      - run:
+          name: "Setup & Install Dependencies"
+          command: |
+            ./circleci-credential.sh
+            pip install -r requirements.txt
+            curl -fL https://getcli.jfrog.io | sh
+      - deploy:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              python setup.py sdist upload -r local
+              python setup.py bdist_wheel upload -r local
+              # Configure Artifactory instance with JFrog CLI
+              ./jfrog rt config --url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_PASSWORD
+              ./jfrog rt bce circleci-python-artifactory $CIRCLE_BUILD_NUM
+              ./jfrog rt npmp npm-virtual --build-name=circleci-npm-artifactory --build-number=$CIRCLE_BUILD_NUM
+              ./jfrog rt bp circleci-python-artifactory $CIRCLE_BUILD_NUM
+            fi
