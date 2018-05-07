@@ -1,6 +1,9 @@
 # 5 Step CI/CD In Kubernetes using Artifactory, Jenkins & Helm
 
-# Contents
+## Prerequisites
+* Basic knowledge of [Docker](https://www.docker.com/), [Jenkins](https://jenkins.io/), [Kubernetes](https://kubernetes.io/) and [Artifactory](https://www.jfrog.com/artifactory/)
+
+## Setup
 
 - [Setup Kubernetes Cluster on GKE](#setup-kubernetes-cluster-on-gke)
 - [Setup Kubernetes Cluster on AKS](#setup-kubernetes-cluster-on-aks)
@@ -8,17 +11,13 @@
 - [Install Jenkins on kubernetes](#install-jenkins-on-kubernetes)
 - [Configure Continuous Integration/Continuous Deployment](#5-step-cicd)
 
-
-### Prerequisites
-* Basic knowledge of [Docker](https://www.docker.com/), [Jenkins](https://jenkins.io/), [Kubernetes](https://kubernetes.io/) and [Artifactory](https://www.jfrog.com/artifactory/)
-
-## Setup Kubernetes Cluster on GKE
+### Setup Kubernetes Cluster on GKE
 Follow this to setup kubernetes cluster on GKE. [https://cloud.google.com/container-engine/docs/quickstart](https://cloud.google.com/container-engine/docs/quickstart)
 
-## Setup Kubernetes Cluster on AKS
+### Setup Kubernetes Cluster on AKS
 Follow this to setup kubernetes cluster on AKS. [https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster)
 
-## Install Artifactory on kubernetes
+### Install Artifactory on kubernetes
 Here is documentation to install JFrog Artifactory on kubernetes [artifactory-docker-examples](https://github.com/JFrogDev/artifactory-docker-examples/tree/master/kubernetes)<br>
 Here is link to official helm chart for Artifactory [https://github.com/kubernetes/charts/tree/master/stable/artifactory](https://github.com/kubernetes/charts/tree/master/stable/artifactory)
 
@@ -43,7 +42,7 @@ Here is link to official helm chart for Artifactory [https://github.com/kubernet
     docker pull docker.artifactory/node
     ```
 
-## Install Jenkins on kubernetes
+### Install Jenkins on kubernetes
 
 Use [Helm](https://github.com/kubernetes/helm) [Chart](https://github.com/kubernetes/charts) to install [jenkins](https://github.com/kubernetes/charts/tree/master/stable/jenkins) in kubernetes. <br>
 <b>Note</b>: Make sure to increase resources for Jenkins deployment in [values.yaml](https://github.com/kubernetes/charts/blob/master/stable/jenkins/values.yaml) file. Jenkins comes with the Kubernetes plugin..<br>
@@ -90,3 +89,8 @@ Cache docker images of jenkins master and agent in Artifactory by changing value
 * Pull helm chart from Virtual helm repository of Artifactory
 * Deploy `docker-app` in Kubernetes using downloaded helm chart
 * [deploy](/kubernetes-example/deploy)
+
+<br><br><br>
+
+**Benefits:**
+For more information about the benefits of JFrog Artifactory as a [Helm repository](https://jfrog.com/integration/helm-repository/) visit Artifactory's [Helm Chart Repositories documentation page](https://www.jfrog.com/confluence/display/RTF/Helm+Chart+Repositories).
