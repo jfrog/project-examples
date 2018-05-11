@@ -4,3 +4,4 @@
 
 * [Maven](gitlabci-maven-artifactory)
 * [Npm](gitlabci-npm-artifactory)
+* [Docker](gitlabci-docker-artifactory)

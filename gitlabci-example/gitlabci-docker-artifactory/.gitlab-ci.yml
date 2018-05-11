@@ -1,0 +1,35 @@
+# The official Docker-in-Docker image with glibc installed, which is required for the JFrog CLI
+image: arielkv/dind-glibc:latest
+
+services:
+  - docker:dind
+
+before_script:
+  - apk update
+  - apk add go curl
+  # Install Jfrog CLI
+  - curl -fL https://getcli.jfrog.io | sh
+  # Configure Artifactory instance with JFrog CLI
+  - ./jfrog rt config MyArtifactory --url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_PASS
+  # Docker client info
+  - docker info
+  # Login to Artifactory docker registry
+  - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PASS $ARTIFACTORY_DOCKER_REPOSITORY
+
+
+build:
+    stage: build
+    script:
+    # Build docker image
+    - docker build --rm=false -t $ARTIFACTORY_DOCKER_REPOSITORY/artifactory-alpine:$CI_JOB_ID .
+    # Check created docker image
+    - docker run -d -p 8081:8081 $ARTIFACTORY_DOCKER_REPOSITORY/artifactory-alpine:$CI_JOB_ID; sleep 10
+    - docker ps
+    # Push docker image to Artifactory
+    - ./jfrog rt dp $ARTIFACTORY_DOCKER_REPOSITORY/artifactory-alpine:$CI_JOB_ID $DOCKER_REPOSITORY_KEY --build-name=gitlabci-docker-artifactory --build-number=$CI_JOB_ID
+    # Collect build environment variables and build tools information using JFrog CLI
+    - ./jfrog rt bce gitlabci-docker-artifactory $CI_JOB_ID
+    # Publish build information to Artifactory
+    - ./jfrog rt bp gitlabci-docker-artifactory $CI_JOB_ID
+    only:
+    - master
