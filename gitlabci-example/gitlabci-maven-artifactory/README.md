@@ -3,7 +3,7 @@
 ### Follow this step-by-step workflow to Integrate GitLab CI with Artifactory.
 This sample project resolves dependencies from Artifactory and deploys the build artifacts to Artifactory.
 #### Prerequisite
-Artifactory Pro/ Artifactory SAAS  
+Artifactory Pro / Artifactory SAAS  
 
 #### Step 1:
 In the Maven project, configure the following Artifactory credentials, under CI/CD Settings > Secret variables: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, and MAVEN_REPO_KEY.

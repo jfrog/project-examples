@@ -4,7 +4,7 @@
 This sample project resolves dependencies from Artifactory and deploys the build artifacts to Artifactory.
 
 #### Prerequisite
-Artifactory Pro/ Artifactory SAAS
+Artifactory Pro / Artifactory SAAS
 
 #### Step 1:
 In the Docker project, configure the following Artifactory credentials, under CI/CD Settings > Secret variables: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, ARTIFACTORY_DOCKER_REPOSITORY and DOCKER_REPOSITORY_KEY.
