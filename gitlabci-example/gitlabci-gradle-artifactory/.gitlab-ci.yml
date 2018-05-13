@@ -1,0 +1,22 @@
+# This file is a template, and might need editing before it works on your project.
+image: frekele/gradle
+
+before_script:
+  # Install JFrog CLI
+  - curl -fL https://getcli.jfrog.io | sh
+  # Configure Artifactory instance with JFrog CLI
+  - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
+  - ./jfrog rt c show
+  # Replace the repository name in the configuration.yml to the correct one.
+  - sed -i 's,GRADLE_REPO_KEY,'"$GRADLE_REPO_KEY"',g' configuration.yaml
+
+build:
+  script:
+    # Run the Gradle command
+    - ./jfrog rt gradle "clean artifactoryPublish -b build.gradle" configuration.yaml --build-name=gitlabci-gradle-artifactory --build-number=$CI_JOB_ID
+    # Collect the environment variables
+    - ./jfrog rt bce gitlabci-gradle-artifactory $CI_JOB_ID
+    # Pass the build information to Artifactory
+    - ./jfrog rt bp gitlabci-gradle-artifactory $CI_JOB_ID
+  only:
+    - master
