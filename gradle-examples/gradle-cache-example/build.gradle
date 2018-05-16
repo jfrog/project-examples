@@ -32,6 +32,15 @@ allprojects {
   group = 'org.jfrog.example.gradle'
   version = currentVersion
   status = 'Integration'
+  repositories {
+    maven {
+      url "http://localhost:8081/artifactory/jcenter" // The Artifactory (preferably virtual) repository to resolve from
+      credentials {
+        username "${artifactory_user}" // Optional resolver user name (leave out to use anonymous resolution)
+        password "${artifactory_password}" // The resolver password
+      }
+    }
+  }
 }
 
 artifactoryPublish.skip = true
@@ -109,14 +118,6 @@ artifactory {
       }
       publishPom = true // Publish generated POM files to Artifactory (true by default)
       publishIvy = true // Publish generated Ivy descriptor files to Artifactory (true by default)
-    }
-  }
-  resolve {
-    repository {
-      repoKey = 'jcenter' // The Artifactory (preferably virtual) repository key to resolve from
-      username = "${artifactory_user}" // Optional resolver user name (leave out to use anonymous resolution)
-      password = "${artifactory_password}" // The resolver password
-      maven = true     
     }
   }
 }

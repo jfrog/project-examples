@@ -23,6 +23,14 @@ buildscript {
     }
 }
 
+allprojects {
+    repositories {
+        maven {
+            url "http://localhost:8081/artifactory/jcenter"
+        }
+    }
+}
+
 version = currentVersion
 
 apply plugin: 'com.jfrog.artifactory'
@@ -60,8 +68,5 @@ artifactory {
             // Publish generated POM files to Artifactory (true by default)
             publishPom = true
         }
-    }
-    resolve {
-        repoKey = 'jcenter'
     }
 }

@@ -38,6 +38,11 @@ allprojects {
     group = 'org.jfrog.test.gradle.publish'
     version = currentVersion
     status = 'Integration'
+    repositories {
+        maven {
+            url "http://localhost:8081/artifactory/jcenter"
+        }
+    }
 }
 
 artifactoryPublish.skip = true
@@ -123,8 +128,5 @@ artifactory {
             publishPom = true // Publish generated POM files to Artifactory (true by default)
             publishIvy = true // Publish generated Ivy descriptor files to Artifactory (true by default)
         }
-    }
-    resolve {
-        repoKey = 'jcenter'
     }
 }

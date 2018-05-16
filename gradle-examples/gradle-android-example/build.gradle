@@ -91,7 +91,4 @@ artifactory {
             publishPom = true // Publish generated POM files to Artifactory (true by default)
         }
     }
-    resolve {
-        repoKey = 'jcenter'
-    }
 }
