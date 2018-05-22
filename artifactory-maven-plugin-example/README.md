@@ -48,3 +48,7 @@ properties are sent as shown above.
 ## Plugin documentation
 
 The full plugin documentation is available [here](https://www.jfrog.com/confluence/display/RTF/Maven+Artifactory+Plugin).
+
+<br><br>
+
+For more information about managing your maven packages with an [Artifactory Maven repository](https://jfrog.com/integration/maven-repository/) visit [Artifactory's documentation page](https://www.jfrog.com/confluence/display/RTF/Maven+Repository).
