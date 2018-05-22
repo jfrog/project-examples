@@ -27,3 +27,7 @@ You should be able to see published Docker image and build information in Artifa
 ![screenshot](img/Screen_Shot3.png)
 
 ## Note: `This solution only supports Artifactory with valid ssl as Circle CI does not support insecure docker registry `
+
+<br><br>
+
+For more information about the benefits of JFrog Artifactory as a secure and private [Docker registry](https://jfrog.com/integration/docker-registry/) visit [Artifactory's documentation page](https://www.jfrog.com/confluence/display/RTF/Docker+Registry).
