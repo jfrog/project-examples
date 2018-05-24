@@ -140,3 +140,6 @@ The following snippet publishes the build-info to Artifactory.
 </Target>
 ```
 You can read more about the JFrog CLI commands used in the above script [here](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory).
+
+## Managing Nuget Packages
+We are currently working on enhancing this solution, so that it also supports resolution, deployment and build-info collection for nuget package. We will update this example when nuget support is released.
