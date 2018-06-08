@@ -29,12 +29,12 @@ node {
             sh "./jfrog rt npm-publish ${NPM_REPO} --build-name=${env.JOB_NAME} --build-number=${env.BUILD_NUMBER}"
 
         }
+    }
 
-        stage('Publish Build Info') {
-            sh "./jfrog rt bag ${env.JOB_NAME} ${env.BUILD_NUMBER}"
-            sh "./jfrog rt bce ${env.JOB_NAME} ${env.BUILD_NUMBER}"
-            sh "./jfrog rt bp ${env.JOB_NAME} ${env.BUILD_NUMBER}"
-        }
+    stage('Publish Build Info') {
+        sh "./node-version/jfrog rt bag ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+        sh "./node-version/jfrog rt bce ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+        sh "./node-version/jfrog rt bp ${env.JOB_NAME} ${env.BUILD_NUMBER}"
     }
 
     stage('Xray Scan') {
