@@ -23,7 +23,7 @@
     "assert": "latest",
     "semver-regex": "latest",
     "jquery": "1.6.2",
-    "ecstatic": "1.2.0"
+    "dns-sync": "0.1.0"
   },
   "keywords": [
     "npm-version"
