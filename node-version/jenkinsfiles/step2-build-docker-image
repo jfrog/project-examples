@@ -4,6 +4,7 @@ node {
 
     def rtServer = Artifactory.newServer url: ARTIFACTORY_URL, credentialsId: ARTIFACTORY_CREDENTIALS
     def buildInfo = Artifactory.newBuildInfo()
+    buildInfo.env.capture = true
     def rtDocker = Artifactory.docker server: rtServer
     def dockerTag = "${DOCKER_REPO_URL}/node-version:${env.BUILD_NUMBER}"
     def image
