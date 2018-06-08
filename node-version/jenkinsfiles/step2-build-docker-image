@@ -17,23 +17,25 @@ node {
 
     stage('Download dependencies') {
         def latestNodeApp = getNodeAppLatestVersion()
-        sh "mkdir dockerbuild"
-        dir ('dockerbuild') {
-            try {
-                def npmDownload = """{
-                    "files": [
-                      {
-                        "pattern": "${NPM_REPO}/node-version/-/${latestNodeApp}",
-                        "target": "node-version.tgz",
-                        "flat": "true"
-                      }
-                    ]
-                 }"""
-                rtServer.download(npmDownload, buildInfo )
-                sh "tar -xzf node-version.tgz"
-            } catch (Exception e) {
-                println "Caught Exception during resolution. Message ${e.message}"
-                throw e
+        dir ('node-version') {
+            sh "mkdir dockerbuild"
+            dir ('dockerbuild') {
+                try {
+                    def npmDownload = """{
+                        "files": [
+                          {
+                            "pattern": "${NPM_REPO}/node-version/-/${latestNodeApp}",
+                            "target": "node-version.tgz",
+                            "flat": "true"
+                          }
+                        ]
+                     }"""
+                    rtServer.download(npmDownload, buildInfo )
+                    sh "tar -xzf node-version.tgz"
+                } catch (Exception e) {
+                    println "Caught Exception during resolution. Message ${e.message}"
+                    throw e
+                }
             }
         }
     }
