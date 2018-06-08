@@ -64,6 +64,19 @@ node {
         }
     }
 
+    stage('Test Image') {
+        image.withRun('-p 3000:3000') {c ->
+            sleep 10
+            def stdout = sh(script: 'curl "http://localhost:3000/"', returnStdout: true)
+            if (stdout.contains("Package Version is : ")) {
+                println "*** Passed Test: " + stdout
+            } else {
+                println "*** Failed Test: " + stdout
+                result = false
+            }
+        }
+    }
+
     stage('Publish Docker Image to Artifactory') {
         buildInfo = rtDocker.push(dockerTag, DEV_DOCKER_REPO, buildInfo)
     }
