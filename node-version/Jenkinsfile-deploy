@@ -1,0 +1,25 @@
+node {
+
+    stage('Clone repository') {
+        /* Let's make sure we have the repository cloned to our workspace */
+        git url: 'https://github.com/jainishshah17/node-version.git'
+    }
+
+    stage('Install helm') {
+        /* This installs helm client */
+        sh 'wget https://kubernetes-helm.storage.googleapis.com/helm-canary-linux-amd64.tar.gz'
+        sh 'tar -xvzf helm-canary-linux-amd64.tar.gz'
+        sh 'chmod 777 $WORKSPACE/linux-amd64/helm'
+    }
+
+    stage('Configure helm') {
+        /* Configure helm client to point to k8s cluster */
+         sh './linux-amd64/helm init'
+
+    }
+
+    stage('Deploy chart') {
+        /* Finally, we'll deploy the image to k8s using helm chart. */
+        sh './linux-amd64/helm upgrade my-release --install chart/'
+    }
+}

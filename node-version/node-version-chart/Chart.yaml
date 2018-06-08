@@ -1,0 +1,16 @@
+apiVersion: v1
+description: A Helm chart for Kubernetes
+name: node-version-chart
+version: <VERSION>
+keywords:
+  - http
+  - node
+  - web
+  - npm
+home: https://github.com/jfrogtraining/swampup/
+sources:
+  - https://github.com/jfrogtraining/swampup/
+maintainers:
+  - name: elioengcomp
+    email: eliom@jfrog.com
+icon: https://raw.githubusercontent.com/JFrogDev/artifactory-dcos/master/images/jfrog_med.png
