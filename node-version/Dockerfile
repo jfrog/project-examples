@@ -5,17 +5,17 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Bundle app source
-# COPY ./package /usr/src/app
-COPY . /usr/src/app
+COPY ./package /usr/src/app
+COPY ./bin /usr/src/app/bin
 
 # Copy npm configurations
-# COPY npmrc /root/.npmrc
+COPY npmrc /root/.npmrc
 
 # Install app dependencies
 RUN npm install
 
 # Cleanup Artifactory information
-#RUN rm /root/.npmrc
+RUN rm /root/.npmrc
 
 EXPOSE 3000
 
