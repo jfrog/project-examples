@@ -6,6 +6,7 @@ node {
     def buildInfo = Artifactory.newBuildInfo()
     def rtDocker = Artifactory.docker server: rtServer
     def dockerTag = "${DOCKER_REPO_URL}/node-version:${env.BUILD_NUMBER}"
+    def image
 
     stage('Clean workspace') {
         sh "rm -rf ./*"
@@ -56,9 +57,22 @@ node {
                     sh "curl -u$USERNAME:$PASSWORD $ARTIFACTORY_URL/api/npm/auth >> npmrc"
                     docker.withRegistry ("https://${DOCKER_REPO_URL}", ARTIFACTORY_CREDENTIALS) {
                           sh "docker login -u ${USERNAME} -p ${PASSWORD} https://${DOCKER_REPO_URL}"
-                          docker.build(dockerTag)
+                          image = docker.build(dockerTag)
                     }
                 }
+            }
+        }
+    }
+
+    stage('Test Image') {
+        image.withRun('-p 3000:3000') {c ->
+            sleep 10
+            def stdout = sh(script: 'curl "http://localhost:3000/"', returnStdout: true)
+            if (stdout.contains("Package Version is : ")) {
+                println "*** Passed Test: " + stdout
+            } else {
+                println "*** Failed Test: " + stdout
+                result = false
             }
         }
     }
@@ -113,7 +127,7 @@ def getNodeAppLatestVersion () {
             def latest = jsonSlurper.parseText("${latestInfo}")
             return latest.results[0].name
         } catch (Exception e) {
-            println "Caught exception finding lastest docker-app helm chart. Message ${e.message}"
+            println "Caught exception finding lastest node app version. Message ${e.message}"
             throw e
         }
     }
