@@ -1,0 +1,66 @@
+import groovy.json.JsonSlurper
+
+node {
+
+    def latestTag = getLatestStagedDockerImageTag()
+
+    stage ('Clone repository') {
+        git url: 'https://github.com/jfrogtraining/project-examples.git'
+    }
+
+
+    dir('node-version') {
+
+        stage('Download build tools') {
+            sh "curl -fL https://getcli.jfrog.io | sh"
+            sh "chmod +x jfrog"
+        }
+
+        stage('Configure Artifactory') {
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: ARTIFACTORY_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                sh "./jfrog rt config --url $ARTIFACTORY_URL --user $USERNAME --password $PASSWORD"
+            }
+        }
+
+        stage ('Build Helm Chart') {
+            dir ('node-version-chart') {
+                sh "sed -i 's/<VERSION>/0.1.${env.BUILD_NUMBER}/' Chart.yaml"
+                sh "sed -i 's/latest/${latestTag}/g' values.yaml"
+                sh "helm package ./"
+            }
+        }
+
+        stage ('Publish Helm Chart To Artifactory') {
+            sh "jfrog rt u '*.${env.BUILD_NUMBER}.tgz' ${HELM_REPO} --build-name=${env.JOB_NAME} --build-number=${env.BUILD_NUMBER}"
+        }
+
+        stage ('Publish BuildInfo') {
+            sh "jfrog rt bce ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+            sh "jfrog rt dl docker-stage-local/node-version/${latestTag}/manifest.json --build-name=${env.JOB_NAME} --build-number=${env.BUILD_NUMBER}"
+            sh "jfrog rt bp ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+        }
+    }
+}
+
+def getLatestStagedDockerImageTag () {
+    def aqlString = 'items.find ({ "repo":"docker-stage-local","type":"folder","$and":[{"path":{"$match":"node-version*"}},{"path":{"$nmatch":"node-version/latest"}}]}).include("path","created","name").sort({"$desc" : ["created"]}).limit(1)'
+
+    File aqlFile = File.createTempFile("dockerlatest", ".tmp")
+    aqlFile.deleteOnExit()
+
+    aqlFile << aqlString
+
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: ARTIFACTORY_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        def getLatestImage = "curl -u$USERNAME:$PASSWORD -X POST ${ARTIFACTORY_URL}/api/search/aql -T " + aqlFile.getAbsolutePath()
+
+        try {
+            def latestImageInfo = getLatestImage.execute().text
+            def jsonSlurper = new JsonSlurper()
+            def latestImage = jsonSlurper.parseText("${latestImageInfo}")
+            return latestImage ? latestImage.results[0].name:"latest"
+        } catch (Exception e) {
+            println "Caught exception finding lastest docker-app helm chart. Message ${e.message}"
+            throw e
+        }
+    }
+}
