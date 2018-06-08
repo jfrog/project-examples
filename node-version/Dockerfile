@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 
 # Bundle app source
 COPY ./package /usr/src/app
-COPY ./bin /usr/src/app/bin
+COPY www /usr/src/app/bin/www
 
 # Copy npm configurations
 COPY npmrc /root/.npmrc
