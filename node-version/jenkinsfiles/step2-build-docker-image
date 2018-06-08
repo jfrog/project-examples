@@ -50,6 +50,7 @@ node {
     stage('Build Docker Image') {
         dir ('node-version') {
             sh 'cp Dockerfile dockerbuild/Dockerfile'
+            sh 'cp -r bin dockerbuild/bin'
             dir ('dockerbuild') {
                 sh "sed -i 's/FROM.*/FROM ${DOCKER_REPO_URL}\\/node:6/' Dockerfile"
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: ARTIFACTORY_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
