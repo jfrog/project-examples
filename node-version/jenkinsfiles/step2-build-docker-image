@@ -1,0 +1,118 @@
+import groovy.json.JsonSlurper
+
+node {
+
+    def rtServer = Artifactory.newServer url: ARTIFACTORY_URL, credentialsId: ARTIFACTORY_CREDENTIALS
+    def buildInfo = Artifactory.newBuildInfo()
+    def rtDocker = Artifactory.docker server: rtServer
+    def dockerTag = "${DOCKER_REPO_URL}/node-version:${env.BUILD_NUMBER}"
+
+    stage('Clean workspace') {
+        sh "rm -rf ./*"
+    }
+
+    stage('Clone repository') {
+        git url: 'https://github.com/jfrogtraining/project-examples.git'
+    }
+
+    stage('Download dependencies') {
+        def latestNodeApp = getNodeAppLatestVersion()
+        sh "mkdir dockerbuild"
+        dir ('dockerbuild') {
+            try {
+                def npmDownload = """{
+                    "files": [
+                      {
+                        "pattern": "${NPM_REPO}/node-version/-/${latestNodeApp}",
+                        "target": "node-version.tgz",
+                        "flat": "true"
+                      }
+                    ]
+                 }"""
+                rtServer.download(npmDownload, buildInfo )
+                sh "tar -xzf node-version.tgz"
+            } catch (Exception e) {
+                println "Caught Exception during resolution. Message ${e.message}"
+                throw e
+            }
+        }
+    }
+
+    stage('Configure Docker') {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: ARTIFACTORY_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+            sh "docker login -u ${USERNAME} -p ${PASSWORD} http://${DOCKER_REPO_URL}"
+        }
+    }
+
+    stage('Build Docker Image') {
+        dir ('node-version') {
+            sh 'cp Dockerfile dockerbuild/Dockerfile'
+            dir ('dockerbuild') {
+                sh "sed -i 's/FROM.*/FROM ${DOCKER_REPO_URL}\\/node:6/' Dockerfile"
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: ARTIFACTORY_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                    sh "echo \"registry = http://172.17.0.1/artifactory/api/npm/$NPM_REPO/\" > npmrc"
+                    sh "curl -u$USERNAME:$PASSWORD $ARTIFACTORY_URL/api/npm/auth >> npmrc"
+                    docker.withRegistry ("https://${DOCKER_REPO_URL}", ARTIFACTORY_CREDENTIALS) {
+                          sh "docker login -u ${USERNAME} -p ${PASSWORD} https://${DOCKER_REPO_URL}"
+                          docker.build(dockerTag)
+                    }
+                }
+            }
+        }
+    }
+
+    stage('Publish Docker Image to Artifactory') {
+        buildInfo = rtDocker.push(dockerTag, DEV_DOCKER_REPO, buildInfo)
+    }
+
+    stage('Publish Build Info') {
+        rtServer.publishBuildInfo buildInfo
+    }
+
+    stage('Xray Scan') {
+        if (XRAY_SCAN == "YES") {
+             def xrayConfig = [
+                'buildName'     : env.JOB_NAME,
+                'buildNumber'   : env.BUILD_NUMBER,
+                'failBuild'     : (FAIL_BUILD == "YES")
+              ]
+              def xrayResults = rtServer.xrayScan xrayConfig
+              echo xrayResults as String
+         } else {
+              println "No Xray scan performed. To enable set XRAY_SCAN = YES"
+         }
+    }
+
+    stage('Promote Build') {
+        sh "jfrog rt bpr ${env.JOB_NAME} ${env.BUILD_NUMBER} ${STAGING_DOCKER_REPO} --status='Staged'"
+    }
+
+    stage('Cleanup') {
+        sh "docker rmi -f ${dockerTag}"
+        sh "docker rmi -f ${DOCKER_REPO_URL}/node:6"
+    }
+
+}
+
+def getNodeAppLatestVersion () {
+    def aqlString = "items.find ({ \"repo\":\"${NPM_REPO}\",\"type\":\"file\",\"path\":{\"\$match\":\"node-version/-\"}}).include(\"path\",\"created\",\"name\").sort({\"\$desc\" : [\"created\"]}).limit(1)"
+
+    File aqlFile = File.createTempFile("npmlatest", ".tmp")
+    aqlFile.deleteOnExit()
+
+    aqlFile << aqlString
+
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: ARTIFACTORY_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        def getLatest = "curl -u$USERNAME:$PASSWORD -X POST ${ARTIFACTORY_URL}/api/search/aql -T " + aqlFile.getAbsolutePath()
+
+        try {
+            def latestInfo = getLatest.execute().text
+            def jsonSlurper = new JsonSlurper()
+            def latest = jsonSlurper.parseText("${latestInfo}")
+            return latest.results[0].name
+        } catch (Exception e) {
+            println "Caught exception finding lastest docker-app helm chart. Message ${e.message}"
+            throw e
+        }
+    }
+}
