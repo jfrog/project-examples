@@ -106,8 +106,7 @@ node {
     }
 
     stage('Cleanup') {
-        sh "docker rmi -f ${dockerTag}"
-        sh "docker rmi -f ${DOCKER_REPO_URL}/node:6"
+        sh "docker rmi -f ${dockerTag}"        
     }
 
 }
