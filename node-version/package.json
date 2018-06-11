@@ -23,7 +23,7 @@
     "assert": "latest",
     "semver-regex": "latest",
     "jquery": "1.6.2",
-    "dns-sync": "0.1.0"
+    "express-cart": "1.1.6"
   },
   "keywords": [
     "npm-version"
