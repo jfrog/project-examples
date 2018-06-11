@@ -1,4 +1,4 @@
-FROM node:6
+FROM node:6.14.2-jessie
 MAINTAINER eliom@jfrog.com
 
 # Create app directory
