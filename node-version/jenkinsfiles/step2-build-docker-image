@@ -59,7 +59,7 @@ node {
                     sh "curl -u$USERNAME:$PASSWORD $ARTIFACTORY_URL/api/npm/auth >> npmrc"
                     docker.withRegistry ("https://${DOCKER_REPO_URL}", ARTIFACTORY_CREDENTIALS) {
                           sh "docker login -u ${USERNAME} -p ${PASSWORD} https://${DOCKER_REPO_URL}"
-                          image = docker.build(dockerTag)
+                          image = docker.build(dockerTag, "--pull")
                     }
                 }
             }
