@@ -1,4 +1,4 @@
-FROM node:6.14.2-jessie
+FROM node:6.14.2-stretch
 MAINTAINER eliom@jfrog.com
 
 # Create app directory
