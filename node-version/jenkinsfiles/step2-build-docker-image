@@ -103,7 +103,7 @@ node {
          }
     }
 
-    if (XRAY_SCAN != "YES" || !xrayResults.summary.fail_build) {
+    if (XRAY_SCAN != "YES" || xrayResults['summary']['fail_build'] != true) {
 
         stage('Promote Build') {
             sh "jfrog rt bpr ${env.JOB_NAME} ${env.BUILD_NUMBER} ${STAGING_DOCKER_REPO} --status='Staged'"
