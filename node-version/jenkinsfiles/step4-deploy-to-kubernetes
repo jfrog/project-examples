@@ -1,0 +1,16 @@
+node {
+
+    stage ('Setup Helm with Artifactory') {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: ARTIFACTORY_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+            sh "which helm"
+            sh "sudo helm version"
+            sh "sudo helm repo add helm ${ARTIFACTORY_URL}/${HELM_REPO}/ --username $USERNAME --password $PASSWORD"
+            sh "sudo helm repo update"
+        }
+    }
+
+    stage('Deploy chart pulling from Artifactory') {
+        sh "sudo helm upgrade node-version --install helm/node-version-chart --set service.type=NodePort --set service.nodePort=30001 --set image.repository=jfrog.local:5000/node-version"
+    }
+
+}
