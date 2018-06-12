@@ -1,5 +1,4 @@
 FROM node:6.14.2-jfrog
-MAINTAINER eliom@jfrog.com
 
 # Create app directory
 RUN mkdir -p /usr/src/app
