@@ -3,6 +3,10 @@ import groovy.json.JsonSlurper
 node {
 
     def latestTag = getLatestStagedDockerImageTag()
+    
+    stage ('Clean workspace') {
+        sh 'rm -rf ./*'
+    }
 
     stage ('Clone repository') {
         git url: 'https://github.com/jfrogtraining/project-examples.git'
