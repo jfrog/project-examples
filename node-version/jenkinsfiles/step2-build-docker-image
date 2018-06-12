@@ -87,8 +87,6 @@ node {
         rtServer.publishBuildInfo buildInfo
     }
 
-    def xrayResults
-
     stage('Xray Scan') {
         if (XRAY_SCAN == "YES") {
              def xrayConfig = [
@@ -96,19 +94,15 @@ node {
                 'buildNumber'   : env.BUILD_NUMBER,
                 'failBuild'     : (FAIL_BUILD == "YES")
               ]
-              xrayResults = rtServer.xrayScan xrayConfig
+              def xrayResults = rtServer.xrayScan xrayConfig
               echo xrayResults as String
          } else {
               println "No Xray scan performed. To enable set XRAY_SCAN = YES"
          }
     }
 
-    if (XRAY_SCAN != "YES" || xrayResults['summary']['fail_build'] != true) {
-
-        stage('Promote Build') {
-            sh "jfrog rt bpr ${env.JOB_NAME} ${env.BUILD_NUMBER} ${STAGING_DOCKER_REPO} --status='Staged'"
-        }
-
+    stage('Promote Build') {
+        sh "jfrog rt bpr ${env.JOB_NAME} ${env.BUILD_NUMBER} ${STAGING_DOCKER_REPO} --status='Staged'"
     }
 
     stage('Cleanup') {
