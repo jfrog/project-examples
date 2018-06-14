@@ -1,0 +1,18 @@
+include 'my-jwt', 'frameworks:my-jwt-framework-support', 'examples:my-jwt-framework-support-example'
+
+// compile the example projects using a custom gradle file, so that we can have a real standalone project
+// but still have the projects compiled as part of the root build
+def renameExamples(parentProject, examplesDirectory) { 
+    parentProject.children.each { project ->
+        if(examplesDirectory || project.name.endsWith("-example")) {
+            project.buildFileName = 'subproject.build.gradle'
+        }
+        if(!examplesDirectory && project.dir.name.equals("examples")) {
+            examplesDirectory = true
+        }
+        renameExamples(project, examplesDirectory)
+    }
+}
+
+renameExamples(rootProject, false)
+

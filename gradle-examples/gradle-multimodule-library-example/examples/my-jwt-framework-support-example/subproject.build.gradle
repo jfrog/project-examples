@@ -1,0 +1,4 @@
+
+dependencies {
+    compile project(':frameworks:my-jwt-framework-support')
+}

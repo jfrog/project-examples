@@ -1,0 +1,140 @@
+plugins {
+    id 'com.jfrog.artifactory' version '4.7.3' apply false
+    id 'com.github.ben-manes.versions' version '0.17.0' apply false
+    id 'org.owasp.dependencycheck' version '3.2.1' apply false
+    id "com.github.spotbugs" version "1.6.2" apply false
+}
+
+// Split projects into buildable: examples and libraries (including frameworks). 
+// This omits 'wrapper' directories. See also settings.gradle
+ 
+def buildProjects() {
+    subprojects.findAll { new File(it.projectDir, 'build.gradle').file  }
+}
+
+def exampleProjects() {
+    buildProjects().findAll { it.name.endsWith("-example")  }
+}
+
+def libraryProjects() {
+    buildProjects().findAll { !exampleProjects().contains(it)  }
+}
+
+configure(exampleProjects()) {
+    apply plugin: 'java'
+}
+
+configure(libraryProjects()) {
+    apply plugin: 'java-library'
+}
+
+configure(buildProjects()) {
+    apply plugin: 'com.jfrog.artifactory'
+    apply plugin: 'com.github.ben-manes.versions'
+    apply plugin: 'org.owasp.dependencycheck'
+    apply plugin: 'com.github.spotbugs'
+    
+    sourceCompatibility = 1.8
+    
+    ext {
+        junitPlatformVersion = '1.2.0'
+        junitJupiterVersion  = '5.2.0'
+        googleTruthVersion   = '0.40'
+    }
+    
+    test {
+        useJUnitPlatform {
+            includeEngines 'junit-jupiter'
+        }
+    
+        reports {
+            html.enabled = true
+        }
+    }
+
+    dependencies {
+        testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+        testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+
+        testCompile ("com.google.truth:truth:${googleTruthVersion}")
+        testCompile ("com.google.truth.extensions:truth-java8-extension:${googleTruthVersion}")
+    }
+ }
+
+// projects which should be published
+configure(libraryProjects()) {
+    apply plugin: 'maven-publish'
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+    
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }    
+        
+    artifactory {
+        contextUrl = "${my_artifactory_contextUrl}" 
+        publish {
+            repository {
+                repoKey = 'libs-snapshot-local'
+                username = "${my_artifactory_user}"
+                password = "${my_artifactory_password}"
+                maven = true
+            }
+            defaults {
+                publications ('mavenJava')
+            }
+        }    
+    }
+    
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                artifact sourcesJar
+                artifact javadocJar
+            }
+        }
+    }
+}
+ 
+allprojects {
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    eclipse {
+        classpath {
+            downloadSources = true
+            downloadJavadoc = true
+        }
+    }
+
+    // Tell idea to output to build/classes/main instead of /out/
+    idea {
+        module {
+            outputDir file('build/classes/main')
+            testOutputDir file('build/classes/test')
+        }
+    }
+}
+
+artifactory {
+    contextUrl = "${my_artifactory_contextUrl}" 
+    resolve {
+        repository {
+            repoKey = 'libs-snapshot'
+            username = "${my_artifactory_user}"
+            password = "${my_artifactory_password}"
+            maven = true
+        }
+    }  
+}
+

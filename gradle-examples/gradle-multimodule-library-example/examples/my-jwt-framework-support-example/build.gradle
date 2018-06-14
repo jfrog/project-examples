@@ -1,0 +1,72 @@
+
+
+plugins {
+    id 'com.jfrog.artifactory' version '4.7.3'
+    id 'com.github.ben-manes.versions' version '0.17.0'
+    id 'org.owasp.dependencycheck' version '3.2.1'
+    id "com.github.spotbugs" version "1.6.2"
+}
+
+
+sourceCompatibility = 1.8
+
+group='org.gradle.standalone.example'
+version='1.0.0'
+
+
+ext {
+    my-jwt.version = 1.0.0
+    junitPlatformVersion = '1.2.0'
+    junitJupiterVersion  = '5.2.0'
+    googleTruthVersion   = '0.40'
+}
+
+eclipse {
+    classpath {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+// Tell idea to output to build/classes/main instead of /out/
+idea {
+    module {
+        outputDir file('build/classes/main')
+        testOutputDir file('build/classes/test')
+    }
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+    }
+
+    reports {
+        html.enabled = true
+    }
+}
+
+dependencies {
+    compile ("org.gradle.my.example:my-jwt-framework-support:${my-jwt.version}')
+
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+
+    testCompile ("com.google.truth:truth:${googleTruthVersion}")
+    testCompile ("com.google.truth.extensions:truth-java8-extension:${googleTruthVersion}")
+
+}
+
+artifactory {
+    contextUrl = "${my_artifactory_contextUrl}" 
+    resolve {
+        repository {
+            repoKey = 'libs-snapshot'
+            username = "${my_artifactory_user}"
+            password = "${my_artifactory_password}"
+            maven = true
+        }
+    }
+}
+
+
