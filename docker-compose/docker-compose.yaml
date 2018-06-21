@@ -1,0 +1,42 @@
+version: '3'
+services:
+
+  postgresql:
+    image: 'docker.bintray.io/postgres:9.5.2'
+    container_name: 'artifactory_pro_db'
+    ports:
+      - "5432:5432"
+    environment:
+      - 'POSTGRES_DB=artifactory'
+      - 'POSTGRES_USER=artifactory'
+      - 'POSTGRES_PASSWORD=password'
+
+  artifactory:
+    image: 'docker.bintray.io/jfrog/artifactory-pro:6.0.0'
+    container_name: 'artifactory_pro'
+    ports:
+      - "8082:8081"
+    depends_on:
+      - postgresql
+    links:
+      - postgresql
+    volumes:
+      - ./data/artifactory-pro:/var/opt/jfrog/artifactory
+    environment:
+      - 'DB_TYPE=postgresql'
+      - 'DB_USER=artifactory'
+      - 'DB_PASSWORD=password'
+
+  nginx:
+    image: 'docker.bintray.io/jfrog/nginx-artifactory-pro:6.0.0'
+    container_name: artifactory_pro_nginx
+    ports:
+      - "80:80"    
+    depends_on:
+      - artifactory
+    links:
+      - artifactory
+    volumes:
+      - ./data/nginx:/var/opt/jfrog/nginx
+    environment:
+      - 'ART_BASE_URL=http://artifactory:8081/artifactory'  
