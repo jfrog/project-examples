@@ -20,8 +20,6 @@ services:
       - postgresql
     links:
       - postgresql
-    volumes:
-      - ./data/artifactory-pro:/var/opt/jfrog/artifactory
     environment:
       - 'DB_TYPE=postgresql'
       - 'DB_USER=artifactory'
@@ -35,8 +33,6 @@ services:
     depends_on:
       - artifactory
     links:
-      - artifactory
-    volumes:
-      - ./data/nginx:/var/opt/jfrog/nginx
+      - artifactory    
     environment:
       - 'ART_BASE_URL=http://artifactory:8081/artifactory'  
