@@ -2,10 +2,9 @@ node {
 
     stage ('Setup Helm with Artifactory') {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: ARTIFACTORY_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-            sh "which helm"
-            sh "sudo helm version"
-            sh "sudo helm repo add helm ${ARTIFACTORY_URL}/${HELM_REPO}/ --username $USERNAME --password $PASSWORD"
-            sh "sudo helm repo update"
+            sh "helm version"
+            sh "helm repo add helm ${ARTIFACTORY_URL}/${HELM_REPO}/ --username $USERNAME --password $PASSWORD"
+            sh "helm repo update"
         }
     }
 
