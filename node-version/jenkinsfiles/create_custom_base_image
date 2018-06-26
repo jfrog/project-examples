@@ -1,0 +1,48 @@
+node {
+
+    def rtServer = Artifactory.newServer url: ARTIFACTORY_URL, credentialsId: ARTIFACTORY_CREDENTIALS
+    def buildInfo = Artifactory.newBuildInfo()
+    buildInfo.env.capture = true
+    def rtDocker = Artifactory.docker server: rtServer
+    def dockerTag = "${DOCKER_REPO_URL}/node:6.14.2-jfrog"
+    def image
+
+    stage('Clean workspace') {
+        sh "rm -rf ./*"
+    }
+
+    stage('Clone repository') {
+        git url: 'https://github.com/jfrogtraining/project-examples.git'
+    }
+
+    stage('Configure Docker') {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: ARTIFACTORY_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+            sh "docker login -u ${USERNAME} -p ${PASSWORD} http://${DOCKER_REPO_URL}"
+        }
+    }
+
+    stage('Build Docker Image') {
+        dir ('node-version/node-custom-image') {
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: ARTIFACTORY_CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                docker.withRegistry ("https://${DOCKER_REPO_URL}", ARTIFACTORY_CREDENTIALS) {
+                    sh "docker login -u ${USERNAME} -p ${PASSWORD} https://${DOCKER_REPO_URL}"
+                    image = docker.build(dockerTag)
+                }
+            }
+        }
+    }
+
+    stage('Publish Docker Image to Artifactory') {
+        buildInfo = rtDocker.push(dockerTag, DEV_DOCKER_REPO, buildInfo)
+    }
+
+    stage('Publish Build Info') {
+        rtServer.publishBuildInfo buildInfo
+    }
+
+    stage('Promote Build') {
+        sh "jfrog rt bpr ${env.JOB_NAME} ${env.BUILD_NUMBER} ${STAGING_DOCKER_REPO} --status='Staged'"
+    }
+}
+
+
