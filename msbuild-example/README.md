@@ -142,4 +142,26 @@ The following snippet publishes the build-info to Artifactory.
 You can read more about the JFrog CLI commands used in the above script [here](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory).
 
 ## Managing Nuget Packages
-We are currently working on enhancing this solution, so that it also supports resolution, deployment and build-info collection for nuget package. We will update this example when nuget support is released.
+Working with NuGet commands are supported by JFrog CLI since version 1.17.0 
+
+## Running the Example
+### Create NuGet Repositories in Artifactory
+* Create a local NuGet repository named *nuget-local*. 
+* Create a remote NuGet repository named *nuget-remote*.
+* Create a virtual NuGet repository named *nuget-virtual*. 
+* Include *nuget-remote* and *nuget-local* in *nuget-virtual*.
+
+### Build the Solution Using JFrog CLI
+```console
+We'll run the NuGet restore command to fatch all the solution dependencies. 
+If you are not located in the same directory as the solution, you may provide the path to the solution
+with the --solution-root flag. This flag is optional. 
+If not provided, CLI and NuGet will try to find the solution within the working directory.
+> jfrog rt nuget restore nuget-virtual --solution-root={path to the solution} 
+
+You can collect the information for publishing build info by adding the --build.name and --build.number flags for the above command. 
+> jfrog rt nuget restore nuget-virtual --solution-root={path to the solution} --build.name=nuget-build --build.number=1
+
+For publishing the build info please run the following
+> jfrog rt bp nuget-build 1
+```
