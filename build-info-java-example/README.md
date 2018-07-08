@@ -1,5 +1,5 @@
 # build-info-java-example
-This project is an example that demonstrates the ability to create an Artifactory build-info object, deploy it to Artifactory and deploy the build artifact from a filesystem directory to Artifactory by using the [build-info OSS project](https://github.com/JFrogDev/build-info), similar to what the CI/build tools Artifactory plugins do.
+This project is an example that demonstrates the ability to create an Artifactory build-info object, deploy it to Artifactory and deploy the build artifact from a filesystem directory to Artifactory by using the [build-info OSS project](https://github.com/JFrog/build-info), similar to what the CI/build tools Artifactory plugins do.
 
 
 ### Motivation
@@ -14,7 +14,7 @@ You can either run this from your IDE, or on a command line. To run it from your
 In order to run it from the command line, please follow the below instructions:  
 First, clone the code:
 ```
-git clone git@github.com:JFrogDev/project-examples.git
+git clone git@github.com:JFrog/project-examples.git
 ```
 Once you have the code on your machine, run:
 ```mvn install```

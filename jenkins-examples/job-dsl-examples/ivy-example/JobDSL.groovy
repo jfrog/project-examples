@@ -1,6 +1,6 @@
 ivyJob('job-dsl-artifactory-ivy-example') {
     scm {
-        git("https://github.com/JFrogDev/project-examples.git", "master")
+        git("https://github.com/JFrog/project-examples.git", "master")
     }
 
     // === Configure the Ivy builder ===
