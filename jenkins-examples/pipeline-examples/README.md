@@ -32,7 +32,7 @@ and then copy the content of the example's Jenkinsfile into the *Script* text-ar
 In your Jenkins job configuration, set the following:
 * Set *Definition* to "Pipeline script from SCM".
 * Set *SCM* to *Git*.
-* Set *Repository URL* to *https://github.com/JFrogDev/project-examples.git*
+* Set *Repository URL* to *https://github.com/JFrog/project-examples.git*
 * Set *Script Path* to the relative path to the example's Jenkinsfile. For example, for the below *props-example*, set *Script Path* to *jenkins-examples/pipeline-examples/props-example/Jenkinsfile* 
 
 ### Available Examples

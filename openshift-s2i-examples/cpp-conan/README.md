@@ -1,7 +1,7 @@
 # How to containerize C++ applications using Conan and OpenShift S2I #
 
 ## Clone project ##
-``` git clone https://github.com/JFrogDev/project-examples.git && cd project-examples/openshift-s2i-examples/cpp-conan ```
+``` git clone https://github.com/JFrog/project-examples.git && cd project-examples/openshift-s2i-examples/cpp-conan ```
 
 ## Install source-to-image / s2i / sti ##
 Follow the [instructions](https://github.com/openshift/source-to-image#installation) to install s2i
