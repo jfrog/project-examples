@@ -50,6 +50,8 @@
 
 #### Step 2: Create Nodejs project (Build, Deploy, Service and Route Creation templates)
 
+**Note**: Replace `<RT_DOCKER_REPO>` with Artifactory docker registry domain in [Build Config](nodejs-rt-bc.yaml) and [Deployment Config](nodejs-rt-dc.yaml) before running following commands:
+
 *  [Build Config](nodejs-rt-bc.yaml): `oc create -f nodejs-rt-bc.yaml`
 
 *  [Deployment Config](nodejs-rt-dc.yaml): `oc create -f nodejs-rt-dc.yaml`
