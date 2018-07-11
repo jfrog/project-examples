@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: null
+  labels:
+    app: jfrog-springboot-sample-app
+  name: jfrog-springboot-sample-app
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    deploymentconfig: jfrog-springboot-sample-app
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
