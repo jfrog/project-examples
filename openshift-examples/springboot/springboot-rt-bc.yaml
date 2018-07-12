@@ -26,7 +26,7 @@ spec:
       forcePull: true
       from:
         kind: DockerImage
-        name: <RT_DOCKER_REPO>/jorgemoralespou/s2i-java:latest
+        name: <RT_DOCKER_REPO>/fabric8/s2i-java
       pullSecret:
         name: rt-docker-registry
     type: Source

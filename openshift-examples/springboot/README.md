@@ -15,9 +15,10 @@ It is very easy to build and deploy applications developed using Spring Boot to 
 
 1) You have a project on OpenShift created or granted access to one where you can create applications.
 
-2) The BuildConfig.yaml  is using https://github.com/redhat-helloworld-msa/ola as an example for the Spring Boot application to be deployed to OpenShift. This will need to be replaced with the git repo of your spring boot application.
+2) The BuildConfig.yaml uses  https://github.com/redhat-helloworld-msa/ola as an example for the Spring Boot application to be deployed to OpenShift. This will need to be replaced with the git repo of your spring boot application.
 
-3) The BuildConfig.yaml relies on s2i builder that is used to build the spring boot application. There are many s2i java builder images that might be suitable for your project. You can also create your own s2i image. This example uses docker.io/jorgemoralespou/s2i-java:latest as it can be used for both maven and gradle builds. 
+3) The BuildConfig.yaml relies on s2i builder that is used to build the spring boot application. This example uses fabric8/s2i-java docker image.
+ There are many s2i java builder images that might be suitable for your project, some of them can work with both maven and gradle builds. You can also create your own s2i image to meet special requirements.
 
 4) Please replace <RT_DOCKER_REPO> with artifactory docker repo
 
@@ -35,10 +36,10 @@ It is very easy to build and deploy applications developed using Spring Boot to 
 
 #### Step 2: Build, Deploy, Service templates
 
-*  Create a springboot project or of you have already created it, use it(oc project spring-boot-samples) 
+*  Create a springboot project or of you have already created it, use it(oc project spring-boot-samples)
 
 
-*  Build Config: *oc create -f springboot-rt-bc.yaml* 
+*  Build Config: *oc create -f springboot-rt-bc.yaml*
 
 *  Deployment Config: *oc create -f springboot-rt-dc.yaml*
 
@@ -46,7 +47,6 @@ It is very easy to build and deploy applications developed using Spring Boot to 
 
 *  Route  Creation: *oc create -f springboot-rt-route.yaml*
 
-*  Get route and access application via route in browser: `oc get route` 
+*  Get route and access application via route in browser: `oc get route`
 
 From your OpenShift login you can monitor builds and deploys.
-
