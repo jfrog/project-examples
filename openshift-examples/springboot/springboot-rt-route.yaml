@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: jfrog-springboot-sample-app
+spec:
+  port:
+    targetPort: 8080-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: jfrog-springboot-sample-app
+    weight: 100
+  wildcardPolicy: None
+status: { }

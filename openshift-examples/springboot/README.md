@@ -44,6 +44,9 @@ It is very easy to build and deploy applications developed using Spring Boot to 
 
 *  Servce Creation: *oc create -f springboot-rt-svc.yaml*
 
+*  Route  Creation: *oc create -f springboot-rt-route.yaml*
+
+*  Get route and access application via route in browser: `oc get route` 
 
 From your OpenShift login you can monitor builds and deploys.
 
