@@ -1,13 +1,6 @@
-# How to build spring boot project and deploy to OpenShift with JFrog Artifactory #
+# How to build and deploy spring boot applications to OpenShift with JFrog Artifactory #
 
-Spring-boot applications are very commonly used to develop microservices. It is very
-simple to deploy it to an OpenShift kubernetes cluster using JFrog Artifactory as
-a docker registry.
-
-Spring boot application can be developed with a github repository or a local git
-repository. Developer can do continuous commits and trigger builds, but OpenShift
-applications can also be built on these common trigger with artifacts being
-deployed to artifactory as well. Here we lay out the step by step approach to accompish this task.
+It is very easy to build and deploy applications developed using Spring Boot to an OpenShift kubernetes cluster with JFrog Artifactory as Kubernetes registry.
 
 ## Prerequisites Details
 
@@ -20,18 +13,16 @@ deployed to artifactory as well. Here we lay out the step by step approach to ac
 
 ## Assumptions ##
 
-1) You are the owner of or you have write privelges on a github repository or you have cloned a git repository locally and you can build and generate the target files yourself in your own branch.
+1) You have a project on OpenShift created or granted access to one where you can create applications.
 
-2) The BuildConfig.yaml uses a s2i image builder available in docker hub at docker.io/jorgemoralespou/s2i-java:latest. This s2i builder image can be used for both maven and gradle builds. There are many s2i java builder images that might be suitable for your project. You can also create your own image.
+2) The BuildConfig.yaml  is using https://github.com/redhat-helloworld-msa/ola as an example for the Spring Boot application to be deployed to OpenShift. This will need to be replaced with the git repo of your spring boot applicatio.
 
-3) In the spring-boot project root directory you have a Dockerfile that publsihes the fat jar to the docker repository. Please see an example here. https://github.com/redhat-helloworld-msa/ola. If not, s2i image needs to be able to push the built jar to docker repository
+3) The BuildConfig.yaml uses a s2i image builder available in docker hub at docker.io/jorgemoralespou/s2i-java:latest. This s2i builder image can be used for both maven and gradle builds. There are many s2i java builder images that might be suitable for your project. You can also create your own image.
 
-4) You have a project on OpenShift created or granted access to one where you can create applications.
-
-5) In the commands in this README document and in the yaml files, please replace <RT_DECKER_REPO> with artifactory docker url.
+4) Please replace <RT_DOCKER_REPO> with artifactory docker repo
 
 
-## Follow the follwing steps to configure OpenShift to build, package and deploy SpringBoot application##
+## Follow the follwing steps to configure OpenShift to build, package and deploy SpringBoot application
 
 #### Step 1: Create OC Secrets
 

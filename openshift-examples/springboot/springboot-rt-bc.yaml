@@ -12,7 +12,7 @@ spec:
       name: rt-docker-registry
     to:
       kind: DockerImage
-      name: docker-virtual.ocpaws2.jfrog.team/jfrog-springboot-sample-app:latest
+      name: <RT_DOCKER_REPO>/jfrog-springboot-sample-app:latest
   postCommit: {}
   resources: {}
   runPolicy: Serial
@@ -26,7 +26,7 @@ spec:
       forcePull: true
       from:
         kind: DockerImage
-        name: docker-virtual.ocpaws2.jfrog.team/jorgemoralespou/s2i-java:latest
+        name: <RT_DOCKER_REPO>/jorgemoralespou/s2i-java:latest
       pullSecret:
         name: rt-docker-registry
     type: Source

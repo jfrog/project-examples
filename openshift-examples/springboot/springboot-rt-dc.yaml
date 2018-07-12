@@ -32,9 +32,9 @@ spec:
         deploymentconfig: jfrog-springboot-sample-app
     spec:
       containers:
-      - image: docker-virtual.ocpaws2.jfrog.team/jfrog-springboot-sample-app:latest
+      - image: <RT_DOCKER_REPO>/jfrog-springboot-sample-app:latest
         imagePullPolicy: Always
-        name: nodejs-rt
+        name: jfrog-springboot-sample-app
         ports:
         - containerPort: 8080
           protocol: TCP
