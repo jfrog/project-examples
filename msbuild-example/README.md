@@ -145,7 +145,7 @@ You can read more about the JFrog CLI commands used in the above script [here](h
 Up until now, we saw how we can configure our project to resolve and deploy generic files from and to Artifactory and also generate build-info accordingly. Let's see how we can do the same when our project consumes nuget packages as dependencies and/or produces nuget packages. The build-info we'll generate will include all of the project's nuget dependencies, including transitive dependencies, as well as the generated artifacts. Follow these steps to achieve this.
 
 ### Create NuGet Repositories in Artifactory
-From the Artifactory UI, create the following repositories:
+From the Artifactory UI, create the following repositories. You can read more about Nuget repositories in the [Nuget Repositories User Guide](https://www.jfrog.com/confluence/display/RTF/NuGet+Repositories)<br>
 * Local NuGet repository named *nuget-local*. 
 * Remote NuGet repository named *nuget-remote*.
 * Virtual NuGet repository named *nuget-virtual*. 
@@ -173,3 +173,5 @@ Lastly, publish the build-info to Artifactory.
 > jfrog rt bp nuget-build 1
 ```
 As we saw earlier, the above commands can also be embedded in your project's csproj file or be executed by your build script.
+<br><br>
+For more information about integrating [Nuget and Artifactory](https://jfrog.com/integration/nuget-repository/) Using JFrog CLI, also read [Building Nuget Packages with JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingNugetPackages)
