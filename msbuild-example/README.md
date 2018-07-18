@@ -174,4 +174,4 @@ Lastly, publish the build-info to Artifactory.
 ```
 As we saw earlier, the above commands can also be embedded in your project's csproj file or be executed by your build script.
 <br><br>
-For more information about integrating [Nuget and Artifactory](https://jfrog.com/integration/nuget-repository/) Using JFrog CLI, also read [Building Nuget Packages with JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingNugetPackages)
+For more information about [Artifactory as a Nuget repository](https://jfrog.com/integration/nuget-repository/) Using JFrog CLI, also read [Building Nuget Packages with JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingNugetPackages)
