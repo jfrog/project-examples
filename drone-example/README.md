@@ -10,7 +10,7 @@ Artifactory Pro / Artifactory AOL
 
 #### Step 1:
 In your project, configure the following Artifactory credentials, under CI/CD Settings > Secret variables: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASSWORD, and REPOSITORY_KEY.
-![screenshot](img/ScreenShot1.png)
+![screenshot](img/Screenhot1.png)
 
 #### Step 2:
 Place a .drone.yml file in the root of your project, as used in this sample project.
