@@ -1,7 +1,7 @@
 pipeline:
   build:
     image: golang
-    secrets: [ ARTIFACTORY_PASSWORD, ARTIFACTORY_USER, ARTIFACTORY_URL, GO_REPO_KEY ]
+    secrets: [ ARTIFACTORY_PASSWORD, ARTIFACTORY_USER, ARTIFACTORY_URL, REPOSITORY_KEY ]
     commands:
       - echo $GOPATH
       - go get -u golang.org/x/vgo
@@ -11,8 +11,8 @@ pipeline:
       - curl -fL https://getcli.jfrog.io | sh
       - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD
       - ./jfrog rt c show
-    # Chnage the repository name in the configuration.yml to the the GO_REPO_KEY .   
-      - sed -i 's,go_repo_key,'"$go_repo_key"',g' ../configuration.yml
+    # Chnage the repository name in the configuration.yml to the the REPOSITORY_KEY .   
+      - sed -i 's,REPOSITORY_KEY,'"$REPOSITORY_KEY"',g' ../configuration.yml
     # Run the go command with the CLI   
       - ./jfrog rt go build --no-registry
       - ls -ll $GOPATH/src/mod
