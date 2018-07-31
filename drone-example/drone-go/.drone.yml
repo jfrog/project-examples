@@ -21,4 +21,4 @@ pipeline:
     # Collect the environment variables with bce command   
       - ./jfrog rt bce Drone-GO-Demo 1.10.0
     # Publish the build with bp command
-      - ./jfrog rt bp Drone-GO-Demo 1.10.
+      - ./jfrog rt bp Drone-GO-Demo 1.10.0
