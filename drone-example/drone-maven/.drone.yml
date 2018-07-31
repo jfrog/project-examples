@@ -1,7 +1,7 @@
 pipeline:
   build:
     image: maven
-    secrets: [ ARTIFACTORY_PASSWORD, ARTIFACTORY_USER, ARTIFACTORY_URL, MAVEN_REPO_KEY ]
+    secrets: [ ARTIFACTORY_PASSWORD, ARTIFACTORY_USER, ARTIFACTORY_URL, REPOSITORY_KEY ]
     commands:
     # Download the JFrog CLI 
       - curl -fL https://getcli.jfrog.io | sh
@@ -9,8 +9,8 @@ pipeline:
       - ./jfrog rt c show
     # Set the M2_HOME EV  
       - export M2_HOME=/usr/share/maven
-    # Chnage the repository name in the configuration.yml to the the MAVEN_REPO_KEY.   
-      - sed -i 's,MAVEN_REPO_KEY,'"$MAVEN_REPO_KEY"',g' configuration.yml
+    # Chnage the repository name in the configuration.yml to the the REPOSITORY_KEY.   
+      - sed -i 's,REPOSITORY_KEY,'"$REPOSITORY_KEY"',g' configuration.yml
     # Run the maven command with the CLI  
       - ./jfrog rt mvn "clean install" configuration.yml --build-name=Drone_Maven_demo --build-number=1.1.0
     # Collect the environment variables with bce command
