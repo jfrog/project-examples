@@ -34,6 +34,14 @@ It is very easy to build and deploy applications developed using Spring Boot to 
    *   *oc secrets add serviceaccount/builder secrets/rt-docker-registry*
    *   *oc secrets add serviceaccount/deployer secrets/rt-docker-registry*
 
+
+   * Create OC secret for your settings.xml that is configured to use artifactory and make it available for s2i builder
+     *   *oc create secret generic settings-secret --from-file=settings.xml=`pwd`/settings.xml
+   *  Link settings-secret to atleast 3 service accounts -
+      *   *oc secrets add serviceaccount/default secrets/settings-secret --for=pull*
+      *   *oc secrets add serviceaccount/builder secrets/settings-secret*
+      *   *oc secrets add serviceaccount/deployer secrets/settings-secret*
+
 #### Step 2: Build, Deploy, Service templates
 
 *  Create a springboot project or of you have already created it, use it(oc project spring-boot-samples)

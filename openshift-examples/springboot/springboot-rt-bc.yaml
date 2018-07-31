@@ -20,9 +20,15 @@ spec:
     git:
       ref: master
       uri: https://github.com/redhat-helloworld-msa/ola
+    - destinationDir: /tmp
+      secret:
+         name: settings-secret
     type: Git
   strategy:
     sourceStrategy:
+      env:
+        - name: MAVEN_ARGS_APPEND
+          value: '-s /tmp/settings.xml'
       forcePull: true
       from:
         kind: DockerImage
