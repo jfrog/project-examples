@@ -1,0 +1,22 @@
+{
+  "name": "drone-npm-artifactory",
+  "version": "1.0.0",
+  "description": "Integrating JFrog Artifactory with Drone CI",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/batelt/drone-npm-artifactory.git"
+  },
+  "keywords": [
+    "NPM"
+  ],
+  "author": "Batel Tova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/batelt/drone-npm-artifactory/issues"
+  },
+  "homepage": "https://github.com/batelt/drone-npm-artifactory#readme"
+}
+
+
+

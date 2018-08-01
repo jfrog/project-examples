@@ -1,0 +1,25 @@
+ppeline:
+  build:
+    image: golang
+    secrets: [ ARTIFACTORY_PASSWORD, ARTIFACTORY_USER, ARTIFACTORY_URL, REPOSITORY_KEY ]
+    commands:
+      - echo $GOPATH
+      - go get -u golang.org/x/vgo
+      - export vgo=$GOPATH/bin/vgo
+      - cd hello
+    # Download the JFrog CLI 
+      - curl -fL https://getcli.jfrog.io | sh
+      - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD
+      - ./jfrog rt c show
+    # Change the repository name in the configuration.yml to the the REPOSITORY_KEY .   
+      - sed -i 's,REPOSITORY_KEY,'"$REPOSITORY_KEY"',g' ../configuration.yml
+    # Run the go command with the CLI   
+      - ./jfrog rt go build --no-registry
+      - ls -ll $GOPATH/src/mod
+      - ./jfrog rt go build go
+      - ./jfrog rt gp go-local v1.10.0 --build-name=Drone-GO-Demo --build-number=1.10.0
+    # Collect the environment variables with bce command   
+      - ./jfrog rt bce Drone-GO-Demo 1.10.0
+    # Publish the build with bp command
+      - ./jfrog rt bp Drone-GO-Demo 1.10.0
+
