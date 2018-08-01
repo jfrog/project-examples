@@ -1,0 +1,8 @@
+version: 1
+type: gradle
+resolver:
+  repo: REPOSITORY_KEY
+  serverID: Default-Server
+deployer:
+  repo: REPOSITORY_KEY
+  serverID: Default-Server

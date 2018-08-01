@@ -1,0 +1,17 @@
+pipeline:
+  build:
+    image: node:latest
+    secrets: [ ARTIFACTORY_PASSWORD, ARTIFACTORY_USER, ARTIFACTORY_URL, REPOSITORY_KEY ]
+    commands:
+    # Download the JFrog CLI  
+      - curl -fL https://getcli.jfrog.io | sh
+      - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD
+      - ./jfrog rt c show
+    # Run the go command with the CLI   
+      - ./jfrog rt npmi $REPOSITORY_KEY --build-name=drone-npm-artifactory --build-number=1.0.0
+    # Collect the environment variables
+      - ./jfrog rt bce gitlabci-npm-artifactory 1.0.0
+      # Publish the package
+      - ./jfrog rt npmp $REPOSITORY_KEY --build-name=drone-npm-artifactory --build-number=1.0.0
+      # Pass the build information to Artifactory
+      - ./jfrog rt bp drone-npm-artifactory 1.0.0   

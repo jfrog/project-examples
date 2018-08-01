@@ -1,0 +1,17 @@
+pipeline:
+  build:
+    image: frekele/gradle
+    secrets: [ ARTIFACTORY_PASSWORD, ARTIFACTORY_USER, ARTIFACTORY_URL, REPOSITORY_KEY ]
+    commands:
+       # Install the JFrog CLI
+      - curl -fL https://getcli.jfrog.io | sh
+      - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD
+      - ./jfrog rt c show
+        # Change the repository name in the configuration.yml to the the REPOSITORY_KEY .
+      - sed -i 's,REPOSITORY_KEY,'"$REPOSITORY_KEY"',g' configuration.yml
+         # Run the gradle command with the CLI
+      - ./jfrog rt gradle "clean artifactoryPublish -b build.gradle" configuration.yml --build-name=Drone-Gradle-Demo --build-number=1.1.0
+        # Collect the environment variables with bce command
+      - ./jfrog rt bce Drone-Gradle-Demo 1.1.0
+        # Publish the build with bp command
+      - ./jfrog rt bp Drone-Gradle-Demo 1.1.0

@@ -1,0 +1,11 @@
+
+version: 1
+type: maven
+resolver:
+  snapshotRepo: REPOSITORY_KEY
+  releaseRepo: REPOSITORY_KEY
+  serverID: Default-Server
+deployer:
+  snapshotRepo: REPOSITORY_KEY
+  releaseRepo: REPOSITORY_KEY
+  serverID: Default-Server
