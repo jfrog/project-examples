@@ -1,0 +1,11 @@
+version: 1
+type: go
+resolver:
+  snapshotRepo: repository_key
+  releaseRepo: repository_key
+  serverID: Default-Server
+deployer:
+  snapshotRepo: repository_key
+  releaseRepo: repository_key
+  serverID: Default-Server
+
