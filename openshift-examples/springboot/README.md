@@ -51,7 +51,7 @@ It is very easy to build and deploy applications developed using Spring Boot to 
 
 *  Deployment Config: *oc create -f springboot-rt-dc.yaml*
 
-*  Servce Creation: *oc create -f springboot-rt-svc.yaml*
+*  Service Creation: *oc create -f springboot-rt-svc.yaml*
 
 *  Route  Creation: *oc create -f springboot-rt-route.yaml*
 
