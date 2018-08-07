@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  creationTimestamp: null
+  labels:
+    app: jfrog-springboot-sample-app
+  name: jfrog-springboot-sample-app
+spec:
+  nodeSelector: null
+  output:
+    pushSecret:
+      name: rt-docker-registry
+    to:
+      kind: DockerImage
+      name: <RT_DOCKER_REPO>/jfrog-springboot-sample-app:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: https://github.com/redhat-helloworld-msa/ola
+    - destinationDir: /tmp
+      secret:
+         name: settings-secret
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+        - name: MAVEN_ARGS_APPEND
+          value: '-s /tmp/settings.xml'
+      forcePull: true
+      from:
+        kind: DockerImage
+        name: <RT_DOCKER_REPO>/fabric8/s2i-java
+      pullSecret:
+        name: rt-docker-registry
+    type: Source
+  triggers:
+  - github:
+      secret: "${GITHUB_WEBHOOK_SECRET}"
+    type: GitHub
+  - generic:
+      secret: "${GENERIC_WEBHOOK_SECRET}"
+    type: Generic
+  - type: ConfigChange

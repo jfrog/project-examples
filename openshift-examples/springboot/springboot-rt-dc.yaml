@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: jfrog-springboot-sample-app
+  name: jfrog-springboot-sample-app
+spec:
+  replicas: 1
+  selector:
+    app: jfrog-springboot-sample-app
+    deploymentconfig: jfrog-springboot-sample-app
+  strategy:
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftWebConsole
+      creationTimestamp: null
+      labels:
+        app: jfrog-springboot-sample-app
+        deploymentconfig: jfrog-springboot-sample-app
+    spec:
+      containers:
+      - image: <RT_DOCKER_REPO>/jfrog-springboot-sample-app:latest
+        imagePullPolicy: Always
+        name: jfrog-springboot-sample-app
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: rt-docker-registry
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+  - type: ConfigChange
+

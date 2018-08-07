@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  creationTimestamp: null
+  labels:
+    app: openshift-nodejs-artifactory
+  name: openshift-nodejs-artifactory
+spec:
+  nodeSelector: null
+  output:
+    pushSecret:
+      name: rt-docker-registry
+    to:
+      kind: DockerImage
+      name: <RT_DOCKER_REPO>/node-version:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: https://github.com/jainishshah17/node-version.git
+    secrets:
+    - destinationDir: /etc
+      secret:
+        name: secret-npmrc
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+      - name: npm_config_userconfig
+        value: /usr/src/app/.npmrc
+      forcePull: true
+      from:
+        kind: DockerImage
+        name: <RT_DOCKER_REPO>/centos/nodejs-4-centos7:latest
+      pullSecret:
+        name: rt-docker-registry
+    type: Source
+  triggers:
+  - github:
+      secret: "${GITHUB_WEBHOOK_SECRET}"
+    type: GitHub
+  - generic:
+      secret: "${GENERIC_WEBHOOK_SECRET}"
+    type: Generic
+  - type: ConfigChange
