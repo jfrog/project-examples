@@ -2,14 +2,14 @@
 
 ## Overview
 Go repositories are supported by Artifactory since version 5.11.0.
-To work with Go repositories you need to use [JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory) and [vgo](https://research.swtch.com/vgo).
-This sample project demonstrates how to work with Go repositories in Artifactory.
+To work with Go repositories you need to use [JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory) and the Go client.
 
 ## Prerequisite
-* Install vgo. Read more about vgo [here](https://research.swtch.com/vgo).
+* Install version 1.11 or above of Go (before Go 1.11 is released, please install one of its release candidates).
+* Make sure the **go** command is in your PATH.
 * Install [JFrog CLI](https://jfrog.com/getcli/)
 * Make sure your Artifactory version is 5.11.0 or above
-* Make sure your JFrog CLI version is 1.15.0 or above
+* Make sure your JFrog CLI version is 1.18.0 or above
 
 ## Running the Example
 ### Create Go Repositories in Artifactory
@@ -33,7 +33,7 @@ Now that we fetched the project dependencies from github, let's push them to Art
 Future builds will not need to run this command and also the previous one.
 > jfrog rt gp go-local --self=false --deps=ALL
 
-Build the project with vgo and resolve the project dependencies from Artifactory.
+Build the project with go and resolve the project dependencies from Artifactory.
 > jfrog rt go build go-virtual 
 
 Publish the package we build to Artifactory.
