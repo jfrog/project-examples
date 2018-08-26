@@ -45,3 +45,4 @@ Complete the seed job configuration in your Jenkins seed job configuration:
 * [maven-example](maven-example): Demonstrates a seed-job that creates a [maven-job](https://www.jfrog.com/confluence/display/RTF/Jenkins+Artifactory+Plug-in#JenkinsArtifactoryPlug-in-ConfiguringMaven2andMaven3Builds).
 * [pipeline-example](pipeline-example): Demonstrates a seed-job that creates a [pipeline-job](https://www.jfrog.com/confluence/display/RTF/Working+With+Pipeline+Jobs+in+Jenkins).
 
+Learn more about the benefits of [Artifactory’s integration with Jenkins CI](https://jfrog.com/integration/jenkins-ci/).
