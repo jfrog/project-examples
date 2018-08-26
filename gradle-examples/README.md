@@ -69,3 +69,5 @@ After downloading the correct Gradle version, it will take about about 11s and p
 tests execution, you should see the message `Executing heavy fake test`. 
 Then if you try it from a different environment, or simply rebuild with `./gradlew clean build`, 
 it will skip the test task, fetch the cache from Artifactory instead and should take about 1s.
+
+Read more information about [Gradle repository](https://jfrog.com/integration/gradle-repository/) and [Gradle Artifactory plugin](https://www.jfrog.com/confluence/display/RTF/Gradle+Artifactory+Plugin).

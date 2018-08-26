@@ -53,3 +53,4 @@ Here are the available examples.
 * The [maven-container-example](maven-container-example) demonstrates how to run Maven in a Docker container.
 * The [gradle-container-example](gradle-container-example) demonstrates how to run Gradle in a Docker container.
 
+Learn more about [working with pipeline jobs in Jenkins](https://www.jfrog.com/confluence/display/RTF/Working+With+Pipeline+Jobs+in+Jenkins) and the benefits of [Artifactory’s integration with Jenkins CI](https://jfrog.com/integration/jenkins-ci/).

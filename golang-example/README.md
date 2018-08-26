@@ -45,3 +45,5 @@ Collect environment variabkes and add them to the build info.
 Publish the build info to Artifactory.
 > jfrog rt bp my-build 1
 ```
+
+Learn about [building go packages](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingGoPackages) and about Artifactory and [go registry](https://jfrog.com/integration/go-registry/) integration.

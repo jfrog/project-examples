@@ -91,3 +91,5 @@ You should be able to see published artifacts and build info in artifactory.
 ## Plugin documentation
 
 The full plugin documentation is available [here](https://www.jfrog.com/confluence/display/RTF/Maven+Artifactory+Plugin).
+
+Learn about Artifactory as a [maven repository](https://jfrog.com/integration/maven-repository/) and [how to resolve artifacts through Artifactory](https://www.jfrog.com/confluence/display/RTF/Maven+Repository#MavenRepository-ResolvingArtifactsthroughArtifactory).
