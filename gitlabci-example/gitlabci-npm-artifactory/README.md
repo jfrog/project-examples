@@ -18,3 +18,4 @@ You can view the published artifacts and build information in Artifactory.
 ![screenshot](img/Screen_Shot2.png)
 
 Find out more about using the [NPM command line](https://www.jfrog.com/confluence/display/RTF/Npm+Registry#NpmRegistry-UsingtheNpmCommandLine) and also about [Artifactory as an NPM registry](https://jfrog.com/integration/npm-registry/).
+Also read about [JFrog CLI's integration with NPM](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingNpmPackages).
