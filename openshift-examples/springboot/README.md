@@ -36,7 +36,9 @@ It is very easy to build and deploy applications developed using Spring Boot to 
 
 
    * Create OC secret for your settings.xml that is configured to use artifactory and make it available for s2i builder
-     *   *oc create secret generic settings-secret --from-file=settings.xml=`pwd`/settings.xml
+      *   *oc create secret generic settings-secret --from-file=settings.xml=./settings.xml*
+
+      
    *  Link settings-secret to atleast 3 service accounts -
       *   *oc secrets add serviceaccount/default secrets/settings-secret --for=pull*
       *   *oc secrets add serviceaccount/builder secrets/settings-secret*
