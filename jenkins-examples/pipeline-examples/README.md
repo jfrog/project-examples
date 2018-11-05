@@ -12,9 +12,13 @@ Follow the below steps to run the examples.
 
 ### Step 1 - Configure Artifactory Server for the Examples
 All examples use an Artifactory server defined in Manage Jenkins, Configure System.
-The server is retrieved by the examples as follows:
+The server is retrieved by the examples as follows in scripted pipeline:
 ```
 def server = Artifactory.server SERVER_ID
+```
+Declarative pipeline:
+```
+serverId: SERVER_ID
 ```
 To set server ID for examples, follow these steps:
 * Find or configure an Artifactory server in Jenkins through Manage Jenkins, Configure System.
