@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Clone') {
+            steps {
+                git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
+            }
+        }
+
+        stage ('Excluded upload') {
+            steps {
+                rtUpload (
+                    serverId: SERVER_ID,
+                    specPath: 'jenkins-examples/pipeline-examples/resources/exclude-upload'
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: SERVER_ID
+                )
+            }
+        }
+    }
+}
