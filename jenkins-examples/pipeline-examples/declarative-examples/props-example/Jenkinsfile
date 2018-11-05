@@ -8,11 +8,20 @@ pipeline {
             }
         }
 
-        stage ('Excluded upload') {
+        stage ('Upload') {
             steps {
                 rtUpload (
                     serverId: SERVER_ID, // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
-                    specPath: 'jenkins-examples/pipeline-examples/resources/exclude-upload.json'
+                    specPath: 'jenkins-examples/pipeline-examples/resources/props-upload.json'
+                )
+            }
+        }
+
+        stage ('Download') {
+            steps {
+                rtDownload (
+                    serverId: SERVER_ID,
+                    specPath: 'jenkins-examples/pipeline-examples/resources/props-download.json'
                 )
             }
         }

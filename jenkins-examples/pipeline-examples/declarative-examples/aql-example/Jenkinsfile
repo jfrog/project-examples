@@ -8,20 +8,33 @@ pipeline {
             }
         }
 
-        stage ('Upload') {
+        stage ('Config Build Info') {
             steps {
-                rtUpload (
-                    serverId: SERVER_ID, // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
-                    specPath: 'jenkins-examples/pipeline-examples/resources/props-upload.json'
+                rtBuildInfo (
+                    buildName: 'holyFrog',
+                    buildNumber: '42'
                 )
             }
         }
 
-        stage ('Excluded download') {
+        stage ('Upload') {
+            steps {
+                rtUpload (
+                    buildName: 'holyFrog',
+                    buildNumber: '42',
+                    serverId: SERVER_ID, // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+                    specPath: 'jenkins-examples/pipeline-examples/resources/recursive-flat-upload.json'
+                )
+            }
+        }
+
+        stage ('Download') {
             steps {
                 rtDownload (
+                    buildName: 'holyFrog',
+                    buildNumber: '42',
                     serverId: SERVER_ID,
-                    specPath: 'jenkins-examples/pipeline-examples/resources/exclude-download.json'
+                    specPath: 'jenkins-examples/pipeline-examples/resources/aql-download.json'
                 )
             }
         }
@@ -29,6 +42,8 @@ pipeline {
         stage ('Publish build info') {
             steps {
                 rtPublishBuildInfo (
+                    buildName: 'holyFrog',
+                    buildNumber: '42',
                     serverId: SERVER_ID
                 )
             }

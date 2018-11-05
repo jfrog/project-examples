@@ -1,0 +1,54 @@
+node {
+    stage 'Build'
+    git url: 'https://github.com/JFrog/project-examples.git'
+
+    // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+    def server = Artifactory.server SERVER_ID
+
+    // Create the upload spec.
+    def uploadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-upload.json'
+
+    // Upload to Artifactory.
+    def buildInfo1 = server.upload spec: uploadSpec
+
+    // Publish the build to Artifactory
+    server.publishBuildInfo buildInfo1
+
+    // Create the download spec.
+    def downloadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-download.json'
+
+    // Download from Artifactory.
+    def buildInfo2 = server.download spec: downloadSpec
+
+    // Publish the build to Artifactory
+    server.publishBuildInfo buildInfo2
+
+    stage 'Promotion'
+    def promotionConfig1 = [
+        //Mandatory parameters
+        'buildName'          : buildInfo1.name,
+        'buildNumber'        : buildInfo1.number,
+
+        //Optional parameters
+        'targetRepo'         : 'libs-release-local',
+        'comment'            : 'this is the promotion comment',
+        'sourceRepo'         : 'libs-snapshot-local',
+        'status'             : 'Released',
+        'includeDependencies': true,
+        'failFast'           : true,
+        'copy'               : true
+    ]
+
+    // Promote build 1
+    Artifactory.addInteractivePromotion server: server, promotionConfig: promotionConfig1, displayName: "Promote me please"
+
+    def promotionConfig2 = [
+        //Mandatory parameters
+        'buildName'          : buildInfo2.name,
+        'buildNumber'        : buildInfo2.number,
+        'targetRepo'         : 'libs-release-local'
+    ]
+
+    // Promote build 2
+    Artifactory.addInteractivePromotion server: server, promotionConfig: promotionConfig2
+}

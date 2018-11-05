@@ -9,19 +9,19 @@ node {
 
     stage ('Artifactory configuration') {
         rtGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
-        rtGradle.deployer repo:'libs-snapshot-local',  server: server
-        rtGradle.resolver repo:'jcenter', server: server
+        rtGradle.deployer repo: 'libs-snapshot-local', server: server
+        rtGradle.resolver repo: 'jcenter', server: server
     }
 
-    withEnv(['DONT_COLLECT=FOO']) {
+    withEnv (['DONT_COLLECT=FOO']) {
         stage ('Config Build Info') {
             buildInfo.env.capture = true
-            buildInfo.env.filter.addInclude("*")
-            buildInfo.env.filter.addExclude("DONT_COLLECT*")
+            buildInfo.env.filter.addInclude ("*")
+            buildInfo.env.filter.addExclude ("DONT_COLLECT*")
         }
 
         stage ('Extra gradle configurations') {
-            rtGradle.deployer.artifactDeploymentPatterns.addExclude("*.war")
+            rtGradle.deployer.artifactDeploymentPatterns.addExclude ("*.war")
             rtGradle.usesPlugin = true // Artifactory plugin already defined in build script
         }
 
