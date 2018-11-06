@@ -67,8 +67,11 @@ project('library') {
 artifactory {
     clientConfig.setIncludeEnvVars(true)
     clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new Date().toString())
-
+<!-- 
     contextUrl = 'http://localhost:8081/artifactory'
+    -->
+    
+    contextUrl = 'http://localhost:8081/repository/Releases'
     publish {
         repository {
             repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
