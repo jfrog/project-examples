@@ -8,15 +8,6 @@ pipeline {
             }
         }
 
-        stage ('Configure build info') {
-            steps {
-                rtBuildInfo (
-                    buildName: 'MK',
-                    buildNumber: '48'
-                )
-            }
-        }
-
         stage ('Upload') {
             steps {
                 rtUpload (

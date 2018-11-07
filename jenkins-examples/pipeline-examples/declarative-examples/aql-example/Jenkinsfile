@@ -8,15 +8,6 @@ pipeline {
             }
         }
 
-        stage ('Config Build Info') {
-            steps {
-                rtBuildInfo (
-                    buildName: 'holyFrog',
-                    buildNumber: '42'
-                )
-            }
-        }
-
         stage ('Upload') {
             steps {
                 rtUpload (
