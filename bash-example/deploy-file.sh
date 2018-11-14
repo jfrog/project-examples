@@ -28,7 +28,7 @@ if command -v sha256sum > /dev/null && command -v sha1sum > /dev/null && command
     md5Value="$(md5sum "$localFilePath")"
     md5Value="${md5Value:0:32}"
     sha1Value="$(sha1sum "$localFilePath")"
-    sha1Value="${md5Value:0:40}"
+    sha1Value="${sha1Value:0:40}"
     sha256Value="$(sha256sum "$localFilePath")"
     sha256Value="${sha256Value:0:65}"
 elif command -v openssl > /dev/null; then
