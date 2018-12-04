@@ -1,0 +1,13 @@
+{
+  "name": "npm-example",
+  "version": "0.0.3",
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "debug": "3.1.0"
+  },
+  "devDependencies": {
+    "send": "0.1.0"
+  }
+}
