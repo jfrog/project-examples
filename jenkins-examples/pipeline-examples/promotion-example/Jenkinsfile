@@ -1,41 +1,49 @@
 node {
-    stage 'Build'
-    git url: 'https://github.com/JFrog/project-examples.git'
+    def server
+    def uploadSpec
+    def buildInfo
+    def downloadSpec
+    def promotionConfig
 
-    // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
-    def server = Artifactory.server SERVER_ID
+    stage ('Build') {
+        git url: 'https://github.com/JFrog/project-examples.git'
 
-    // Create the upload spec.
-    def uploadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-upload.json'
+        // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+        server = Artifactory.server SERVER_ID
 
-    // Upload to Artifactory.
-    def buildInfo = server.upload spec: uploadSpec
+        // Create the upload spec.
+        uploadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-upload.json'
 
-    // Create the download spec.
-    def downloadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-download.json'
+        // Upload to Artifactory.
+        buildInfo = server.upload spec: uploadSpec
 
-    // Download from Artifactory.
-    server.download spec: downloadSpec, buildInfo: buildInfo
+        // Create the download spec.
+        downloadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-download.json'
 
-    // Publish the build to Artifactory
-    server.publishBuildInfo buildInfo
+        // Download from Artifactory.
+        server.download spec: downloadSpec, buildInfo: buildInfo
 
-    stage 'Promotion'
-    def promotionConfig = [
-        //Mandatory parameters
-        'buildName'          : buildInfo.name,
-        'buildNumber'        : buildInfo.number,
-        'targetRepo'         : 'libs-release-local',
+        // Publish the build to Artifactory
+        server.publishBuildInfo buildInfo
+    }
 
-        //Optional parameters
-        'comment'            : 'this is the promotion comment',
-        'sourceRepo'         : 'libs-snapshot-local',
-        'status'             : 'Released',
-        'includeDependencies': true,
-        'failFast'           : true,
-        'copy'               : true
-    ]
+    stage ('Promotion') {
+        promotionConfig = [
+            //Mandatory parameters
+            'buildName'          : buildInfo.name,
+            'buildNumber'        : buildInfo.number,
+            'targetRepo'         : 'libs-release-local',
 
-    // Promote build
-    server.promote promotionConfig
+            //Optional parameters
+            'comment'            : 'this is the promotion comment',
+            'sourceRepo'         : 'libs-snapshot-local',
+            'status'             : 'Released',
+            'includeDependencies': true,
+            'failFast'           : true,
+            'copy'               : true
+        ]
+
+        // Promote build
+        server.promote promotionConfig
+    }
 }
