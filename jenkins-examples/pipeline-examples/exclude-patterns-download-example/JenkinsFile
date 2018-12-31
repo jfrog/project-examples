@@ -9,7 +9,7 @@ node {
     // Upload to Artifactory.
     def buildInfo1 = server.upload spec: uploadSpec
 
-    // Read the upload spec and upload files to Artifactory.
+    // Read the download spec and download files from Artifactory.
     def downloadSpec = readFile 'jenkins-examples/pipeline-examples/resources/exclude-download.json'
     def buildInfo2 = server.download spec: downloadSpec
 
