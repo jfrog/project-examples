@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Clone') {
+            steps {
+                git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
+            }
+        }
+
+        stage ('Excluded upload') {
+            steps {
+                rtUpload (
+                    serverId: SERVER_ID, // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+                    specPath: 'jenkins-examples/pipeline-examples/resources/exclude-upload.json'
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: SERVER_ID
+                )
+            }
+        }
+    }
+}
