@@ -80,7 +80,7 @@ msbuild /p:ArtifactoryPublish=true /p:BuildName=someBuildName /p:BuildNumber=10
 ```
 
 ### Downloading Dependencies:
-The following snippet downlaods the *MsbuildLibrary.dll* file from the *msbuild-local* Artifactory repository
+The following snippet downloads the *MsbuildLibrary.dll* file from the *msbuild-local* Artifactory repository
 into the dependencies directory.
 ```
 <Target Name="DownloadDependencies" BeforeTargets="PrepareForBuild">
