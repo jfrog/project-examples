@@ -57,6 +57,7 @@ Here are the available examples.
 * The [exclude-patterns-upload-example](scripted-examples/exclude-patterns-upload-example) demonstrates how to exclude certain files while uploading.
 * The [maven-container-example](scripted-examples/maven-container-example) demonstrates how to run Maven in a Docker container.
 * The [gradle-container-example](scripted-examples/gradle-container-example) demonstrates how to run Gradle in a Docker container.
+* The [npm-example](scripted-examples/npm-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a npm build.
 
 #### Declarative pipeline examples:
 * The [props-example](declarative-examples/props-example) downloads and uploads files to Artifactory with properties. The props-example also uses a placeholder when uploading.
@@ -70,6 +71,6 @@ Here are the available examples.
 * The [gradle-example](declarative-examples/gradle-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Gradle build. Unlike the [gradle-example-ci-server](gradle-example-ci-server), this examples assumes that the Gradle Artifactory Plugin in already applied in the Gradle build script.
 * The [exclude-patterns-download-example](declarative-examples/exclude-patterns-download-example) demonstrates how to exclude certain files while downloading.
 * The [exclude-patterns-upload-example](declarative-examples/exclude-patterns-upload-example) demonstrates how to exclude certain files while uploading.
-
+* The [npm-example](declarative-examples/npm-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a npm build.
 
 Learn more about [working with pipeline jobs in Jenkins](https://www.jfrog.com/confluence/display/RTF/Working+With+Pipeline+Jobs+in+Jenkins) and the benefits of [Artifactory’s integration with Jenkins CI](https://jfrog.com/integration/jenkins-ci/).
