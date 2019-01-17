@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Clone') {
+            steps {
+                git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
+            }
+        }
+
+        stage ('Artifactory configuration') {
+            steps {
+                rtServer (
+                    id: "ARTIFACTORY_SERVER",
+                    url: SERVER_URL,
+                    credentialsId: CREDENTIALS
+                )
+
+                rtNpmResolver (
+                    id: "NPM_RESOLVER",
+                    serverId: "ARTIFACTORY_SERVER",
+                    repo: "npm-remote"
+                )
+
+                rtNpmDeployer (
+                    id: "NPM_DEPLOYER",
+                    serverId: "ARTIFACTORY_SERVER",
+                    repo: "npm-local"
+                )
+            }
+        }
+
+        stage ('Exec npm install') {
+            steps {
+                rtNpmInstall (
+                    tool: NPM_TOOL, // Tool name from Jenkins configuration
+                    path: "npm-example",
+                    resolverId: "NPM_RESOLVER"
+                )
+            }
+        }
+
+        stage ('Exec npm publish') {
+            steps {
+                rtNpmPublish (
+                    tool: NPM_TOOL, // Tool name from Jenkins configuration
+                    path: "npm-example",
+                    deployerId: "NPM_DEPLOYER"
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "ARTIFACTORY_SERVER"
+                )
+            }
+        }
+    }
+}
