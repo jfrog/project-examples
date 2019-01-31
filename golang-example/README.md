@@ -32,7 +32,7 @@ Build the project with go and resolve the project dependencies from Artifactory.
 Publish the package we build to Artifactory.
 > jfrog rt gp go v1.0.0 --build-name=my-build --build-number=1
 
-Collect environment variabkes and add them to the build info.
+Collect environment variables and add them to the build info.
 > jfrog rt bce my-build 1
 
 Publish the build info to Artifactory.
