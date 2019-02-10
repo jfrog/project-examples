@@ -9,7 +9,7 @@ node {
 
     stage ('Artifactory configuration') {
         rtGradle.tool = CONTAINER_GRADLE_TOOL // Tool name from Jenkins configuration
-        rtGradle.deployer repo:'libs-snapshot-local',  server: server
+        rtGradle.deployer repo:'libs-release-local',  server: server
         rtGradle.resolver repo:'jcenter', server: server
     }
 
