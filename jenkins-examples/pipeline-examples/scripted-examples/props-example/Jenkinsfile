@@ -9,8 +9,14 @@ node {
     // Upload to Artifactory.
     def buildInfo1 = server.upload spec: uploadSpec
 
-    // Read the upload spec and upload files to Artifactory.
+    // Read the set-props spec.
+    def setPropsSpec = readFile 'jenkins-examples/pipeline-examples/resources/set-props.json'
+    // Set properties on the matching artifacts.
+    server.setProps spec: setPropsSpec, props: "p3=v3", failNoOp: true
+
+    // Read the download spec.
     def downloadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-download.json'
+    // Download from Artifactory.
     def buildInfo2 = server.download spec: downloadSpec
 
     // Merge the upload and download build-info objects.
@@ -18,4 +24,9 @@ node {
 
     // Publish the build to Artifactory
     server.publishBuildInfo buildInfo1
+
+    // Read the delete-props spec.
+    def deletePropsSpec = readFile 'jenkins-examples/pipeline-examples/resources/delete-props.json'
+    // Delete properties on the matching artifacts.
+    server.deleteProps spec: deletePropsSpec, props: "p1,p2", failNoOp: true
 }
