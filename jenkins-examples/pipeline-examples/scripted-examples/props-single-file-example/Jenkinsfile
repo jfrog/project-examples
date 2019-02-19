@@ -1,44 +1,80 @@
 node {
-    git url: 'https://github.com/JFrog/project-examples.git'
+    def buildInfo1
+    def buildInfo2
 
     // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
     def server = Artifactory.server SERVER_ID
 
-    // Create the upload spec.
-    def uploadSpec = """{
-        "files": [
-                {
-                    "pattern": "jenkins-examples/pipeline-examples/resources/ArtifactoryPipeline.zip",
-                    "target": "libs-snapshot-local",
-                    "props": "p1=v1;p2=v2"
-                },
-                {
-                    "pattern": "jenkins-examples/pipeline-examples/resources/ArtifactoryPipelineNoProps.zip",
-                    "target": "libs-snapshot-local"
-                }
-            ]
-        }"""
+    stage ('Clone') {
+        git url: 'https://github.com/JFrog/project-examples.git'
+    }
 
-    // Upload to Artifactory.
-    def buildInfo1 = server.upload spec: uploadSpec
+    stage ('Upload') {
+        // Create the upload spec.
+        def uploadSpec = """{
+            "files": [
+                    {
+                        "pattern": "jenkins-examples/pipeline-examples/resources/ArtifactoryPipeline.zip",
+                        "target": "libs-snapshot-local",
+                        "props": "p1=v1;p2=v2"
+                    },
+                    {
+                        "pattern": "jenkins-examples/pipeline-examples/resources/ArtifactoryPipelineNoProps.zip",
+                        "target": "libs-snapshot-local"
+                    }
+                ]
+            }"""
+        // Upload to Artifactory.
+        buildInfo1 = server.upload spec: uploadSpec
+    }
 
-    // Create the download spec.
-    def downloadSpec = """{
-        "files": [
-                {
-                    "pattern": "libs-snapshot-local/*(Pipeline).zip",
-                    "target": "Bazinga/{1}/",
-                    "props": "p1=v1;p2=v2"
-                }
-            ]
-        }"""
+    stage ('Set Props') {
+        // Create the set-props spec.
+        def setPropsSpec = """{
+            "files": [
+                    {
+                        "pattern": "libs-snapshot-local/*(Pipeline).zip",
+                        "props": "p1=v1;p2=v2"
+                    }
+                ]
+            }"""
+        // Set properties on the matching artifacts.
+        server.setProps spec: setPropsSpec, props: "p3=v3", failNoOp: true
+    }
 
-    // Download from Artifactory.
-    def buildInfo2 = server.download spec: downloadSpec
+    stage ('Download') {
+        // Create the download spec.
+        def downloadSpec = """{
+            "files": [
+                    {
+                        "pattern": "libs-snapshot-local/*(Pipeline).zip",
+                        "target": "Bazinga/{1}/",
+                        "props": "p1=v1;p2=v2"
+                    }
+                ]
+            }"""
+        // Download from Artifactory.
+        buildInfo2 = server.download spec: downloadSpec
+    }
 
-    // Merge the upload and download build-info objects.
-    buildInfo1.append buildInfo2
+    stage ('Publish Build Info') {
+        // Merge the upload and download build-info objects.
+        buildInfo1.append buildInfo2
+        // Publish the build to Artifactory
+        server.publishBuildInfo buildInfo1
+    }
 
-    // Publish the build to Artifactory
-    server.publishBuildInfo buildInfo1
+    stage ('Delete Props') {
+        // Create the delete-props spec.
+        def deletePropsSpec = """{
+            "files": [
+                    {
+                        "pattern": "libs-snapshot-local/*(Pipeline).zip",
+                        "props": "p3=v3"
+                    }
+                ]
+            }"""
+        // Delete properties on the matching artifacts.
+        server.deleteProps spec: deletePropsSpec, props: "p1,p2", failNoOp: true
+    }
 }
