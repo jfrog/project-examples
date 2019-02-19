@@ -29,6 +29,24 @@ pipeline {
             }
         }
 
+        stage ('Set Props') {
+            steps {
+                rtSetProps (
+                    serverId: SERVER_ID,
+                    spec: """{
+                           "files": [
+                            {
+                                "pattern": "libs-snapshot-local/*(Pipeline).zip",
+                                "props": "p1=v1;p2=v2"
+                              }
+                           ]
+                          }""",
+                    props: "p3=v3",
+                    failNoOp: true
+                )
+            }
+        }
+
         stage ('Download') {
             steps {
                 rtDownload (
@@ -50,6 +68,24 @@ pipeline {
             steps {
                 rtPublishBuildInfo (
                     serverId: SERVER_ID
+                )
+            }
+        }
+
+        stage ('Delete Props') {
+            steps {
+                rtDeleteProps (
+                    serverId: SERVER_ID,
+                    spec: """{
+                               "files": [
+                                {
+                                    "pattern": "libs-snapshot-local/*(Pipeline).zip",
+                                    "props": "p3=v3"
+                                  }
+                               ]
+                              }""",
+                    props: "p1,p2",
+                    failNoOp: true
                 )
             }
         }

@@ -1,21 +1,50 @@
 node {
-    git url: 'https://github.com/JFrog/project-examples.git'
+    def uploadSpec
+    def setPropsSpec
+    def downloadSpec
+    def deletePropsSpec
+    def buildInfo1
+    def buildInfo2
 
     // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
     def server = Artifactory.server SERVER_ID
 
-    // Read the upload spec which was downloaded from github.
-    def uploadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-upload.json'
-    // Upload to Artifactory.
-    def buildInfo1 = server.upload spec: uploadSpec
+    stage ('Clone') {
+        git url: 'https://github.com/JFrog/project-examples.git'
+    }
 
-    // Read the upload spec and upload files to Artifactory.
-    def downloadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-download.json'
-    def buildInfo2 = server.download spec: downloadSpec
+    stage ('Upload') {
+        // Read the upload spec which was downloaded from github.
+        uploadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-upload.json'
+        // Upload to Artifactory.
+        buildInfo1 = server.upload spec: uploadSpec
+    }
 
-    // Merge the upload and download build-info objects.
-    buildInfo1.append buildInfo2
+    stage ('Set Props') {
+        // Read the set-props spec.
+        setPropsSpec = readFile 'jenkins-examples/pipeline-examples/resources/set-props.json'
+        // Set properties on the matching artifacts.
+        server.setProps spec: setPropsSpec, props: "p3=v3", failNoOp: true
+    }
 
-    // Publish the build to Artifactory
-    server.publishBuildInfo buildInfo1
+    stage ('Download') {
+        // Read the download spec.
+        downloadSpec = readFile 'jenkins-examples/pipeline-examples/resources/props-download.json'
+        // Download from Artifactory.
+        buildInfo2 = server.download spec: downloadSpec
+    }
+
+    stage ('Publish Build Info') {
+        // Merge the upload and download build-info objects.
+        buildInfo1.append buildInfo2
+        // Publish the build to Artifactory
+        server.publishBuildInfo buildInfo1
+    }
+
+    stage ('Delete Props') {
+        // Read the delete-props spec.
+        deletePropsSpec = readFile 'jenkins-examples/pipeline-examples/resources/delete-props.json'
+        // Delete properties on the matching artifacts.
+        server.deleteProps spec: deletePropsSpec, props: "p1,p2", failNoOp: true
+    }
 }

@@ -1,0 +1,8 @@
+{
+ "files": [
+  {
+      "pattern": "libs-snapshot-local/*(Pipeline).zip",
+      "props": "p1=v1;p2=v2"
+    }
+ ]
+}

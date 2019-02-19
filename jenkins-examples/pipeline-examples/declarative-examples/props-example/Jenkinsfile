@@ -17,6 +17,17 @@ pipeline {
             }
         }
 
+        stage ('Set Props') {
+            steps {
+                rtSetProps (
+                    serverId: SERVER_ID,
+                    specPath: 'jenkins-examples/pipeline-examples/resources/set-props.json',
+                    props: "p3=v3",
+                    failNoOp: true
+                )
+            }
+        }
+
         stage ('Download') {
             steps {
                 rtDownload (
@@ -30,6 +41,17 @@ pipeline {
             steps {
                 rtPublishBuildInfo (
                     serverId: SERVER_ID
+                )
+            }
+        }
+
+        stage ('Delete Props') {
+            steps {
+                rtDeleteProps (
+                    serverId: SERVER_ID,
+                    specPath: 'jenkins-examples/pipeline-examples/resources/delete-props.json',
+                    props: "p1,p2",
+                    failNoOp: true
                 )
             }
         }
