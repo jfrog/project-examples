@@ -4,7 +4,6 @@
 * Basic knowledge of [Docker](https://www.docker.com/), [Jenkins](https://jenkins.io/), [Kubernetes](https://kubernetes.io/) and [Artifactory](https://www.jfrog.com/artifactory/)
 
 ## Setup
-
 - [Setup Kubernetes Cluster on GKE](#setup-kubernetes-cluster-on-gke)
 - [Setup Kubernetes Cluster on AKS](#setup-kubernetes-cluster-on-aks)
 - [Install Artifactory on kubernetes](#install-artifactory-on-kubernetes)
@@ -18,12 +17,11 @@ Follow this to setup kubernetes cluster on GKE. [https://cloud.google.com/contai
 Follow this to setup kubernetes cluster on AKS. [https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster)
 
 ### Install Artifactory on kubernetes
-Here is documentation to install JFrog Artifactory on kubernetes [artifactory-docker-examples](https://github.com/JFrog/artifactory-docker-examples/tree/master/kubernetes)<br>
-Here is link to official helm chart for Artifactory [https://github.com/kubernetes/charts/tree/master/stable/artifactory](https://github.com/kubernetes/charts/tree/master/stable/artifactory)
+Here is documentation to install JFrog Artifactory on kubernetes using [Artifactory Helm chart](https://github.com/jfrog/charts/tree/master/stable/artifactory)
 
 <b>Note</b> If you are using [Artifactory SaaS](https://www.jfrog.com/artifactory/free-trial/#Cloud) you can skip this step. 
 
-### Configure docker insecure registry in each node of kubernetes cluster if you are using self-signed certificate.
+### Configure docker insecure registry in each node of kubernetes cluster if you are using self-signed certificate
 
 *   Get cluster ip  of nginx services by running following command:
     ```
@@ -43,14 +41,12 @@ Here is link to official helm chart for Artifactory [https://github.com/kubernet
     ```
 
 ### Install Jenkins on kubernetes
+Use [Jenkins Helm Chart](https://github.com/helm/charts/tree/master/stable/jenkins) to install Jenkins in kubernetes.<br>
+<b>Note</b>: Make sure to set resources for Jenkins deployment in [values.yaml](https://github.com/helm/charts/blob/master/stable/jenkins/values.yaml) file. Jenkins comes with the Kubernetes plugin.<br>
+Cache docker images of jenkins master and agent in Artifactory by changing value of `Master.Image` to `docker.artifactory/jenkinsci/jenkins` and `Agent.Image` to `docker.artifactory/jenkinsci/jnlp-slave` in [values.yaml](https://github.com/helm/charts/blob/master/stable/jenkins/values.yaml) file.
 
-Use [Helm](https://github.com/kubernetes/helm) [Chart](https://github.com/kubernetes/charts) to install [jenkins](https://github.com/kubernetes/charts/tree/master/stable/jenkins) in kubernetes. <br>
-<b>Note</b>: Make sure to increase resources for Jenkins deployment in [values.yaml](https://github.com/kubernetes/charts/blob/master/stable/jenkins/values.yaml) file. Jenkins comes with the Kubernetes plugin..<br>
-Cache docker images of jenkins master and agent in Artifactory by changing value of `Master.Image` to `docker.artifactory/jenkinsci/jenkins` and `Agent.Image` to `docker.artifactory/jenkinsci/jnlp-slave` in [values.yaml](https://github.com/kubernetes/charts/blob/master/stable/jenkins/values.yaml) file.
 
-
-### Configuring Jenkins to build docker images:
-
+### Configuring Jenkins to build docker images
 * From Jenkins home click on Manage Jenkins -> 	Configure System.
 * You will see section Cloud -> Kubernetes -> Images -> Volumes.
 * Click on Add Volume and add Host Path Volume with following mount path:
