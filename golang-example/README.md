@@ -9,25 +9,20 @@ To work with Go repositories you need to use [JFrog CLI](https://www.jfrog.com/c
 * Make sure the **go** command is in your PATH.
 * Install [JFrog CLI](https://jfrog.com/getcli/)
 * Make sure your Artifactory version is 5.11.0 or above
-* Make sure your JFrog CLI version is 1.20.0 or above
+* Make sure your JFrog CLI version is 1.26.0 or above
 
 ## Running the Example
-### Create Go Repositories in Artifactory
-* Create a remote Go repository named *go-remote*.
-* Create a local Go repository named *go-local*. 
-* Create a virtual Go repository named *go*. 
-* Include *go-remote* and *go-local* as part the *go* repository aggregated repositories.
-* Set *go-local* as the Default Deployment Repository for the *go* repository.
-
-### Build the Project Using JFrog CLI
 CD to the root project directory
 
 ```console
 Configure Artifactory:
 > jfrog rt c
 
+Configure the project's repositories::
+> jfrog rt go-config
+
 Build the project with go and resolve the project dependencies from Artifactory.
-> jfrog rt go build go --build-name=my-build --build-number=1 
+> jfrog rt go build --build-name=my-build --build-number=1 
 
 Publish the package we build to Artifactory.
 > jfrog rt gp go v1.0.0 --build-name=my-build --build-number=1
