@@ -24,8 +24,8 @@ Configure the project's repositories::
 Build the project with go and resolve the project dependencies from Artifactory.
 > jfrog rt go build --build-name=my-build --build-number=1 
 
-Publish the package we build to Artifactory.
-> jfrog rt gp go v1.0.0 --build-name=my-build --build-number=1
+Publish version v1.0.0 of the package to the go-local repository in Artifactory.
+> jfrog rt gp go-local v1.0.0 --build-name=my-build --build-number=1
 
 Collect environment variables and add them to the build info.
 > jfrog rt bce my-build 1
