@@ -12,7 +12,7 @@ To set up Jenkins to use the example, read [this](https://github.com/jfrog/proje
 * The [gradle-example-ci-server](gradle-example-ci-server) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Gradle build. Unlike the [gradle-example](gradle-example), this examples assumes that the Gradle Artifactory Plugin in not applied to the Gradle build script.
 * The [gradle-example](gradle-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Gradle build. Unlike the [gradle-example-ci-server](gradle-example-ci-server), this examples assumes that the Gradle Artifactory Plugin in already applied in the Gradle build script.
 * The [interactive-promotion-example](interactive-promotion-example) demonstrates how to promote a build in Artifactory after the build finished.
-* The [issues-collection-example](issues-collection-example) demonstrates how to collect the list of tracked project issues and them to the build-info.
+* The [issues-collection-example](issues-collection-example) demonstrates how to collect the list of tracked project issues and add them to the build-info.
 * The [maven-example](maven-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Maven build.
 * The [npm-example](npm-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a npm build.
 * The [promotion-example](promotion-example) demonstrates how to promote a build in Artifactory.
