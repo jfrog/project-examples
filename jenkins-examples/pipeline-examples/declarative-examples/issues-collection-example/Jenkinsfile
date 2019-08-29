@@ -21,10 +21,10 @@ pipeline {
         stage ('Issues Collection') {
             steps {
                 rtCollectIssues (
+                    serverId: SERVER_ID,
                     config: """{
                         "version": "1",
                         "issues": {
-                            "serverID": "rt-server-1",
                             "trackerName": "JIRA",
                             "regexp": "(.+-[0-9]+)\\s-\\s(.+)",
                             "keyGroupIndex": "1",

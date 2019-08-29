@@ -9,7 +9,6 @@ node {
         issuesCollectionConfig = """{
             "version": "1",
             "issues": {
-                "serverID": "rt-server-1",
                 "trackerName": "JIRA",
                 "regexp": "(.+-[0-9]+)\\s-\\s(.+)",
                 "keyGroupIndex": "1",
@@ -20,7 +19,7 @@ node {
             }
         }"""
 
-        buildInfo.issues.collect(issuesCollectionConfig)
+        buildInfo.issues.collect(server, issuesCollectionConfig)
 
         server.publishBuildInfo buildInfo
     }
