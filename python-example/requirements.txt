@@ -1,4 +1,2 @@
---index-url http://localhost:8081/artifactory/api/pypi/pypi-virtual/simple
-PyYAML==3.11
-django-rss-plugin==0.0.9
-nltk==3.0.1
+PyYAML>3.11
+nltk
