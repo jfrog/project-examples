@@ -44,7 +44,7 @@ Configure Artifactory:
 Configure the project's resolution repository:
 > jfrog rt pipc
 
-Install the project with pip and resolve project dependencies from Artifactory:
+Install project dependencies with pip from Artifactory:
 > jfrog rt pipi -r requirements.txt --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
 
 Package the project, create distribution archives (tar.gz and whl):
@@ -59,8 +59,11 @@ Collect environment variables and add them to the build info:
 Publish the build info to Artifactory:
 > jfrog rt bp my-pip-build 1
 
-Validate published package by installing it from Artifactory using pip:
+Install published package by installing it from Artifactory using pip:
 > jfrog rt pip-install jfrog-python-example
+
+Validate package successfully installed:
+> pip show jfrog-python-example
 ```
 
 Learn about [Building Python Packages with JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingPythonPackages).
