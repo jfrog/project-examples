@@ -23,12 +23,12 @@ pipeline {
                 rtCollectIssues (
                     serverId: SERVER_ID,
                     config: """{
-                        "version": "1",
+                        "version": 1,
                         "issues": {
                             "trackerName": "JIRA",
                             "regexp": "(.+-[0-9]+)\\s-\\s(.+)",
-                            "keyGroupIndex": "1",
-                            "summaryGroupIndex": "2",
+                            "keyGroupIndex": 1,
+                            "summaryGroupIndex": 2,
                             "trackerUrl": "http://my-jira.com/issues",
                             "aggregate": "true",
                             "aggregationStatus": "RELEASED"
@@ -36,7 +36,7 @@ pipeline {
                     }""",
                     
                     // You may alternatively provide a path to a config file, instead of the config itself, by setting:
-                    //configPath: '/path/to/config'
+                    // configPath: '/path/to/config'
                     
                     // If custom build name and/or number were set:
                     buildName: 'my-build',
