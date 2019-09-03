@@ -34,7 +34,7 @@ allprojects {
   status = 'Integration'
   repositories {
   	maven {
-        url "http://barb3.jfrog.io/barb3/jcenter" // The Artifactory (preferably virtual) repository to resolve from
+        url "http://localhost:8081/artifactory/jcenter" // The Artifactory (preferably virtual) repository to resolve from
         credentials {
             username "${artifactory_user}"
             password "${artifactory_password}"
@@ -82,7 +82,7 @@ configurations {
 }
 
 artifactory {
-  contextUrl = 'http://barb3.jfrog.io/barb3'
+  contextUrl = 'http://localhost:8081/artifactory'
   publish {
     repository {
       repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to
