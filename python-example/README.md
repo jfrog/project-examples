@@ -42,16 +42,16 @@ Configure Artifactory:
 > jfrog rt c
 
 Configure the project's resolution repository:
-> jfrog rt pip-config
+> jfrog rt pipc
 
 Install the project with pip and resolve project dependencies from Artifactory:
-> jfrog rt pip-install -r requirements.txt --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+> jfrog rt pipi -r requirements.txt --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
 
 Package the project, create distribution archives (tar.gz and whl):
 > python setup.py sdist bdist_wheel
 
 Upload the packages to the pypi repository in Artifactory:
-> jfrog rt u dist/ pypi-local/ --build-name=my-pip-build --build-number=1
+> jfrog rt u dist/ pypi-local/ --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
 
 Collect environment variables and add them to the build info:
 > jfrog rt bce my-pip-build 1
