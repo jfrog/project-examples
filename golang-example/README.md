@@ -18,7 +18,7 @@ CD to the root project directory
 Configure Artifactory:
 > jfrog rt c
 
-Configure the project's repositories::
+Configure the project's repositories:
 > jfrog rt go-config
 
 Build the project with go and resolve the project dependencies from Artifactory.
