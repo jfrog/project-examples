@@ -1,19 +1,22 @@
-# Python example
+# Python Example
 
 ## Overview
-PyPi repositories are supported by Artifactory versions 5.8.10, 5.9.7, 5.10.4 or above (including 6.x).
-Installing python project and producing the Build-Info is made using **pip**.
+This example demonstrates how to build a Python project with Artifactory, while collecting build-info.
 
-## Prerequisite
-* Make sure **Python** is installed and the **python** command is in your PATH.
-* Install **pip** from [pip documentation](https://pip.pypa.io/en/stable/installing/).
-* Make sure your Artifactory version supports pypi repositories, setup repositories in Artifactory following [PyPi repositories configuration](https://www.jfrog.com/confluence/display/RTF/PyPI+Repositories#PyPIRepositories-Configuration).
-* For packaging **Python** projects you need to have **wheel** and **setuptools** installed, read more about [Packaging Python Projects](https://packaging.python.org/tutorials/packaging-projects/).
-* Best practice is to install **Python** projects with **pip** and virtual-environments, follow [this guide](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/).
-* Install [JFrog CLI](https://jfrog.com/getcli/), version 1.28.0 or above.
+## Before Running the Example
+### Set Up the Environment 
+1. Make sure **Python** is installed and the **python** command is in your PATH.
+2. Install **pip**. You can use the [Pip Documentation](https://pip.pypa.io/en/stable/installing/) and also [Installing packages using pip and virtual environments](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
+3. Create three Pypi repositories in Artifactory - a local, remote and a virtual repository. You can use the [PyPi Repositories Documentation](https://www.jfrog.com/confluence/display/RTF/PyPI+Repositories).
+* The remote repository should proxy *https://files.pythonhosted.org* (the default when creating a Pypi remote repository). 
+* Name the virtual repository *pipy*.
+* The virtual repository should include thr remote repository.
+* The virtual repository should have the local repository set as the *Default Deployment Repository*.
+4. Make sure **wheel** and **setuptools** are installed. You can use the [Installing Packages Documentation](https://packaging.python.org/tutorials/installing-packages/).
+5. Make sure version 1.28.0 or above of [JFrog CLI](https://jfrog.com/getcli/) is installed.
 
-#### Before Running the Example
-In your terminal, validate that the following commands work:
+### Validate the Setup
+In your terminal, validate that the following commands work.
 ```console
 Output Python version:
 > python --version
@@ -41,7 +44,7 @@ CD to the root project directory
 Configure Artifactory:
 > jfrog rt c
 
-Configure the project's resolution repository:
+Configure the project's resolution repository. You shoud set the virtual repository you created.
 > jfrog rt pipc
 
 Install project dependencies with pip from Artifactory:
@@ -51,7 +54,7 @@ Package the project, create distribution archives (tar.gz and whl):
 > python setup.py sdist bdist_wheel
 
 Upload the packages to the pypi repository in Artifactory:
-> jfrog rt u dist/ pypi-local/ --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+> jfrog rt u dist/ pypi/ --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
 
 Collect environment variables and add them to the build info:
 > jfrog rt bce my-pip-build 1
