@@ -13,6 +13,7 @@ To set up Jenkins to use the example, read [this](https://github.com/jfrog/proje
 * The [gradle-deploy-example](gradle-deploy-example) demonstrates how to defer the build artifacts deployment to a separate stage.
 * The [gradle-example-ci-server](gradle-example-ci-server) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Gradle build. Unlike the [gradle-example](gradle-example), this examples assumes that the Gradle Artifactory Plugin in not applied to the Gradle build script.
 * The [gradle-example](gradle-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Gradle build. Unlike the [gradle-example-ci-server](gradle-example-ci-server), this examples assumes that the Gradle Artifactory Plugin in already applied in the Gradle build script.
+* The [issues-collection-example](issues-collection-example) demonstrates how to collect the list of tracked project issues and add them to the build-info.
 * The [maven-container-example](maven-container-example) demonstrates how to run Maven in a Docker container.
 * The [maven-deploy-example](maven-deploy-example) demonstrates how to defer the build artifacts deployment to a separate stage.
 * The [maven-example](maven-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Maven build.

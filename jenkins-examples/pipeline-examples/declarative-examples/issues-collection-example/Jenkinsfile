@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Clone') {
+            steps {
+                git branch: 'master', url: "https://github.com/jfrog/jenkins-artifactory-plugin.git"
+            }
+        }
+        
+        stage ('Build Info') {
+            steps {
+                rtBuildInfo (
+                    // Optional - Build name and build number. If not set, the Jenkins job's build name and build number are used.
+                    buildName: 'my-build',
+                    buildNumber: '20'
+                )
+            }
+        }
+
+        stage ('Issues Collection') {
+            steps {
+                rtCollectIssues (
+                    serverId: SERVER_ID,
+                    config: """{
+                        "version": 1,
+                        "issues": {
+                            "trackerName": "JIRA",
+                            "regexp": "(.+-[0-9]+)\\s-\\s(.+)",
+                            "keyGroupIndex": 1,
+                            "summaryGroupIndex": 2,
+                            "trackerUrl": "http://my-jira.com/issues",
+                            "aggregate": "true",
+                            "aggregationStatus": "RELEASED"
+                        }
+                    }""",
+                    
+                    // You may alternatively provide a path to a config file, instead of the config itself, by setting:
+                    // configPath: '/path/to/config'
+                    
+                    // If custom build name and/or number were set:
+                    buildName: 'my-build',
+                    buildNumber: '20'
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: SERVER_ID,
+                    buildName: 'my-build',
+                    buildNumber: '20'
+                )
+            }
+        }
+    }
+}

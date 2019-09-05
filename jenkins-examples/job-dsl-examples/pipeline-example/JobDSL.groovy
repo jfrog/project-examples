@@ -7,7 +7,7 @@ pipelineJob('job-dsl-artifactory-pipeline-example') {
 
     definition {
         cps {
-            script(readFileFromWorkspace('jenkins-examples/pipeline-examples/declarative-example/Jenkinsfile'))
+            script(readFileFromWorkspace('jenkins-examples/pipeline-examples/scripted-examples/declarative-example/Jenkinsfile'))
             sandbox()
         }
     }
