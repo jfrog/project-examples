@@ -21,4 +21,7 @@
   </group>
 </dependencies>
     </metadata>
+    <files>
+        <file src="one.txt" target="one.txt" />
+    </files>
 </package>
