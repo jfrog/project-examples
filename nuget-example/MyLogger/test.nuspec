@@ -10,7 +10,7 @@
         <description>My package description.</description>
          <dependencies>
     <dependency id="log4net" version="2.0.8.0" />
-    <dependency id="Newtonsoft.Json" version="6.0.0.0" />
+    <dependency id="Newtonsoft.Json" version="9.0" />
 </dependencies>
     </metadata>
     <files>
