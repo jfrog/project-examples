@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLogger", "MyLogger\MyLogger.csproj", "{EB7DD549-6605-4378-9B1D-1BCEFEE20610}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLogger", "MyLogger\test.nuspec", "{EB7DD549-6605-4378-9B1D-1BCEFEE20610}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
