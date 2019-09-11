@@ -9,5 +9,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 	<description>JFrog Core</description>
     <copyright>Copyright 2013</copyright>
+	    <dependencies>
+    <dependency id="MyLogger" version="1.0.0.0" />
+    <dependency id="Newtonsoft.Json" version="9.0" />
+</dependencies>
   </metadata>
 </package>
