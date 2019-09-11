@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
+    <id>test-1</id>
+    <version>1.0.0</version>
+    <title>Nuget-proj-example</title>
     <authors>JFrog</authors>
     <owners>JFrog</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
