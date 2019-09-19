@@ -10,7 +10,7 @@ jobs:
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v1
         env:
-          RT_SERVER: ${{ secrets.RT_SERVER_TOKEN }}
+          JF_ARTIFACTORY_SERVER: ${{ secrets.JF_ARTIFACTORY_SERVER_TOKEN }}
       - name: Run JFrog CLI
         run: |
           jfrog rt bce # Collect environment variables for the build
