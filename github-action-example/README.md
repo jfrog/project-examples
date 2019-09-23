@@ -1,5 +1,5 @@
 # Github Action Example
-This is an example Github workflow, which uses the [Setup JFrog CLI Github Action](https://github.com/jfrog/setup-jfrog-cli) 
+This is an example Github workflow, which uses the [Setup JFrog CLI Github Action](https://github.com/jfrog/setup-jfrog-cli).
 
 ## Running the Example
 1. Create a new Github repository.
