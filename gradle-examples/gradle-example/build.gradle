@@ -34,7 +34,7 @@ allprojects {
   status = 'Integration'
   repositories {
   	maven {
-        url "http://localhost:8081/artifactory/jcenter" // The Artifactory (preferably virtual) repository to resolve from
+        url "http://127.0.0.1:8081/artifactory/jcenter" // The Artifactory (preferably virtual) repository to resolve from
         credentials {
             username "${artifactory_user}"
             password "${artifactory_password}"
@@ -57,7 +57,7 @@ subprojects {
       published
     }
     dependencies {
-      testCompile 'junit:junit:4.7'
+      testImplementation 'junit:junit:4.7'
     }
     task sourceJar(type: Jar) {
       from sourceSets.main.allSource
@@ -82,7 +82,7 @@ configurations {
 }
 
 artifactory {
-  contextUrl = 'http://localhost:8081/artifactory'
+  contextUrl = 'http://127.0.0.1:8081/artifactory'
   publish {
     repository {
       repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to

@@ -26,7 +26,7 @@ buildscript {
 allprojects {
     repositories {
         maven {
-            url "http://localhost:8081/artifactory/jcenter"
+            url "http://127.0.0.1:8081/artifactory/jcenter"
         }
     }
 }
@@ -38,7 +38,7 @@ apply plugin: 'java'
 apply plugin: 'maven-publish'
 
 dependencies {
-    testCompile 'junit:junit:4.7'
+    testImplementation 'junit:junit:4.7'
 }
 
 publishing {
@@ -50,7 +50,7 @@ publishing {
 }
 
 artifactory {
-    contextUrl = 'http://localhost:8081/artifactory'
+    contextUrl = 'http://127.0.0.1:8081/artifactory'
     publish {
         repository {
             repoKey = 'libs-snapshot-local' // The Artifactory repository key to publish to

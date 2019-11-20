@@ -7,5 +7,5 @@ repositories {
     jcenter()
 }
 dependencies {
-	compile(group: 'commons-lang', name: 'commons-lang', version: '2.6')
+    implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
 }
