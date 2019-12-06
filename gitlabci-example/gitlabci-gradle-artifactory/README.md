@@ -6,7 +6,7 @@ This sample project resolves dependencies from Artifactory and deploys the build
 Artifactory Pro / Artifactory SAAS  
 
 #### Step 1:
-In the Gradle project, configure the following Artifactory credentials, under CI/CD Settings > Secret variables: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, and GRADLE_REPO_KEY.
+In the Gradle project, configure the following Artifactory credentials, under CI/CD Settings > Secret variables: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASSWORD, and GRADLE_REPO_KEY.
 ![screenshot](img/Screen_Shot1.png)
 
 #### Step 2:

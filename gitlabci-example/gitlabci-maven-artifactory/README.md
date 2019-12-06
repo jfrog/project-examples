@@ -6,7 +6,7 @@ This sample project resolves dependencies from Artifactory and deploys the build
 Artifactory Pro / Artifactory SAAS  
 
 #### Step 1:
-In the Maven project, configure the following Artifactory credentials, under CI/CD Settings > Secret variables: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASS, and MAVEN_REPO_KEY.
+In the Maven project, configure the following Artifactory credentials, under CI/CD Settings > Secret variables: ARTIFACTORY_URL, ARTIFACTORY_USER, ARTIFACTORY_PASSWORD, and MAVEN_REPO_KEY.
 ![screenshot](img/Screen_Shot1.png)
 
 #### Step 2:
