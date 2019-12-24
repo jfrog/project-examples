@@ -9,6 +9,7 @@ To set up Jenkins to use the example, read [this](https://github.com/jfrog/proje
 * The [docker-push-example](docker-push-example) demonstrates how to push a docker image to Artifactory.
 * The [exclude-patterns-download-example](exclude-patterns-download-example) demonstrates how to exclude certain files while downloading.
 * The [exclude-patterns-upload-example](exclude-patterns-upload-example) demonstrates how to exclude certain files while uploading.
+* The [go-example](go-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Go build.
 * The [gradle-example-ci-server](gradle-example-ci-server) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Gradle build. Unlike the [gradle-example](gradle-example), this examples assumes that the Gradle Artifactory Plugin in not applied to the Gradle build script.
 * The [gradle-example](gradle-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Gradle build. Unlike the [gradle-example-ci-server](gradle-example-ci-server), this examples assumes that the Gradle Artifactory Plugin in already applied in the Gradle build script.
 * The [interactive-promotion-example](interactive-promotion-example) demonstrates how to promote a build in Artifactory after the build finished.
