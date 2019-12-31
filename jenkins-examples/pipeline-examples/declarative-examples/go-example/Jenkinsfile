@@ -1,0 +1,61 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Clone') {
+            steps {
+                git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
+            }
+        }
+
+        stage ('Artifactory configuration') {
+            steps {
+                rtServer (
+                    id: "ARTIFACTORY_SERVER",
+                    url: SERVER_URL,
+                    credentialsId: CREDENTIALS
+                )
+
+                rtGoResolver (
+                    id: "GO_RESOLVER",
+                    serverId: "ARTIFACTORY_SERVER",
+                    repo: "go"
+                )
+
+                rtGoDeployer (
+                    id: "GO_DEPLOYER",
+                    serverId: "ARTIFACTORY_SERVER",
+                    repo: "go-local"
+                )
+            }
+        }
+
+        stage ('Exec Go run') {
+            steps {
+                rtGoRun (
+                    path: "golang-example/hello",
+                    resolverId: "GO_RESOLVER",
+                    args: "build"
+                )
+            }
+        }
+
+        stage ('Exec Go publish') {
+            steps {
+                rtGoPublish (
+                    path: "golang-example/hello",
+                    deployerId: "GO_DEPLOYER",
+                    version: "1.0.0"
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "ARTIFACTORY_SERVER"
+                )
+            }
+        }
+    }
+}

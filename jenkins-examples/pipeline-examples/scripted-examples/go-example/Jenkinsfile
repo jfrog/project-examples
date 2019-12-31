@@ -1,0 +1,27 @@
+node {
+    def server = Artifactory.server SERVER_ID
+    def rtGo = Artifactory.newGoBuild()
+    def buildInfo
+
+    stage ('Clone') {
+        git url: 'https://github.com/JFrog/project-examples.git'
+    }
+
+    stage ('Artifactory configuration') {
+        rtGo.deployer repo: 'go-local', server: server
+        rtGo.resolver repo: 'go', server: server
+        buildInfo = Artifactory.newBuildInfo()
+    }
+
+    stage ('Go run') {
+        rtGo.run buildInfo: buildInfo, path: 'golang-example/hello', args: 'build'
+    }
+
+    stage ('Go publish') {
+        rtGo.publish buildInfo: buildInfo, path: 'golang-example/hello', version: '1.0.0'
+    }
+
+    stage ('Publish build info') {
+        server.publishBuildInfo buildInfo
+    }
+}
