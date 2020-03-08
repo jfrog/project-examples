@@ -5,7 +5,7 @@ node {
     def buildInfo
 
     stage('Clone') {
-        git url: 'https://github.com/JFrog/project-examples.git'
+        git url: 'https://github.com/jfrog/project-examples.git'
     }
 
     stage('Artifactory configuration') {
@@ -15,7 +15,7 @@ node {
     }
 
     stage('Build docker image') {
-        dockerImage = docker.build("java-node", "jenkins-examples/pipeline-examples/scripted-examples/npm-container-example")
+        dockerImage = docker.build("java-node", "jenkins-examples/pipeline-examples/resources/npm")
     }
 
     withEnv(['npm_config_cache=npm-cache']) {
