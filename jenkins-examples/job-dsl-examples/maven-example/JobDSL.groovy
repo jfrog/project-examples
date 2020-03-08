@@ -1,6 +1,6 @@
 mavenJob('job-dsl-artifactory-maven-example') {
     scm {
-        git("https://github.com/JFrog/project-examples.git", "master")
+        git("https://github.com/jfrog/project-examples.git", "master")
     }
 
     configure { node ->

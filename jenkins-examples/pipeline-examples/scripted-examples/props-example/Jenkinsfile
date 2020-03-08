@@ -10,7 +10,7 @@ node {
     def server = Artifactory.server SERVER_ID
 
     stage ('Clone') {
-        git url: 'https://github.com/JFrog/project-examples.git'
+        git url: 'https://github.com/jfrog/project-examples.git'
     }
 
     stage ('Upload') {
