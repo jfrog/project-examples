@@ -1,6 +1,6 @@
 node {
     stage 'Build'
-    git url: 'https://github.com/JFrog/project-examples.git'
+    git url: 'https://github.com/jfrog/project-examples.git'
 
     // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
     def server = Artifactory.server SERVER_ID
