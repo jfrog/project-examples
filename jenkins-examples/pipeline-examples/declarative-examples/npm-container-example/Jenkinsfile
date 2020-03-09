@@ -10,12 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Clone') {
-            steps {
-                git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
-            }
-        }
-
         stage('Artifactory configuration') {
             steps {
                 rtServer(
