@@ -20,7 +20,7 @@ node {
     }
 
     stage ('Push image to Artifactory') {
-        buildInfo = rtDocker.push ARTIFACTORY_DOCKER_REGISTRY + '/hello-world:latest', 'docker-local'
+        rtDocker.push ARTIFACTORY_DOCKER_REGISTRY + '/hello-world:latest', 'docker-local', buildInfo
     }
 
     stage ('Publish build info') {

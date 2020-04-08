@@ -1,7 +1,7 @@
 node {
     def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
     def rtGradle = Artifactory.newGradleBuild()
-    def buildInfo
+    def buildInfo = Artifactory.newBuildInfo()
 
     stage ('Clone') {
         git url: 'https://github.com/jfrog/project-examples.git'
@@ -14,7 +14,7 @@ node {
     }
 
     stage ('Exec Gradle') {
-        buildInfo = rtGradle.run rootDir: "gradle-examples/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
+        rtGradle.run rootDir: "gradle-examples/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo
     }
 
     stage ('Publish build info') {
