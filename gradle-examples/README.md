@@ -30,9 +30,16 @@ and the gradle wrapper in Windows
 A minimal sample project that uses the Gradle Artifactory Plugin to resolve and publish artifacts to Artifactory.
 
 ### gradle-example-ci-server
-Gradle sample project to be used with one of the Artifactory CI Server Plugins (Jenkins, TeamCity or Bamboo).
+Gradle sample project to be used with one of the Artifactory CI clients or plugins:
+* [JFrog CLI](https://www.jfrog.com/confluence/display/CLI/JFrog+CLI)
+* [Jenkins Artifactory Plugin](https://www.jfrog.com/confluence/display/JFROG/Jenkins+Artifactory+Plug-in)
+* [Azure DevOps Extension](https://www.jfrog.com/confluence/display/JFROG/Artifactory+Azure+DevOps+Extension)
+* [Bamboo Artifactory Plugin](https://www.jfrog.com/confluence/display/JFROG/Bamboo+Artifactory+Plug-in)
+* [TeamCity Artifactory Plugin](https://www.jfrog.com/confluence/display/JFROG/TeamCity+Artifactory+Plug-in)
+* [Setup JFrog CLI GitHub Action](https://github.com/marketplace/actions/setup-jfrog-cli)
+
 The Artifactory configuration in this case (repositories, Artifactory credentials, etc.)
-is done from the CI Server UI.
+is done from the CI client UI.
 You can still add the artifactory closure to the build script and have default values configured there,
 but the values configured in the CI Server override them.
 In this example, the only Artifactory property configured is "artifactoryPublish.skip = true".
