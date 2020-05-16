@@ -1,4 +1,9 @@
 pipeline {
+    /**
+     *  In this example, the agent's Dockerfile is within the repository.
+     *  Therefore, you must use this example only in "Multibranch Pipeline" or a "Pipeline from SCM".
+     *  More information here: https://jenkins.io/doc/book/pipeline/syntax/#agent under "dockerfile".
+     */
     agent {
         dockerfile {
             dir 'jenkins-examples/pipeline-examples/resources/npm'
@@ -10,12 +15,6 @@ pipeline {
     }
 
     stages {
-        stage('Clone') {
-            steps {
-                git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
-            }
-        }
-
         stage('Artifactory configuration') {
             steps {
                 rtServer(
