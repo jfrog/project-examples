@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    stages {
+        // Clone the code from github:
+        stage ('Clone') {
+            steps {
+                git branch: 'master', url: "https://github.com/memsharded/example-poco-timer.git"
+            }
+        }
+
+        stage ('Conan configuration') {
+            steps {
+                // Create a conan client instance
+                rtConanClient (
+                    id: "myConanClient"
+                )
+
+                // Add a new repository named 'conan-local' to the conan client.
+                // uUe an Artifactory server ID defined in Jenkins --> Manage:
+                // The name provided can be used later in the script:
+                rtConanRemote (
+                    name: "myRemoteName",
+                    serverId: SERVER_ID,
+                    repo: "conan-local",
+                    clientId: "myConanClient"
+                )
+            }
+        }
+
+        // Run a conan build.
+        stage ('Exec Conan install') {
+            steps {
+                rtConanRun (
+                    clientId: "myConanClient",
+                    command: "install . --build missing"
+                )
+            }
+        }
+
+        // Run an upload command, with the remote name defined in rtConanRemote step.
+        stage ('Exec Conan upload') {
+            steps {
+                rtConanRun (
+                    clientId: "myConanClient",
+                    command: "upload * --all -r myRemoteName --confirm"
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: SERVER_ID
+                )
+            }
+        }
+    }
+}
