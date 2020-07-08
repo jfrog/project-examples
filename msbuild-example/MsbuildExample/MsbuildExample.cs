@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MsbuildLibrary
+namespace MsbuildExample
 {
-    public class LibraryExample
+    public class MsbuildExample
     {
         public static string HelloWorld()
         {
