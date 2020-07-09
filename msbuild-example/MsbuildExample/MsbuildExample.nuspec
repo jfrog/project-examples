@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>MsbuildExample</id>
+    <version>1.0.0</version>
+    <title>MsbuildExample</title>
+    <authors>Alex K</authors>
+    <owners>Alex K</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>http://github.com/jfrog/project-examples/msbuild-example/</projectUrl>
+    <description>MsbuildExample</description>
+    <releaseNotes>This is a test package.</releaseNotes>
+    <copyright>Copyright 2020</copyright>
+    <tags>Msbuild Example</tags>
+  </metadata> 
+</package>

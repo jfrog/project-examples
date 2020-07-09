@@ -148,30 +148,52 @@ Up until now, we saw how we can configure our project to resolve and deploy gene
 From the Artifactory UI, create the following repositories. You can read more about Nuget repositories in the [Nuget Repositories User Guide](https://www.jfrog.com/confluence/display/RTF/NuGet+Repositories)<br>
 * Local NuGet repository named *nuget-local*. 
 * Remote NuGet repository named *nuget-remote*.
-* Virtual NuGet repository named *nuget-virtual*. 
-Next, include *nuget-remote* and *nuget-local* in *nuget-virtual*.
+* Virtual NuGet repository named *nuget*. 
+Next, include *nuget-remote* and *nuget-local* in *nuget*.
 
 ### Build the Solution Using JFrog CLI
-CD into the solution's root directory and run the following command 
+CD into the solution's root directory and run the following command to set your project with the virtual repository (named *nuget*) you created.
+If you'd like JFrog CLI to use the **nuget** client, run:
 ```console
-> jfrog rt nuget restore nuget-virtual --build-name=nuget-build --build-number=1
+> jfrog rt nugetc
 ```
-The command restored the two project's dependencies by downloading them from Artifactory and also stored the build-info locally.
+and if you'd like it to use the **.NET core CLI**, run:
+```console
+> jfrog rt dotnetc
+```
+The above commands created a directory named *.jfrog* at the root directory of the project.
+
+Now run one of the following commands, depending on whether you'd like to use the **nuget** or **dotnet core CLI** clients.
+
+```console
+> jfrog rt nuget restore --build-name nuget-build --build-number 1
+```
+or
+```console
+> jfrog rt dotnet restore --build-name nuget-build --build-number 1
+```
+
+The command restored the project dependencies by downloading them from Artifactory and also stored the build-info locally.
 
 CD into the MsbuildExample directory and run the following command to create the nuget artifact.
 ```
 > nuget pack
 ```
+or
+```
+> dotnet pack
+```
 
 Upload the created nuget package to Artifactory by running:
 ```
-> jfrog rt u MsbuildExample.1.0.0.nupkg nuget-local --build-name=nuget-build --build-number=1
+> jfrog rt u MsbuildExample.1.0.0.nupkg nuget-local --build-name=nuget-build --build-number=1 --module MsbuildExample
 ```
 
 Lastly, publish the build-info to Artifactory.
 ```
 > jfrog rt bp nuget-build 1
 ```
+
 As we saw earlier, the above commands can also be embedded in your project's csproj file or be executed by your build script.
 <br><br>
 For more information about [Artifactory as a Nuget repository](https://jfrog.com/integration/nuget-repository/) using JFrog CLI read [Building Nuget Packages with JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingNugetPackages)
