@@ -9,10 +9,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>http://github.com/jfrog/project-examples/msbuild-example/</projectUrl>
-    <iconUrl>http://icon/url/</iconUrl>
     <description>MsbuildExample</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <releaseNotes>This is a test package.</releaseNotes>
     <copyright>Copyright 2020</copyright>
-    <tags>Tag1 Tag2</tags>
+    <tags>Msbuild Example</tags>
   </metadata> 
 </package>
