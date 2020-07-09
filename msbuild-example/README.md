@@ -157,13 +157,13 @@ If you'd like JFrog CLI to use the **nuget** client, run:
 ```console
 > jfrog rt nugetc
 ```
-and if you'd like it to use the **dotnety core CLI**, run:
+and if you'd like it to use the **.NET core CLI**, run:
 ```console
 > jfrog rt dotnetc
 ```
 The above commands created a directory named *.jfrog* at the root directory of the project.
 
-Now run one of the following commands, depending on whether you you'd like to use the **nuget** or **dotnet core CLI** clients.
+Now run one of the following commands, depending on whether you'd like to use the **nuget** or **dotnet core CLI** clients.
 
 ```console
 > jfrog rt nuget restore --build-name nuget-build --build-number 1
