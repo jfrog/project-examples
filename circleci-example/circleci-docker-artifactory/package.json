@@ -22,7 +22,7 @@
     "serve-favicon": "~2.4.5",
     "assert": "latest",
     "semver-regex": "latest",
-    "jquery": "1.6.2"
+    "jquery": "3.5.0"
   },
   "keywords": [
     "npm-version"
