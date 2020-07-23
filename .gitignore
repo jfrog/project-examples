@@ -16,4 +16,4 @@ obj
 packages
 *.tmp
 .idea
-*.DS_Store
+.DS_Store
