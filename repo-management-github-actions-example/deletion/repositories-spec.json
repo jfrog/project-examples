@@ -1,0 +1,10 @@
+{
+    "files": [
+     {
+        "pattern": ${key1},
+        "sortBy": ["modified"],
+        "sortOrder": "desc",
+        "limit": 1
+     }
+    ]
+}

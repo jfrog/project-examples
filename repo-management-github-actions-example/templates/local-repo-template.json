@@ -1,0 +1,5 @@
+{    
+  "key": "auto-cli-local-${key1}",
+  "packageType": "maven",
+  "rclass": "local"
+}
