@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+    environment {
+        PATH = "/Users/myUser/venv-example/bin:$PATH" // Add pip virtual-environment's path to PATH
+    }
+
+    stages {
+        stage ('Clone') {
+            steps {
+                git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
+            }
+        }
+
+        stage ('Configuration') {
+            steps {
+                rtServer (
+                    id: "ARTIFACTORY_SERVER",
+                    url: SERVER_URL,
+                    credentialsId: CREDENTIALS
+                )
+
+                rtPipResolver (
+                    id: "NPM_RESOLVER",
+                    serverId: "ARTIFACTORY_SERVER",
+                    repo: "pip-virtual"
+                )
+            }
+        }
+
+        stage ('Pip install') {
+            steps {
+                rtPipInstall (
+                    resolverId: "NPM_RESOLVER"
+                    args: "-r python-example/requirements.txt"
+                )
+            }
+        }
+
+        stage ('Package and create distribution archives') {
+            steps {
+                sh '''
+                    cd python-example
+                    python setup.py sdist bdist_wheel
+                '''
+            }
+        }
+
+        stage ('Upload packages') {
+            steps {
+                rtUpload (
+                    serverId: "ARTIFACTORY_SERVER",
+                    spec: '''{
+                        "files": [
+                            {
+                                "pattern": "python-example/dist/",
+                                "target": "pypi/"
+                            }
+                        ]
+                    }'''
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "ARTIFACTORY_SERVER"
+                )
+            }
+        }
+    }
+}
