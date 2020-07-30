@@ -1,0 +1,22 @@
+node {
+    def server = Artifactory.server SERVER_ID
+    def rtNuget = Artifactory.newNugetBuild()
+    def buildInfo
+
+    stage ('Clone') {
+        git url: 'https://github.com/autofac/Examples.git'
+    }
+
+    stage ('Artifactory configuration') {
+        rtNuget.resolver repo: 'nuget-remote', server: server
+        buildInfo = Artifactory.newBuildInfo()
+    }
+
+    stage ('NuGet restore') {
+        rtNuget.run buildInfo: buildInfo, args: 'restore ./Examples.sln'
+    }
+
+    stage ('Publish build info') {
+        server.publishBuildInfo buildInfo
+    }
+}

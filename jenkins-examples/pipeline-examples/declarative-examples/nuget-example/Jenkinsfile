@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Clone') {
+            steps {
+                git branch: 'master', url: "https://github.com/autofac/Examples.git"
+            }
+        }
+
+        stage ('Artifactory configuration') {
+            steps {
+                rtServer (
+                    id: "ARTIFACTORY_SERVER",
+                    url: SERVER_URL,
+                    credentialsId: CREDENTIALS
+                )
+
+                rtNugetResolver (
+                    id: "NUGET_RESOLVER",
+                    serverId: "ARTIFACTORY_SERVER",
+                    repo: "nuget-remote"
+                )
+            }
+        }
+
+        stage ('Exec NuGet restore') {
+            steps {
+                rtNugetRun (
+                    resolverId: "NUGET_RESOLVER",
+                    args: "restore ./Examples.sln"
+                )
+            }
+        }}
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "ARTIFACTORY_SERVER"
+                )
+            }
+        }
+    }
+}
