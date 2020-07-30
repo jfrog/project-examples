@@ -98,8 +98,6 @@ project('api') {
     }
 }
 
-artifactoryPublish.skip = true
-
 artifactory {
     clientConfig.setIncludeEnvVars(true)
     clientConfig.info.addEnvironmentProperty('test.adding.dynVar',new java.util.Date().toString())
