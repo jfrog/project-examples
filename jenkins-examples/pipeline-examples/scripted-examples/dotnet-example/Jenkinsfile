@@ -1,0 +1,22 @@
+node {
+    def server = Artifactory.server SERVER_ID
+    def rtDotnet = Artifactory.newDotnetBuild()
+    def buildInfo
+
+    stage ('Clone') {
+        git url: 'https://github.com/graphql-dotnet/graphql-dotnet.git'
+    }
+
+    stage ('Artifactory configuration') {
+        rtDotnet.resolver repo: 'nuget-remote', server: server
+        buildInfo = Artifactory.newBuildInfo()
+    }
+
+    stage ('.NET restore') {
+        rtDotnet.run buildInfo: buildInfo, args: 'restore ./src/GraphQL.sln'
+    }
+
+    stage ('Publish build info') {
+        server.publishBuildInfo buildInfo
+    }
+}

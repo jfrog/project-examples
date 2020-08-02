@@ -8,6 +8,7 @@ To set up Jenkins to use the example, read [this](https://github.com/jfrog/proje
 * The [build-scan-example](build-scan-example) demonstrates how to scan published builds with JFrog Xray.
 * The [conan-example](conan-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Conan build.
 * The [docker-push-example](docker-push-example) demonstrates how to push a docker image to Artifactory.
+* The [dotnet-example](dotnet-example) resolves dependencies and publishes build-info to Artifactory for a .NET build.
 * The [exclude-patterns-download-example](exclude-patterns-download-example) demonstrates how to exclude certain files while downloading.
 * The [exclude-patterns-upload-example](exclude-patterns-upload-example) demonstrates how to exclude certain files while uploading.
 * The [go-example](go-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Go build.

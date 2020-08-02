@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Clone') {
+            steps {
+                git branch: 'master', url: "https://github.com/graphql-dotnet/graphql-dotnet.git"
+            }
+        }
+
+        stage ('Artifactory configuration') {
+            steps {
+                rtServer (
+                    id: "ARTIFACTORY_SERVER",
+                    url: SERVER_URL,
+                    credentialsId: CREDENTIALS
+                )
+
+                rtDotnetResolver (
+                    id: "DOTNET_RESOLVER",
+                    serverId: "ARTIFACTORY_SERVER",
+                    repo: "nuget-remote"
+                )
+            }
+        }
+
+        stage ('Exec .NET restore') {
+            steps {
+                rtDotnetRun (
+                    resolverId: "DOTNET_RESOLVER",
+                    args: "restore ./src/GraphQL.sln"
+                )
+            }
+        }}
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "ARTIFACTORY_SERVER"
+                )
+            }
+        }
+    }
+}
