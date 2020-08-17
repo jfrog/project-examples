@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    stages {
+        stage ('Artifactory configuration') {
+            steps {
+                rtServer (
+                    id: "ARTIFACTORY_SERVER",
+                    url: SERVER_URL,
+                    credentialsId: CREDENTIALS
+                )
+            }
+        }
+
+        stage ('Add build trigger') {
+            steps {
+                rtBuildTrigger(
+                    serverId: "ARTIFACTORY_SERVER",
+                    spec: "*/10 * * * *",
+                    paths: "generic-libs-local/builds/starship"
+                )
+            }
+        }
+        
+    }
+}

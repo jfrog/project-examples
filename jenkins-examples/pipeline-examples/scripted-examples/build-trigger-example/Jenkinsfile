@@ -1,0 +1,7 @@
+node {
+    def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
+
+    stage ('Trigger build') {
+        server.setBuildTrigger spec: "*/10 * * * *", paths: "generic-libs-local/builds/starship" 
+    }
+}
