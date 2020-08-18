@@ -6,6 +6,7 @@ To set up Jenkins to use the example, read [this](https://github.com/jfrog/proje
 * The [aql-example](aql-example) uses a Download Spec which includes [AQL](https://www.jfrog.com/confluence/display/RTF/Artifactory+Query+Language) instead of a wildcard pattern.
 * The [build-retention-example](build-retention-example) demonstrates triggering build retention in Artifactory.
 * The [build-scan-example](build-scan-example) demonstrates how to scan published builds with JFrog Xray.
+* The [build-trigger-example](build-trigger-example) demonstrates how to trigger a build when files are added or modified in a specific Artifactory path.
 * The [conan-example](conan-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Conan build.
 * The [docker-push-example](docker-push-example) demonstrates how to push a docker image to Artifactory.
 * The [dotnet-example](dotnet-example) resolves dependencies and publishes build-info to Artifactory for a .NET build.
