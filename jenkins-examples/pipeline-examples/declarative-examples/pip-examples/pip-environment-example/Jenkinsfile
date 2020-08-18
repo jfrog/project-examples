@@ -20,9 +20,9 @@ pipeline {
                 )
 
                 rtPipResolver (
-                    id: "NPM_RESOLVER",
+                    id: "PIP_RESOLVER",
                     serverId: "ARTIFACTORY_SERVER",
-                    repo: "pip-virtual"
+                    repo: "pypi-virtual"
                 )
             }
         }
@@ -30,7 +30,7 @@ pipeline {
         stage ('Pip install') {
             steps {
                 rtPipInstall (
-                    resolverId: "NPM_RESOLVER"
+                    resolverId: "PIP_RESOLVER"
                     args: "-r python-example/requirements.txt"
                 )
             }
@@ -53,7 +53,7 @@ pipeline {
                         "files": [
                             {
                                 "pattern": "python-example/dist/",
-                                "target": "pypi/"
+                                "target": "pypi-virtual/"
                             }
                         ]
                     }'''
