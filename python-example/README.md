@@ -10,7 +10,7 @@ This example demonstrates how to build a Python project with Artifactory, while 
 3. Create three Pypi repositories in Artifactory - a local, remote and a virtual repository. You can use the [PyPi Repositories Documentation](https://www.jfrog.com/confluence/display/RTF/PyPI+Repositories).
 * The remote repository should proxy *https://files.pythonhosted.org* (the default when creating a Pypi remote repository). 
 * Name the virtual repository *pipy*.
-* The virtual repository should include thr remote repository.
+* The virtual repository should include the remote repository.
 * The virtual repository should have the local repository set as the *Default Deployment Repository*.
 4. Make sure **wheel** and **setuptools** are installed. You can use the [Installing Packages Documentation](https://packaging.python.org/tutorials/installing-packages/).
 5. Make sure version 1.28.0 or above of [JFrog CLI](https://jfrog.com/getcli/) is installed.
