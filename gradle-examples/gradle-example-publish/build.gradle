@@ -45,6 +45,8 @@ allprojects {
     }
 }
 
+// Setting this property to true will make the artifactoryPublish task
+// skip this module (in our case, the root module):
 artifactoryPublish.skip = true
 
 project('services') {
@@ -97,8 +99,6 @@ project('api') {
         }
     }
 }
-
-artifactoryPublish.skip = true
 
 artifactory {
     clientConfig.setIncludeEnvVars(true)
