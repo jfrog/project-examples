@@ -10,8 +10,8 @@ We have included a few sample projects to help you get started using the plugin.
 * The example projects are configured to work with an Artifactory instance accessed through the following URL:<br>
 http://localhost:8081/artifactory<br>
 This URL is defined inside the *build.gradle* file of each project. Please change it if your Artifactory instance is accessible through a different URL.
-* Configure your Artifactory username and password inside *gradle.properties* file for each project
-* Since all example projects are configured to resolve dependencies from 'jcenter', it is recommended to create a remote repository named *jcenter*, with *https://jcenter.bintray.com* as its URL.
+* Configure your Artifactory username and password in the *gradle.properties* file for each project
+* Since all example projects are configured to resolve dependencies from 'jcenter', it is recommended to create a remote repository named *jcenter*, which proxies *https://jcenter.bintray.com* as its URL.
 * CD to one of the project's root directory and run the build using one of the following commands:
 
 ```console
