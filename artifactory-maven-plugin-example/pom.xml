@@ -51,7 +51,7 @@
             <plugin>
                 <groupId>org.jfrog.buildinfo</groupId>
                 <artifactId>artifactory-maven-plugin</artifactId>
-                <version>2.7.0</version>
+                <version>3.0.0</version>
                 <inherited>false</inherited>
                 <executions>
                     <execution>
@@ -81,13 +81,6 @@
                                 <buildNumber>${buildnumber}</buildNumber>
                                 <buildUrl>http://build-url.org</buildUrl>
                             </buildInfo>
-                            <licenses>
-                                <autoDiscover>true</autoDiscover>
-                                <includePublishedArtifacts>false</includePublishedArtifacts>
-                                <runChecks>true</runChecks>
-                                <scopes>compile,runtime</scopes>
-                                <violationRecipients>build@organisation.com</violationRecipients>
-                            </licenses>
                         </configuration>
                     </execution>
                 </executions>
