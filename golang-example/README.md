@@ -1,4 +1,4 @@
-# Golang example
+# Golang examples its amazing
 
 ## Overview
 Go repositories are supported by Artifactory since version 5.11.0.
