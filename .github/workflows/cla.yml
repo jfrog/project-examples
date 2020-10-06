@@ -20,7 +20,7 @@ jobs:
           PERSONAL_ACCESS_TOKEN : ${{ secrets.CLA_SIGN_TOKEN }}
         with:
           path-to-signatures: 'signed_clas.json'
-          path-to-cla-document: 'https://jfrog.com/privacy-policy/cla/'
+          path-to-cla-document: 'https://jfrog.com/cla/'
           remote-organization-name: 'jfrog'
           remote-repository-name: 'jfrog-signed-clas'
           # branch should not be protected
