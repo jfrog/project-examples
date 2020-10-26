@@ -21,10 +21,6 @@ pipeline {
                     // On OSX: "tcp://127.0.0.1:1234"
                     // On Linux can be omitted or null
                     host: HOST_NAME,
-                    // Optional
-                    buildName: 'buildName',
-                    // Optional
-                    buildNumber: 'buildNumber',
                     sourceRepo: 'docker-remote',
                 )
             }
@@ -34,10 +30,6 @@ pipeline {
             steps {
                 rtPublishBuildInfo (
                     serverId: "ARTIFACTORY_SERVER"
-                    // Optional
-                    buildName: 'buildName',
-                    // Optional
-                    buildNumber: 'buildNumber',
                 )
             }
         }
