@@ -9,6 +9,7 @@ To set up Jenkins to use the example, read [this](https://github.com/jfrog/proje
 * The [conan-example](conan-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Conan build.
 * The [declarative-example](declarative-example) demonstrates how to download, upload and publish build-info to Artifactory using a Declarative Pipeline script.
 * The [docker-push-example](docker-push-example) demonstrates how to push a docker image to Artifactory.
+* The [docker-pull-example](docker-pull-example) demonstrates how to pull a docker image from Artifactory.
 * The [dotnet-example](dotnet-example) resolves dependencies and publishes build-info to Artifactory for a .NET build.
 * The [exclude-patterns-download-example](exclude-patterns-download-example) demonstrates how to exclude certain files while downloading.
 * The [exclude-patterns-upload-example](exclude-patterns-upload-example) demonstrates how to exclude certain files while uploading.

@@ -1,0 +1,16 @@
+node {
+    def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
+    // Host:
+    // On OSX: "tcp://127.0.0.1:1234"
+    // On Linux can be omitted or null
+    def rtDocker = Artifactory.docker server: server, host: HOST_NAME
+    def buildInfo = Artifactory.newBuildInfo()
+
+    stage ('Pull an image from Artifactory') {
+       rtDocker.pull ARTIFACTORY_DOCKER_REGISTRY + '/hello-world:latest', 'docker-remote', buildInfo
+    }
+
+    stage ('Publish build info') {
+        server.publishBuildInfo buildInfo
+    }
+}
