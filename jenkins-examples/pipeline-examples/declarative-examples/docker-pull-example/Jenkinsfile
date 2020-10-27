@@ -12,7 +12,7 @@ pipeline {
             }
         }
 
-        stage ('Pull image from Artifactory') {
+        stage ('Pull an image from Artifactory') {
             steps {
                 rtDockerPull(
                     serverId: "ARTIFACTORY_SERVER",

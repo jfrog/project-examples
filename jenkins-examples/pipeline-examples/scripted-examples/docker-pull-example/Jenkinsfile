@@ -6,7 +6,7 @@ node {
     def rtDocker = Artifactory.docker server: server, host: HOST_NAME
     def buildInfo = Artifactory.newBuildInfo()
 
-    stage ('Pull image to Artifactory') {
+    stage ('Pull an image from Artifactory') {
        rtDocker.pull ARTIFACTORY_DOCKER_REGISTRY + '/hello-world:latest', 'docker-remote', buildInfo
     }
 
