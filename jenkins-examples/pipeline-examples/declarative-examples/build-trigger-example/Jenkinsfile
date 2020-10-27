@@ -2,10 +2,9 @@ pipeline {
     agent any
 
     environment {
-        // The URL of the artifact in Artifactory that caused the build.
-        // May be empty if the build isn't been triggered by a change in Artifactory.
-        RT_TRIGGER_URL = """${currentBuild.getBuildCauses('org.jfrog.hudson.trigger.ArtifactoryCause')[0] ?
-                currentBuild.getBuildCauses('org.jfrog.hudson.trigger.ArtifactoryCause')[0].url : ''}"""
+        // The URL of the artifact in Artifactory, that caused the job to be triggered.
+        // May be empty if the build isn't triggered by a change in Artifactory.
+        RT_TRIGGER_URL = "${currentBuild.getBuildCauses('org.jfrog.hudson.trigger.ArtifactoryCause')[0]?.url}"
     }
 
     stages {
