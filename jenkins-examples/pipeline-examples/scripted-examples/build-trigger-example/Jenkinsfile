@@ -1,7 +1,11 @@
 node {
+    // The URL of the artifact in Artifactory that caused the build.
+    // May be null if the build isn't been triggered by a change in Artifactory.
+    def rtTriggerUrl = currentBuild.getBuildCauses('org.jfrog.hudson.trigger.ArtifactoryCause')[0]?.url
+
     def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
 
-    stage ('Trigger build') {
-        server.setBuildTrigger spec: "*/10 * * * *", paths: "generic-libs-local/builds/starship" 
+    stage('Trigger build') {
+        server.setBuildTrigger spec: "*/10 * * * *", paths: "generic-libs-local/builds/starship"
     }
 }
