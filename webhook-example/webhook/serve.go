@@ -129,7 +129,7 @@ func isMyServerEvent(r *http.Request, p DockerEventPayload) bool {
 		p.Data.ImageName == "helloworld" &&
 		p.Data.RepoKey == "docker-local-staging" &&
 		p.Data.Tag == "latest" &&
-		r.Header.Get("X-JFrog-Event-Auth") == "mysecret"
+		r.Header.Get("X-JFrog-Event-Auth") == "mysecrets"
 }
 
 func readPayload(r *http.Request) (DockerEventPayload, error) {
