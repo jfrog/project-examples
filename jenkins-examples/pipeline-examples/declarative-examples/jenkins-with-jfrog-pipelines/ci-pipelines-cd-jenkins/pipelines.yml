@@ -1,0 +1,103 @@
+# CI in Pipelines, CD in Jenkins
+resources:
+  - name: calculate_repository_resource
+    type: GitRepo
+    configuration:
+      gitProvider: talitzgithub  
+      path: talitz/spring-petclinic-ci-cd-k8s-example
+      branches: 
+        include: master
+ 
+  - name: appl_build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: artifactory_eu
+      buildName: build_and_dockerize_spring_pet_clinic
+      buildNumber: 1
+  
+  - name: dbp_image
+    type: Image
+    configuration:
+      registry: artifactory_eu      
+      sourceRepository: docker_local  
+      imageName: talyi-docker.jfrog.io/pet-clinic
+      imageTag: 1.0.0
+      autoPull: true      
+
+pipelines:
+  - name: build_and_dockerize_spring_pet_clinic
+    steps: 
+      - name: build_app
+        type: MvnBuild
+        configuration:
+          affinityGroup: dbp_group
+          integrations:
+            - name: artifactory_eu
+          sourceLocation: .
+          autoPublishBuildInfo: true
+          mvnCommand: clean install -s settings.xml
+          configFileLocation: .
+          configFileName: maven.yaml
+          inputResources:
+            - name: calculate_repository_resource
+          outputResources:
+            - name: appl_build_info         
+
+      - name: docker_build
+        type: DockerBuild
+        configuration:
+          runtime:
+            type: image
+            image:
+              custom:
+                name: docker.bintray.io/jfrog/pipelines-u18node
+                tag: "12.18.2"
+                autoPull: true          
+          inputSteps: 
+            - name: build_app          
+          affinityGroup: dbp_group
+          dockerFileLocation: .
+          dockerFileName: Dockerfile
+          dockerImageName: talyi-docker.jfrog.io/pet-clinic
+          dockerImageTag: 1.0.${run_number}
+          inputResources:
+            - name: calculate_repository_resource
+          integrations:
+            - name: artifactory_eu
+        execution:
+          onStart:
+            - jfrog rt dl libs-snapshot-local --build=build_and_dockerize_spring_pet_clinic  --flat=true
+            - mkdir target
+            - cp spring-petclinic-*.jar target/
+            - pwd
+            - mv -v target $res_calculate_repository_resource_resourcePath
+
+      - name: docker_push
+        type: DockerPush
+        configuration:
+          runtime:
+            type: image
+            image:
+              custom:
+                name: docker.bintray.io/jfrog/pipelines-u18node
+                tag: "12.18.2"
+                autoPull: true
+          inputSteps:
+            - name: docker_build          
+          affinityGroup: dbp_group
+          targetRepository: docker-local
+          integrations:
+            - name: artifactory_eu
+          outputResources:
+            - name: dbp_image        
+
+      - name: trigger_jenkins
+        type: Jenkins
+        configuration:
+          inputSteps:
+              - name: docker_push
+          jenkinsJobName: spring-petclinic-ci-cd-k8s-example
+          inputResources:
+            - name: dbp_image
+          integrations:
+            - name: new_jenk_int  

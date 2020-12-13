@@ -1,0 +1,53 @@
+
+#CI in Jenkins, CD in Pipelines
+resources:
+  - name: incoming_basic_hook
+    type: IncomingWebhook
+    configuration:
+      webhookName: in_hook_int
+ 
+  - name: spring_helm_chart_resource
+    type: HelmChart
+    configuration:
+      sourceArtifactory: artifactory_eu
+      repository: helm
+      chart: spring-petclinic-ci-cd-k8s-chart
+      version: '1.0.0'
+
+pipelines:
+  - name: deploy_spring_pet_clinic
+    steps:
+      - name: start_by_hook
+        type: Bash
+        configuration:
+          inputResources:
+            - name: incoming_basic_hook
+        execution:
+          onExecute:
+            - echo "job triggered by resource-> $step_triggered_by_resource_name"
+            - echo "$res_incoming_basic_hook_payload" | jq '.' > payload.json
+            - echo "$(read_json payload.json my.nested.object)"
+
+      - name: deploy_helm_chart
+        type: HelmDeploy
+        configuration:
+          runtime:
+            type: image
+            image:
+              custom:
+                name: docker.bintray.io/jfrog/pipelines-u18node
+                tag: "12.18.2"
+                autoPull: true
+          integrations:
+            - name: app_spring_pet_clinic_k8s_cluster_integration
+            - name: gcloud_k8s_creds
+          helmVersion: 3
+          lint: true
+          flags: --kube-context=gke_soleng-dev_us-west1-a_artifactory-ha-cluster --set=image.tag=1.0.100
+          inputSteps:
+            - name: start_by_hook
+          inputResources:
+            - name: spring_helm_chart_resource
+          releaseName: spring-petclinic-ci-cd-k8s-example
+          valueFilePaths:
+            - values.yaml
