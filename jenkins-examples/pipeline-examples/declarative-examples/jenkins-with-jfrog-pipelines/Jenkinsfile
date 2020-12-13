@@ -49,9 +49,6 @@ pipeline {
         stage ('Build Docker Image') {
             steps {
                 script {
-                  sh "cd target && ls -la"
-                }
-                script {
                     docker.build("talyi-docker.jfrog.io/" + "pet-clinic:1.0.${env.BUILD_NUMBER}")
                 }
             }
