@@ -11,21 +11,21 @@ pipeline {
         stage ('Artifactory Configuration') {
             steps {
                 rtServer (
-                    id: "talyi-artifactory",
+                    id: "artifactory-server-id",
                     url: "https://talyi.jfrog.io/artifactory",
                     credentialsId: "admin.jfrog"
                 )
 
                 rtMavenResolver (
                     id: 'maven-resolver',
-                    serverId: 'talyi-artifactory',
+                    serverId: 'artifactory-server-id',
                     releaseRepo: 'libs-release',
                     snapshotRepo: 'libs-snapshot'
                 )  
                  
                 rtMavenDeployer (
                     id: 'maven-deployer',
-                    serverId: 'talyi-artifactory',
+                    serverId: 'artifactory-server-id',
                     releaseRepo: 'libs-release-local',
                     snapshotRepo: 'libs-snapshot-local',
                     threads: 6,
@@ -49,9 +49,6 @@ pipeline {
         stage ('Build Docker Image') {
             steps {
                 script {
-                  sh "cd target && ls -la"
-                }
-                script {
                     docker.build("talyi-docker.jfrog.io/" + "pet-clinic:1.0.${env.BUILD_NUMBER}")
                 }
             }
@@ -60,7 +57,7 @@ pipeline {
         stage ('Push Image to Artifactory') {
             steps {
                 rtDockerPush(
-                    serverId: "talyi-artifactory",
+                    serverId: "artifactory-server-id",
                     image: "talyi-docker.jfrog.io/" + "pet-clinic:1.0.${env.BUILD_NUMBER}",
                     targetRepo: 'docker',
                     properties: 'project-name=jfrog-blog-post;status=stable'
@@ -71,11 +68,10 @@ pipeline {
         stage ('Publish Build Info') {
             steps {
                 rtPublishBuildInfo (
-                    serverId: "talyi-artifactory"
+                    serverId: "artifactory-server-id"
                 )
             }
         }
-
 
         stage('Trigger JFrog Pipelines') {
             steps {
@@ -84,6 +80,5 @@ pipeline {
                 }
             }
         }
-
     }
 }
