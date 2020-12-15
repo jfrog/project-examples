@@ -27,3 +27,4 @@ To set up Jenkins to use the example, read [this](https://github.com/jfrog/proje
 * The [promotion-example](promotion-example) demonstrates how to promote a build in Artifactory.
 * The [props-example](props-example) demonstrates setting/deleting properties on artifacts in Artifactory. Also downloads and uploads files to Artifactory with properties, while using a placeholder when downloading.
 * The [props-single-file-example](props-single-file-example) is the same as the [props-example](props-example), but has the specs embedded inside the Groovy script.
+* The [jenkins-with-jfrog-pipelines](jenkins-with-jfrog-pipelines) demonstrates three different ways to leap forward with JFrog Pipelines as part of your existing Jenkins based DevOps processes.
