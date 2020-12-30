@@ -4,7 +4,7 @@
 
 This is an example showing how to collect build info while using Kaniko  container to build image from a docker file and push it to Artifactory.
 
-### Validate the Setup
+### Preconditions to run the example
 * In your terminal, validate that the following commands work.
     ```console
     Output Docker version
