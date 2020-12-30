@@ -1,0 +1,7 @@
+{
+	"auths": {
+		"artprod.mycompany": {
+			"auth": "<USER-NAME:<PASSWORD> (convert to base 64)"
+		}
+	}
+}
