@@ -1,7 +1,8 @@
-#### Kaniko Example
-Kaniko is a tool to build container images from a Dockerfile, inside a container or Kubernetes cluster.
+# Kaniko Example
+## General
+[Kaniko](https://github.com/GoogleContainerTools/kaniko) is a tool to build container images from a Dockerfile, inside a container or Kubernetes cluster.
 
-This is a sample of how to collect build info while using Kaniko  container to build image from a docker file and push it to Artifactory.
+This is an example showing how to collect build info while using Kaniko  container to build image from a docker file and push it to Artifactory.
 
 ### Validate the Setup
 * In your terminal, validate that the following commands work.
@@ -18,7 +19,7 @@ This is a sample of how to collect build info while using Kaniko  container to b
 ## Running the Example
 * CD to the this example with your terminal.
 
-* Fill the missing parts below before run each command:
+* Replace the `**ARTPROD.MYCOMPANY**` with you Artifactory Docker registry & `**TARGET-REPOSITORY**` to the repository  name where the image  is stored in Artifactory
 
     ```console
     Run Kaniko:
