@@ -19,7 +19,7 @@ This is an example showing how to collect build info while using Kaniko  contain
 ## Running the Example
 * CD to the this example with your terminal.
 
-* Replace the `**ARTPROD.MYCOMPANY**` with you Artifactory Docker registry & `**TARGET-REPOSITORY**` to the repository  name where the image  is stored in Artifactory
+* Replace `**ARTPROD.MYCOMPANY**` with your Artifactory Docker registry url and `**TARGET-REPOSITORY**` with the repository name where the image is stored in Artifactory.
 
     ```console
     Run Kaniko:
