@@ -1,2 +1,2 @@
 FROM alpine
-RUN echo "created from standard input"
+RUN echo "Hello frog!"
