@@ -12,7 +12,7 @@ This is an example showing how to collect build-info, while using the Kaniko con
 ### Validating your setup
 * In your terminal, validate that the following commands work.
     ```console
-    Output docker version 17.07.0-ce (2017-08-29) or above
+    Output docker version
     > docker --version
 
     Output JFrog CLI version 1.43.0 or above.
@@ -26,7 +26,7 @@ This is an example showing how to collect build-info, while using the Kaniko con
 * Edit the 'config.json' file, located in the current directory.
 * Replace the **USER-NAME:PASSWORD** token inside the file with the base64 encoded value.
 * Replace the **DOCKER_REG_URL** token inside the file with your Artifactory docker registry URL.
-* Run the following commands, after replacing **DOCKER_REG_URL** with your Artifactory Docker registry URL and **TARGET_REPO** with the target repository name in Artifactory. **TARGET_REPO** is the name of the Artifactory repository mentioned in the [Prerequisites for running this example](#prerequisites_for_running_this_example) section.
+* Run the following commands, after replacing **DOCKER_REG_URL** with your Artifactory Docker registry URL and **TARGET_REPO** with the target repository name in Artifactory. **TARGET_REPO** is the name of the Artifactory repository mentioned in the [Prerequisites for running this example](#prerequisites-for-running-this-example) section.
 
     ```console
     Run Kaniko:
