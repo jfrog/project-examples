@@ -3,7 +3,7 @@
     {
       "pattern": "libs-snapshot-local",
       "target": "Bazinga/",
-      "excludePatterns": ["*ArtifactoryPipeline.zip"]
+      "exclusions": ["*ArtifactoryPipeline.zip"]
     }
   ]
 }

@@ -4,7 +4,7 @@
       "pattern": "jenkins-examples/pipeline-examples/resources/",
       "target": "libs-snapshot-local",
       "regexp": "true",
-      "excludePatterns": [".*.zip", "jenkins-examples/pipeline-examples/resources/props.*"]
+      "exclusions": [".*.zip", "jenkins-examples/pipeline-examples/resources/props.*"]
     }
   ]
 }
