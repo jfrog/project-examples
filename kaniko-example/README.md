@@ -28,13 +28,13 @@ This is an example showing how to collect build-info, while using the Kaniko con
 * Replace the **DOCKER_REG_URL** token inside the file with your Artifactory docker registry URL.
 * Run the following commands, after replacing **DOCKER_REG_URL** with your Artifactory Docker registry URL and **TARGET_REPO** with the target repository name in Artifactory. **TARGET_REPO** is the name of the Artifactory repository mentioned in the [Prerequisites for running this example](#prerequisites-for-running-this-example) section.
 
-* For macOS users, replace `-i` with `-i ''`
     ```console
     Run Kaniko:
-    > docker run --rm -v `pwd`:/workspace -v `pwd`/config.json:/kaniko/.docker/config.json:ro gcr.io/kaniko-project/executor:latest --dockerfile=Dockerfile --destination=DOCKER_REG_URL/hello-world:latest --image-name-with-digest-file=image-file-details
+    > docker run --rm -v `pwd`:/workspace -v `pwd`/config.json:/kaniko/.docker/config.json:ro gcr.io/kaniko-project/executor:$(IMAGE_TAG) --dockerfile=Dockerfile --destination=DOCKER_REG_URL/hello-world:latest --image-name-with-digest-file=image-file-details
 
     Add image tag:
-    > sed  -i 's/@/:latest@/g' image-file-details
+    // If you are running on OSX, replace `-i` with `-i ''`:
+    > sed  -i 's/@/:$(IMAGE_TAG) @/g' image-file-details
 
     Configure Artifactory:
     > jfrog rt c
