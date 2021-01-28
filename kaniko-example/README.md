@@ -22,7 +22,7 @@ This is an example showing how to collect build-info, while using the Kaniko con
 ## Running the Example
 * Clone this repository.
 * CD into this example directory.
-* Encode your Artifactory **username:password** using a base64 encoder.
+* Encode your Artifactory **username:password** using a base64 encoder, e.g. `echo -n  "admin:password" | base64`.
 * Edit the 'config.json' file, located in the current directory.
 * Replace the **USER-NAME:PASSWORD** token inside the file with the base64 encoded value.
 * Replace the **DOCKER_REG_URL** token inside the file with your Artifactory docker registry URL.
