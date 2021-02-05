@@ -1,0 +1,53 @@
+resources:
+  - name: be_gitRepo
+    type: GitRepo
+    configuration:
+      path: RjSH1/project-examples
+      gitProvider: my_github
+ 
+  - name: appl_build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: demoArt
+      
+  - name: appl_promoted_build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: demoArt
+      
+pipelines:
+  - name: demo_application
+    steps:
+      - name: mvn_build_step
+        type: MvnBuild
+        configuration:
+          sourceLocation: maven-example
+         # resolverSnapshotRepo: maven-jcenter
+         # resolverReleaseRepo: maven-jcenter
+          deployerSnapshotRepo: maven-local
+          deployerReleaseRepo: maven-local
+         # mvnCommand: clean install
+          inputResources:
+            - name: be_gitRepo
+          integrations:
+            - name: demoArt 
+            
+      - name: publish_app_build
+        type: PublishBuildInfo
+        configuration:
+          forceXrayScan: false
+          inputSteps:
+            - name: mvn_build_step
+          outputResources:
+            - name: appl_build_info
+ 
+      - name: promote_app_build
+        type: PromoteBuild
+        configuration:
+          targetRepository: demo-pipelines        
+          integrations:
+            - name: demoArt
+          inputResources:
+            - name: appl_build_info
+          outputResources:
+            - name: appl_promoted_build_info
