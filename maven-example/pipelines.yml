@@ -1,0 +1,53 @@
+resources:
+  - name: be_gitRepo
+    type: GitRepo
+    configuration:
+      path: RjSH1/project-examples
+      gitProvider: zenGit
+ 
+  - name: appl_build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: zenArt
+      
+  - name: appl_promoted_build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: zenArt
+      
+pipelines:
+  - name: demo_application
+    steps:
+      - name: mvn_build_step
+        type: MvnBuild
+        configuration:
+          sourceLocation: maven-example
+         # resolverSnapshotRepo: maven-jcenter
+         # resolverReleaseRepo: maven-jcenter
+          deployerSnapshotRepo: maven-local
+          deployerReleaseRepo: maven-local
+         # mvnCommand: clean install
+          inputResources:
+            - name: be_gitRepo
+          integrations:
+            - name: zenArt 
+            
+      - name: publish_app_build
+        type: PublishBuildInfo
+        configuration:
+          forceXrayScan: false
+          inputSteps:
+            - name: mvn_build_step
+          outputResources:
+            - name: appl_build_info
+ 
+      - name: promote_app_build
+        type: PromoteBuild
+        configuration:
+          targetRepository: demo-pipelines        
+          integrations:
+            - name: zenArt
+          inputResources:
+            - name: appl_build_info
+          outputResources:
+            - name: appl_promoted_build_info            
