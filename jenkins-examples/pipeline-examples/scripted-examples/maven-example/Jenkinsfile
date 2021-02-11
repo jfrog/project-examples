@@ -1,4 +1,6 @@
 node {
+    // Configure an Artifactory server with the pipeline parameters provided by SERVER_URL & CREDENTIALS.
+    // You can also obtain a preconfigured Artifactory server with: `def server = Artifactory.server SERVER_ID`
     def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
     def rtMaven = Artifactory.newMavenBuild()
     def buildInfo
@@ -8,9 +10,14 @@ node {
     }
 
     stage ('Artifactory configuration') {
-        rtMaven.tool = MAVEN_TOOL // Tool name from Jenkins configuration
-        rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: server
-        rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
+        // Maven tool name from Jenkins' Global Tool Configuration (defined by the pipeline parameter MAVEN_TOOL)
+        rtMaven.tool = MAVEN_TOOL
+        // Define a deployer with the pipeline parameters: ARTIFACTORY_LOCAL_RELEASE_REPO (default: 'libs-release-local'),
+        //      ARTIFACTORY_LOCAL_SNAPSHOT_REPO (default: 'libs-snapshot-local')
+        rtMaven.deployer releaseRepo: ARTIFACTORY_LOCAL_RELEASE_REPO, snapshotRepo: ARTIFACTORY_LOCAL_SNAPSHOT_REPO, server: server
+        // Define a deployer with the pipeline parameters: ARTIFACTORY_RELEASE_REPO (default: 'libs-release'),
+        //      ARTIFACTORY_SNAPSHOT_REPO (default: 'libs-snapshot')
+        rtMaven.resolver releaseRepo: ARTIFACTORY_RELEASE_REPO, snapshotRepo: ARTIFACTORY_SNAPSHOT_REPO, server: server
         buildInfo = Artifactory.newBuildInfo()
     }
 
