@@ -13,7 +13,8 @@ pipeline {
                 rtUpload (
                     buildName: 'MK',
                     buildNumber: '48',
-                    serverId: SERVER_ID, // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+                    // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
+                    serverId: SERVER_ID,
                     specPath: 'jenkins-examples/pipeline-examples/resources/props-upload.json'
                 )
             }
@@ -53,12 +54,12 @@ pipeline {
                     serverId: SERVER_ID,
 
                     //Optional parameters
-                    targetRepo: 'libs-release-local',
+                    targetRepo: ARTIFACTORY_LOCAL_RELEASE_REPO,
                     displayName: 'Promote me please',
                     buildName: 'MK',
                     buildNumber: '48',
                     comment: 'this is the promotion comment',
-                    sourceRepo: 'libs-snapshot-local',
+                    sourceRepo: ARTIFACTORY_LOCAL_SNAPSHOT_REPO,
                     status: 'Released',
                     includeDependencies: true,
                     failFast: true,

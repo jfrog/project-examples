@@ -2,7 +2,7 @@ node {
     def buildInfo1
     def buildInfo2
 
-    // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+    // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
     def server = Artifactory.server SERVER_ID
 
     stage ('Clone') {

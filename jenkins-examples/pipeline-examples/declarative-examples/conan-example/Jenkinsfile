@@ -17,10 +17,10 @@ pipeline {
                 )
 
                 // Add a new repository named 'conan-local' to the conan client.
-                // uUe an Artifactory server ID defined in Jenkins --> Manage:
                 // The name provided can be used later in the script:
                 rtConanRemote (
                     name: "myRemoteName",
+                    // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
                     serverId: SERVER_ID,
                     repo: "conan-local",
                     clientId: "myConanClient"

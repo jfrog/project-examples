@@ -13,7 +13,8 @@ pipeline {
                 rtUpload (
                     buildName: 'holyFrog',
                     buildNumber: '42',
-                    serverId: SERVER_ID, // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+                    // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
+                    serverId: SERVER_ID,
                     specPath: 'jenkins-examples/pipeline-examples/resources/recursive-flat-upload.json'
                 )
             }

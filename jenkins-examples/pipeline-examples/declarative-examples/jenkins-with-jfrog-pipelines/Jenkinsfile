@@ -19,15 +19,15 @@ pipeline {
                 rtMavenResolver (
                     id: 'maven-resolver',
                     serverId: 'artifactory-server-id',
-                    releaseRepo: 'libs-release',
-                    snapshotRepo: 'libs-snapshot'
+                    releaseRepo: ARTIFACTORY_VIRTUAL_RELEASE_REPO,
+                    snapshotRepo: ARTIFACTORY_VIRTUAL_SNAPSHOT_REPO
                 )  
                  
                 rtMavenDeployer (
                     id: 'maven-deployer',
                     serverId: 'artifactory-server-id',
-                    releaseRepo: 'libs-release-local',
-                    snapshotRepo: 'libs-snapshot-local',
+                    releaseRepo: ARTIFACTORY_LOCAL_RELEASE_REPO,
+                    snapshotRepo: ARTIFACTORY_LOCAL_SNAPSHOT_REPO,
                     threads: 6,
                     properties: ['BinaryPurpose=Technical-BlogPost', 'Team=DevOps-Acceleration']
                 )

@@ -1,13 +1,20 @@
 node {
-    def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
-    // Host:
-    // On OSX: "tcp://127.0.0.1:1234"
-    // On Linux can be omitted or null
-    def rtDocker = Artifactory.docker server: server, host: HOST_NAME
-    def buildInfo = Artifactory.newBuildInfo()
+    def server
+    def rtDocker
+    def buildInfo
 
     stage ('Clone') {
         git url: 'https://github.com/jfrog/project-examples.git'
+    }
+
+    stage ('Artifactory configuration') {
+        // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
+        server = Artifactory.server SERVER_ID
+        // Host:
+        // On OSX: "tcp://127.0.0.1:1234"
+        // On Linux can be omitted or null
+        rtDocker = Artifactory.docker server: server, host: HOST_NAME
+        buildInfo = Artifactory.newBuildInfo()
     }
 
     stage ('Add properties') {

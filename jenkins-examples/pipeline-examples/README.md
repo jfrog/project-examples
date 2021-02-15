@@ -4,7 +4,7 @@
 Pipeline jobs in Jenkins allow creating a script which defines your build steps. 
 For those not familiar with Jenkins Pipelines, check out the [Pipeline Tutorial](https://github.com/jenkinsci/pipeline-plugin/blob/master/TUTORIAL.md) or the [Getting Started With Pipeline](https://jenkins.io/doc/book/pipeline/) documentation.
 
-Read the [Working With Pipeline Jobs in Jenkins](https://www.jfrog.com/confluence/display/RTF/Working+With+Pipeline+Jobs+in+Jenkins) documentation for information on working with JFrog Artifactory using Jenkins pipeline jobs.
+You may find more information on working with JFrog Artifactory using Jenkins pipeline jobs on the [Working With Pipeline Jobs in Jenkins](https://www.jfrog.com/confluence/display/RTF/Working+With+Pipeline+Jobs+in+Jenkins) documentation.
 
 ## Examples
 The examples in this repository are meant to help you get started using the Artifactory Pipeline APIs in your pipeline scripts.
@@ -12,16 +12,22 @@ The examples in this repository are meant to help you get started using the Arti
 Follow the below steps to run the examples.
 
 ### Step 1 - Configure Artifactory Server for the Examples
-All examples use an Artifactory server defined in Manage Jenkins, Configure System.
-The server is referenced in all examples using the SERVER_ID variable.
-To have the SERVER_ID variable reference your Artifactory server, follow these steps:
-* Find or configure an Artifactory server in Jenkins through Manage Jenkins, Configure System. You'll need its Server ID.
+All examples use an Artifactory server defined in Jenkins' Configuration.
+
+Find or configure an Artifactory server in Jenkins through *Manage Jenkins*, *Configure System*. You'll need its Server ID.
+
+### Step 2 - Set or Replace Variables in the Example's Pipeline
+The pipeline of most examples includes variables, such as `SERVER_ID`, `MAVEN_TOOL`, `ARTIFACTORY_LOCAL_RELEASE_REPO`, etc.
+
+Please make sure to either set or replace these variables with values that suit your configuration.
+
+To set the variables for the pipeline, follow these steps:
+
 * In the Jenkins job configuration, check the *This project is parameterized* option.
 * Click *Add Parameter* and then select *String Parameter*.
-* Set the *Name* as *SERVER_ID* and the *Default Value* as the Artifactory Server ID configured in *Manage Jenkins*.
+* Set the *Name* as the variable name (`SERVER_ID` for example) and the *Default Value* as the required value (Artifactory Server ID configured in `Manage Jenkins`, for example).
 
-### Step 2 - Configure the Jenkins Job
-
+### Step 3 - Configure the Jenkins Job
 Configure the Jenkins using one of the following methods.
 #### Method 1:
 In the job configuration, set *Definition* to *Pipeline script*,
