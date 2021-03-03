@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("org.jfrog.buildinfo", "build-info-extractor-gradle", "4.19.x-SNAPSHOT")
+        classpath("org.jfrog.buildinfo", "build-info-extractor-gradle", "4.+")
     }
     configurations.classpath {
         resolutionStrategy {
