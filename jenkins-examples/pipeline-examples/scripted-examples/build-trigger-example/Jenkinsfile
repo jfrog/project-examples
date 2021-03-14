@@ -3,7 +3,12 @@ node {
     // May be empty if the build isn't triggered by a change in Artifactory.
     def rtTriggerUrl = currentBuild.getBuildCauses('org.jfrog.hudson.trigger.ArtifactoryCause')[0]?.url
 
-    def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
+    def server
+
+    stage ('Artifactory configuration') {
+        // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
+        server = Artifactory.server SERVER_ID
+    }
 
     stage('Trigger build') {
         server.setBuildTrigger spec: "*/10 * * * *", paths: "generic-libs-local/builds/starship"

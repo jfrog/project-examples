@@ -1,5 +1,5 @@
 node {
-    // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+    // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
     def server = Artifactory.server SERVER_ID
     def buildInfo = Artifactory.newBuildInfo()
 

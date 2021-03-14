@@ -11,7 +11,8 @@ pipeline {
         stage ('Excluded upload') {
             steps {
                 rtUpload (
-                    serverId: SERVER_ID, // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+                    // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
+                    serverId: SERVER_ID,
                     specPath: 'jenkins-examples/pipeline-examples/resources/exclude-upload.json'
                 )
             }

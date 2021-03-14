@@ -10,7 +10,7 @@ pipeline {
         stage('Artifactory download and upload'){
             steps {
                 script{
-                    // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+                    // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
                     def server = Artifactory.server SERVER_ID
 
                     // Read the download and upload specs:

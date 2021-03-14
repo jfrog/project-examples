@@ -1,5 +1,5 @@
 node {
-    def server = Artifactory.newServer url: SERVER_URL, credentialsId: CREDENTIALS
+    def server
     def rtGradle = Artifactory.newGradleBuild()
     def buildInfo = Artifactory.newBuildInfo()
 
@@ -8,8 +8,11 @@ node {
     }
 
     stage ('Artifactory configuration') {
+        // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
+        server = Artifactory.server SERVER_ID
+
         rtGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
-        rtGradle.deployer repo: 'libs-snapshot-local', server: server
+        rtGradle.deployer repo: ARTIFACTORY_LOCAL_SNAPSHOT_REPO, server: server
         rtGradle.resolver repo: 'jcenter', server: server
     }
 

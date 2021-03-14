@@ -8,7 +8,7 @@ node {
     stage ('Build') {
         git url: 'https://github.com/jfrog/project-examples.git'
 
-        // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+        // Obtain an Artifactory server instance, defined in Jenkins --> Manage Jenkins --> Configure System:
         server = Artifactory.server SERVER_ID
 
         // Create the upload spec.
@@ -32,11 +32,11 @@ node {
             //Mandatory parameters
             'buildName'          : buildInfo.name,
             'buildNumber'        : buildInfo.number,
-            'targetRepo'         : 'libs-release-local',
+            'targetRepo'         : ARTIFACTORY_LOCAL_RELEASE_REPO,
 
             //Optional parameters
             'comment'            : 'this is the promotion comment',
-            'sourceRepo'         : 'libs-snapshot-local',
+            'sourceRepo'         : ARTIFACTORY_LOCAL_SNAPSHOT_REPO,
             'status'             : 'Released',
             'includeDependencies': true,
             'failFast'           : true,
