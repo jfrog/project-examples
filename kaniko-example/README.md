@@ -30,13 +30,7 @@ This is an example showing how to collect build-info, while using the Kaniko con
 
     ```console
     Run Kaniko:
-    > export IMAGE_TAG=latest
-    > docker run --rm -v `pwd`:/workspace -v `pwd`/config.json:/kaniko/.docker/config.json:ro gcr.io/kaniko-project/executor:latest --dockerfile=Dockerfile --destination=DOCKER_REG_URL/hello-world:$IMAGE_TAG --image-name-with-digest-file=image-file-details
-
-    Add the image tag to 'image-file-details':
-    > sed  -i 's/@/:'$IMAGE_TAG'@/g' image-file-details
-    On macOS, use:
-    > sed  -i '' 's/@/:'$IMAGE_TAG'@/g' image-file-details
+    > docker run --rm -v `pwd`:/workspace -v `pwd`/config.json:/kaniko/.docker/config.json:ro gcr.io/kaniko-project/executor:latest --dockerfile=Dockerfile --destination=DOCKER_REG_URL/hello-world:1 --image-name-tag-with-digest-file=image-file-details
 
     Configure Artifactory:
     > jfrog rt c
