@@ -31,7 +31,7 @@ pipeline {
                     args: "restore ./src/GraphQL.sln"
                 )
             }
-        }}
+        }
 
         stage ('Publish build info') {
             steps {
