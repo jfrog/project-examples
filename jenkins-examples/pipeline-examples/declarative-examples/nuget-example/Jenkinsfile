@@ -31,7 +31,7 @@ pipeline {
                     args: "restore ./Examples.sln"
                 )
             }
-        }}
+        }
 
         stage ('Publish build info') {
             steps {
