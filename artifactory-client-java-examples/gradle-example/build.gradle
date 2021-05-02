@@ -1,4 +1,4 @@
-group 'org.jftog.example'
+group 'org.jfrog.example'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -6,7 +6,7 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
