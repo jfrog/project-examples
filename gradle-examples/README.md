@@ -57,6 +57,9 @@ Sample project that uses the Gradle Artifactory Plugin with Gradle Configuration
 ### gradle-example-publish
 Sample project that uses the Gradle Artifactory Plugin with Gradle Publications.
 
+### gradle-kts-example-publish
+Sample project that configures the Gradle Artifactory Plugin with the Gradle Kotlin DSL.
+
 ### gradle-android-example
 Sample project that uses the Gradle Artifactory Plugin to deploy Android application(apk) and library(aar) to Artifactory.
 
