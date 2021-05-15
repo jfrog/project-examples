@@ -51,8 +51,7 @@
             <plugin>
                 <groupId>org.jfrog.buildinfo</groupId>
                 <artifactId>artifactory-maven-plugin</artifactId>
-                <version>2.4.1</version>
-                <inherited>false</inherited>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>build-info</id>
@@ -81,13 +80,6 @@
                                 <buildNumber>${buildNumber}</buildNumber>
                                 <buildUrl>${buildUrl}</buildUrl>
                             </buildInfo>
-                            <licenses>
-                                <autoDiscover>true</autoDiscover>
-                                <includePublishedArtifacts>false</includePublishedArtifacts>
-                                <runChecks>true</runChecks>
-                                <scopes>compile,runtime</scopes>
-                                <violationRecipients>build@organisation.com</violationRecipients>
-                            </licenses>
                         </configuration>
                     </execution>
                 </executions>
@@ -112,25 +104,4 @@
             </plugin>
         </plugins>
     </build>
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>central</id>
-            <name>bintray</name>
-            <url>https://jcenter.bintray.com</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>central</id>
-            <name>bintray-plugins</name>
-            <url>https://jcenter.bintray.com</url>
-        </pluginRepository>
-    </pluginRepositories>
-
 </project>

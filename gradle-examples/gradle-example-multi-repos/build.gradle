@@ -16,7 +16,7 @@
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath(group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '4.+')
@@ -40,7 +40,7 @@ allprojects {
     status = 'Integration'
     repositories {
         maven {
-            url "http://127.0.0.1:8081/artifactory/jcenter"
+            url "http://127.0.0.1:8081/artifactory/libs-release"
         }
     }
 }

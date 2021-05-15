@@ -25,7 +25,7 @@ pipeline {
                 rtGradleResolver (
                     id: "GRADLE_RESOLVER",
                     serverId: "ARTIFACTORY_SERVER",
-                    repo: "jcenter"
+                    repo: "libs-release"
                 )
             }
         }

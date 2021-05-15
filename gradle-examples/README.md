@@ -11,7 +11,7 @@ We have included a few sample projects to help you get started using the plugin.
 http://localhost:8081/artifactory<br>
 This URL is defined inside the *build.gradle* file of each project. Please change it if your Artifactory instance is accessible through a different URL.
 * Configure your Artifactory username and password in the *gradle.properties* file for each project
-* Since all example projects are configured to resolve dependencies from 'jcenter', it is recommended to create a remote repository named *jcenter*, which proxies *https://jcenter.bintray.com* as its URL.
+* Since all example projects are configured to resolve dependencies from 'Maven Central', it is recommended to create a remote repository named *mvn-central*, which proxies *https://repo1.maven.org/maven2* as its URL.
 * CD to one of the project's root directory and run the build using one of the following commands:
 
 ```console
@@ -64,9 +64,6 @@ Sample project that configures the Gradle Artifactory Plugin with the Gradle Kot
 Sample project that uses the Gradle Artifactory Plugin to deploy Android application(apk) and library(aar) to Artifactory.
 
 Compatible with Android gradle plugin version 3.0.x
-
-### gradle-jcenter-resolve
-Resolves a dependency from jcenter.
 
 ### gradle-cache-example
 Simple copy of the `gradle-example` project with modified configuration to use Artifactory as an external
