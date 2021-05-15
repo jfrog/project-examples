@@ -18,7 +18,6 @@
     `docker-stage-local` - Local docker repo.
     `docker-prod-local` - Local docker repo.
     `docker-remote`     - Remote docker repo pointing to Docker hub `https://registry-1.docker.io/`.
-    `bintray-docker-remote` - Remote docker repo pointing to Bintray: `https://docker.bintray.io`. 
     `docker` - Virtual docker repo aggregating all above created repo with `docker-stage-local` as default repo for deployment.
 
 3.  Create Generic local repository with name `tomcat-local` and deploy [Java](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and [Tomcat](https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.32/bin/apache-tomcat-8.0.32.tar.gz) binaries in it. 
