@@ -13,7 +13,7 @@ node {
 
         rtGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
         rtGradle.deployer repo: ARTIFACTORY_LOCAL_RELEASE_REPO, server: server
-        rtGradle.resolver repo: 'jcenter', server: server
+        rtGradle.resolver repo: 'libs-release', server: server
     }
 
     stage ('Exec Gradle') {

@@ -50,7 +50,7 @@ pipelines:
             type: image
             image:
               custom:
-                name: docker.bintray.io/jfrog/pipelines-u18node
+                name: releases-docker.jfrog.io/jfrog/pipelines-u18node
                 tag: "12.18.2"
                 autoPull: true          
           inputSteps: 
@@ -79,7 +79,7 @@ pipelines:
             type: image
             image:
               custom:
-                name: docker.bintray.io/jfrog/pipelines-u18node
+                name: releases-docker.jfrog.io/jfrog/pipelines-u18node
                 tag: "12.18.2"
                 autoPull: true
           inputSteps:

@@ -16,13 +16,12 @@ copy `circle.yml` file to your project.
 Step 2:
 
 Configure artifactory-maven-plugin to your project by copying following to your pom.xml:
-```
+```xml
             <plugins>
                         <plugin>
                             <groupId>org.jfrog.buildinfo</groupId>
                             <artifactId>artifactory-maven-plugin</artifactId>
-                            <version>2.4.1</version>
-                            <inherited>false</inherited>
+                            <version>3.2.1</version>
                             <executions>
                                 <execution>
                                     <id>build-info</id>
@@ -51,13 +50,6 @@ Configure artifactory-maven-plugin to your project by copying following to your 
                                             <buildNumber>${buildNumber}</buildNumber>
                                             <buildUrl>${buildUrl}</buildUrl>
                                         </buildInfo>
-                                        <licenses>
-                                            <autoDiscover>true</autoDiscover>
-                                            <includePublishedArtifacts>false</includePublishedArtifacts>
-                                            <runChecks>true</runChecks>
-                                            <scopes>compile,runtime</scopes>
-                                            <violationRecipients>build@organisation.com</violationRecipients>
-                                        </licenses>
                                     </configuration>
                                 </execution>
                             </executions>

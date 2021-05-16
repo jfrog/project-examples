@@ -23,7 +23,7 @@ here are the command for running this example
 
 Run artifactory locally
 ```bash
-docker run -p 8082:8082  docker.bintray.io/jfrog/artifactory-pro:latest
+docker run --name artifactory -d -p 8081:8081 -p 8082:8082 releases-docker.jfrog.io/jfrog/artifactory-pro:latest
 ```
 
 (here you need to setup artifactory repository and webhook, install Jfrog CLI, follow the instructions in the blog post)
