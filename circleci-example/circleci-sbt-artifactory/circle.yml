@@ -23,7 +23,7 @@ deployment:
     - ./circleci-credentials.sh
     - sbt clean compile package publish
     # Configure Artifactory instance with JFrog CLI
-    - ./jfrog rt config --url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_PASSWORD
+    - ./jfrog config add --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_PASSWORD --interactive=false
     # Collect build environment variables and build tools information using JFrog CLI
     - ./jfrog rt bce circleci-sbt-artifactory $CIRCLE_BUILD_NUM
     # Publish build information to Artifactory

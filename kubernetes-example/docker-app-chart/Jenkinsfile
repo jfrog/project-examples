@@ -9,7 +9,7 @@ node {
         /* This installs helm client and JFrog Cli */
         sh "curl -fL https://getcli.jfrog.io | sh"
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: CREDENTIALS, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-        sh "./jfrog rt config --url ${SERVER_URL} --user ${env.USERNAME} --password ${env.PASSWORD}"
+        sh "./jfrog config add --artifactory-url ${SERVER_URL} --user ${env.USERNAME} --password ${env.PASSWORD} --interactive=false"
         sh "curl -u ${env.USERNAME}:${env.PASSWORD} -O ${SERVER_URL}/generic-local/helm"
         sh "chmod 777 ./helm"
         }

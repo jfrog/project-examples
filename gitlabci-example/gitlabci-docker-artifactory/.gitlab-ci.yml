@@ -10,7 +10,7 @@ before_script:
   # Install Jfrog CLI
   - curl -fL https://getcli.jfrog.io | sh
   # Configure Artifactory instance with JFrog CLI
-  - ./jfrog rt config MyArtifactory --url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_PASS
+  - ./jfrog config add MyArtifactory --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_PASS --interactive=false
   # Docker client info
   - docker info
   # Login to Artifactory docker registry

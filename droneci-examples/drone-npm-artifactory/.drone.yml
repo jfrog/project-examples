@@ -5,8 +5,8 @@ pipeline:
     commands:
     # Download the JFrog CLI  
       - curl -fL https://getcli.jfrog.io | sh
-      - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD
-      - ./jfrog rt c show
+      - ./jfrog config add --artifactory-url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD --interactive=false
+      - ./jfrog c show
     # Run the go command with the CLI   
       - ./jfrog rt npmi $REPOSITORY_KEY --build-name=drone-npm-artifactory --build-number=1.0.0
     # Collect the environment variables

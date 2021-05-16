@@ -29,7 +29,7 @@ Create the following repositories on your Artifactory instance.
 CD to the root project directory.
 ```
 Configure Artifactory:
-> jfrog rt c
+> jfrog c add
 
 Build the project and record the depedencies as part of the build-info.
 > jfrog rt npmi npm --build-name my-npm-build --build-number 1

@@ -5,8 +5,8 @@ pipeline:
     commands:
        # Install the JFrog CLI
       - curl -fL https://getcli.jfrog.io | sh
-      - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD
-      - ./jfrog rt c show
+      - ./jfrog config add --artifactory-url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD --interactive=false
+      - ./jfrog c show
         # Change the repository name in the configuration.yml to the the REPOSITORY_KEY .
       - sed -i 's,REPOSITORY_KEY,'"$REPOSITORY_KEY"',g' configuration.yml
          # Run the gradle command with the CLI

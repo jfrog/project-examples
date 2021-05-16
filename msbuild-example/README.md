@@ -13,7 +13,7 @@ To achive this, we'll add JFrog CLI commands into the project's csproj file.<br/
 * Make sure msbuild is installed, and add it to the search path (add the *msbuild.exe* path to the PATH environment variable). 
 * Configure your Artifactory URL and credentials using the following command: 
 ```
-jfrog rt c
+jfrog c add
 ``` 
 * From the Artifactory UI, create a local generic repository named *msbuild-local*.
 

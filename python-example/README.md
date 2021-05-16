@@ -42,7 +42,7 @@ CD to the root project directory
 
 ```console
 Configure Artifactory:
-> jfrog rt c
+> jfrog c add
 
 Configure the project's resolution repository. You shoud set the virtual repository you created.
 > jfrog rt pipc

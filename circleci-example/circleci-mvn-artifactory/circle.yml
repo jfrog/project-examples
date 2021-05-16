@@ -8,7 +8,7 @@ dependencies:
     # Install JFrog CLI
     - curl -fL https://getcli.jfrog.io | sh
     # Configure Artifactory instance with JFrog CLI
-    - ./jfrog rt config artifactory --url $ARTIFACTORY_URL --user $ARTIFACTORY_USERNAME --password $ARTIFACTORY_PASSWORD --interactive=false
+    - ./jfrog config add artifactory --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USERNAME --password $ARTIFACTORY_PASSWORD --interactive=false
     # Set the M2_HOME environment variable
     - export M2_HOME=/usr/share/maven
     # Replace the repository name in the configuration.yml to the correct one.

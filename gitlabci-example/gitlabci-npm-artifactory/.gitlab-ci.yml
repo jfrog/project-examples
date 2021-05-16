@@ -7,8 +7,8 @@ before_script:
   # Install JFrog CLI
   - curl -fL https://getcli.jfrog.io | sh
   # Configure Artifactory instance with JFrog CLI
-  - ./jfrog rt config --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
-  - ./jfrog rt c show
+  - ./jfrog config add --artifactory-url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS --interactive=false
+  - ./jfrog c show
 
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
