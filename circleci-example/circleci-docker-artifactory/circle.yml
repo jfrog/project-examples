@@ -7,7 +7,7 @@ dependencies:
     # Install JFrog CLI
     - curl -fL https://getcli.jfrog.io | sh
     # Configure Artifactory instance with JFrog CLI
-    - ./jfrog rt config --url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_PASSWORD --interactive=false
+    - ./jfrog config add --artifactory-url $ARTIFACTORY_URL --user $ARTIFACTORY_USER --apikey $ARTIFACTORY_PASSWORD --interactive=false
   override:
     - docker build --rm=false -t $ARTIFACTORY_DOCKER_REPOSITORY/node-version:$CIRCLE_BUILD_NUM .
 

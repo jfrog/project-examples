@@ -33,7 +33,7 @@ This is an example showing how to collect build-info, while using the Kaniko con
     > docker run --rm -v `pwd`:/workspace -v `pwd`/config.json:/kaniko/.docker/config.json:ro gcr.io/kaniko-project/executor:latest --dockerfile=Dockerfile --destination=DOCKER_REG_URL/hello-world:1 --image-name-tag-with-digest-file=image-file-details
 
     Configure Artifactory:
-    > jfrog rt c
+    > jfrog c add
 
     Collect image build info:
     > jfrog rt build-docker-create TARGET_REPO --image-file image-file-details --build-name myBuild --build-number 1
