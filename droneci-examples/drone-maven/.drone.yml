@@ -5,7 +5,7 @@ pipeline:
     commands:
     # Download the JFrog CLI 
       - curl -fL https://getcli.jfrog.io | sh
-      - ./jfrog config add --artifactory-url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD
+      - ./jfrog config add --artifactory-url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD --interactive=false
       - ./jfrog c show
     # Set the M2_HOME EV  
       - export M2_HOME=/usr/share/maven
