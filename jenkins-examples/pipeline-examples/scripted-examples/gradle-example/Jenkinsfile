@@ -13,7 +13,7 @@ node {
 
         rtGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
         rtGradle.deployer repo: ARTIFACTORY_LOCAL_SNAPSHOT_REPO, server: server
-        rtGradle.resolver repo: 'libs-release', server: server
+        rtGradle.resolver repo: ARTIFACTORY_VIRTUAL_RELEASE_REPO, server: server
     }
 
     withEnv (['DONT_COLLECT=FOO']) {
@@ -26,6 +26,7 @@ node {
         stage ('Extra gradle configurations') {
             rtGradle.deployer.artifactDeploymentPatterns.addExclude ("*.war")
             rtGradle.usesPlugin = true // Artifactory plugin already defined in build script
+            rtGradle.useWrapper = true
         }
 
         stage ('Exec Gradle') {

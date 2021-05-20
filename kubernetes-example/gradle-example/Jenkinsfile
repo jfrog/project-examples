@@ -6,11 +6,11 @@ node {
     stage 'Build'
         git url: 'https://github.com/jfrogtraining/kubernetes_example.git', branch: 'master'
 
-    //Configure Artifactroy repository to pull/push artifacts
+    //Configure Artifactory repository to pull/push artifacts
     stage 'Artifactory configuration'
         rtGradle.tool = GRADLE_TOOL // Tool name from Jenkins configuration
         rtGradle.deployer repo:DEPLOY_REPO, server: server
-        rtGradle.resolver repo:'libs-release', server: server
+        rtGradle.resolver repo:ARTIFACTORY_VIRTUAL_RELEASE_REPO, server: server
         rtGradle.deployer.addProperty("unit-test", "pass").addProperty("qa-team", "platform", "ui")
         def buildInfo = Artifactory.newBuildInfo()
         buildInfo.env.capture = true
