@@ -23,3 +23,4 @@ steps:
     artifactoryService: 'Kayal_Art'
     targetResolveRepo: 'nuget'
     solutionPath: '**/*.sln'
+    nugetProtocolVersion: 'v3'
