@@ -19,13 +19,13 @@ pipeline {
                 rtGradleDeployer (
                     id: "GRADLE_DEPLOYER",
                     serverId: "ARTIFACTORY_SERVER",
-                    repo: "libs-release-local",
+                    repo: ARTIFACTORY_LOCAL_RELEASE_REPO,
                 )
 
                 rtGradleResolver (
                     id: "GRADLE_RESOLVER",
                     serverId: "ARTIFACTORY_SERVER",
-                    repo: "libs-release"
+                    repo: ARTIFACTORY_VIRTUAL_RELEASE_REPO
                 )
             }
         }

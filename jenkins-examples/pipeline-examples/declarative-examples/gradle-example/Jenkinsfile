@@ -23,14 +23,14 @@ pipeline {
                 rtGradleDeployer (
                     id: "GRADLE_DEPLOYER",
                     serverId: "ARTIFACTORY_SERVER",
-                    repo: "libs-snapshot-local",
+                    repo: ARTIFACTORY_LOCAL_SNAPSHOT_REPO,
                     excludePatterns: ["*.war"],
                 )
 
                 rtGradleResolver (
                     id: "GRADLE_RESOLVER",
                     serverId: "ARTIFACTORY_SERVER",
-                    repo: "libs-release"
+                    repo: ARTIFACTORY_VIRTUAL_RELEASE_REPO
                 )
             }
         }
@@ -49,6 +49,7 @@ pipeline {
             steps {
                 rtGradleRun (
                     usesPlugin: true, // Artifactory plugin already defined in build script
+                    useWrapper: true,
                     tool: GRADLE_TOOL, // Tool name from Jenkins configuration
                     rootDir: "gradle-examples/gradle-example/",
                     buildFile: 'build.gradle',
