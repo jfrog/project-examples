@@ -21,7 +21,7 @@ node {
     stage ('Exec Maven') {
         docker.image('maven:3.6.1-jdk-8-slim').inside {
             withEnv(['JAVA_HOME=/usr/local/openjdk-8']) { // Java home of the container
-                rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean install', buildInfo: buildInfo
+                rtMaven.run pom: 'maven-examples/maven-example/pom.xml', goals: 'clean install', buildInfo: buildInfo
             }
         }
     }

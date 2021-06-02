@@ -7,7 +7,7 @@ job("job-dsl-artifactory-freestyle-maven-example") {
         // Configure the Maven builder
         node / 'builders' << 'org.jfrog.hudson.maven3.Maven3Builder' {
             goals 'clean install' // Specifies the goals to execute, such as "clean install" or "deploy"
-            rootPom 'maven-example' // If your workspace has the top-level pom.xml in somewhere other than the module root directory, specify the path
+            rootPom 'maven-examples/maven-example' // If your workspace has the top-level pom.xml in somewhere other than the module root directory, specify the path
             mavenName M3 // Tool name from Jenkins configuration
         }
 

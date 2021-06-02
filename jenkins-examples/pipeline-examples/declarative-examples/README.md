@@ -20,6 +20,7 @@ To set up Jenkins to use the example, read [this](https://github.com/jfrog/proje
 * The [issues-collection-example](issues-collection-example) demonstrates how to collect the list of tracked project issues and add them to the build-info.
 * The [jfrog-pipelines-example](jfrog-pipelines-example) demonstrates how to collect output resources when using JFrog Pipelines integration.
 * The [maven-example](maven-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Maven build.
+* The [maven-jib-example](maven-example) demonstrates how to collect and publish build-info for a Maven JIB build.
 * The [npm-container-example](npm-container-example) demonstrates how to run npm in a Docker container. Use this example only in **Multibranch Pipeline** or a **Pipeline from SCM**, as instructed [here](https://jenkins.io/doc/book/pipeline/syntax/#agent) under **dockerfile**.
 * The [npm-example](npm-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a npm build.
 * The [nuget-example](nuget-example) resolves dependencies and publishes build-info to Artifactory for a NuGet build.

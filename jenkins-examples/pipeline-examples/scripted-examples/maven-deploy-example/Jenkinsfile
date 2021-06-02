@@ -21,11 +21,11 @@ node {
     }
  
     stage ('Test') {
-        rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean test'
+        rtMaven.run pom: 'maven-examples/maven-example/pom.xml', goals: 'clean test'
     }
         
     stage ('Install') {
-        rtMaven.run pom: 'maven-example/pom.xml', goals: 'install', buildInfo: buildInfo
+        rtMaven.run pom: 'maven-examples/maven-example/pom.xml', goals: 'install', buildInfo: buildInfo
     }
  
     stage ('Deploy') {

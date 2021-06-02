@@ -9,9 +9,9 @@
             * rtMaven.tool = CONTAINER_MAVEN_TOOL
         * Add `JAVA_HOME` environment variable to the pipeline script.
             *       withEnv(['JAVA_HOME=/usr/local/openjdk-8']) { // Java home of the container
-                        rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean install', buildInfo: buildInfo
+                        rtMaven.run pom: 'maven-examples/maven-example/pom.xml', goals: 'clean install', buildInfo: buildInfo
                     }
     * Option 2: Set `JAVA_HOME` and `MAVEN_HOME` environment variables as configured in the container.
         *     withEnv(['JAVA_HOME=/usr/local/openjdk-8', 'MAVEN_HOME=/usr/share/maven']) {
-                rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean install', buildInfo: buildInfo
+                rtMaven.run pom: 'maven-examples/maven-example/pom.xml', goals: 'clean install', buildInfo: buildInfo
               }
