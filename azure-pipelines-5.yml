@@ -23,7 +23,7 @@ steps:
     cliInstallationRepo: 'jfrog-cli'
     installCustomVersion: true
     cliVersion: '1.46.3'
-- task: ArtifactoryNuGet@2
+- task: ArtifactoryNuGet@1
   inputs:
     command: 'restore'
     artifactoryService: 'Kayal_Art'
