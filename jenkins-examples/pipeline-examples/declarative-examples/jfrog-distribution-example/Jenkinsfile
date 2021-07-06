@@ -35,8 +35,8 @@ pipeline {
                                 {
                                     "pattern": "libs-release-local/ArtifactoryPipeline.zip"
                                 }
-                             ]
-                            }"""
+                              ]
+                             }"""
                 )
             }
         }
@@ -52,8 +52,8 @@ pipeline {
                                 {
                                     "pattern": "libs-release-local/ArtifactoryPipeline.zip"
                                 }
-                             ]
-                            }""",
+                              ]
+                             }""",
                     description: "Update a release bundle"
                 )
             }

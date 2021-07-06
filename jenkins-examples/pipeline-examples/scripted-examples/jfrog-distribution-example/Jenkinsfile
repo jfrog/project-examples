@@ -9,7 +9,7 @@ node {
         {
           "pattern": "libs-release-local/ArtifactoryPipeline.zip"
         }
-     ]
+      ]
     }"""
     def distributionRules = """{
       "distribution_rules": [
