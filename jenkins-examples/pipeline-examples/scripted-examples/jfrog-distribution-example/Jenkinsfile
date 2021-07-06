@@ -1,0 +1,61 @@
+node {
+    def jfrogInstance = JFrog.instance SERVER_ID
+    def rtServer = jfrogInstance.artifactory
+    def dsServer = jfrogInstance.distribution
+    def releaseBundleName = "example-release-bundle"
+    def releaseBundleVersion = "1"
+    def releaseBundleSpec = """{
+      "files": [
+        {
+          "pattern": "libs-release-local/ArtifactoryPipeline.zip"
+        }
+      ]
+    }"""
+    def distributionRules = """{
+      "distribution_rules": [
+        {
+          "site_name": "*",
+          "city_name": "*",
+          "country_codes": ["*"]
+        }
+      ]
+    }"""
+
+    stage ('Clone') {
+        git url: 'https://github.com/jfrog/project-examples.git'
+    }
+
+    stage ("Upload file") {
+        def uploadSpec = """{
+            "files": [
+                {
+                    "pattern": "jenkins-examples/pipeline-examples/resources/ArtifactoryPipeline.zip",
+                    "target": "libs-release-local"
+                }
+            ]
+        }"""
+        rtServer.upload spec: uploadSpec
+    }
+
+    stage ("Create release bundle") {
+        dsServer.createReleaseBundle name: releaseBundleName, version: releaseBundleVersion, spec: releaseBundleSpec
+    }
+
+    stage ("Update release bundle") {
+        dsServer.updateReleaseBundle name: releaseBundleName, version: releaseBundleVersion, spec: releaseBundleSpec, description: "Update a release bundle"
+    }
+
+    // Optional - this step can be achieved also by providing "signImmediately: true" to dsUpdateReleaseBundle step
+    stage ("Sign release bundle") {
+        dsServer.signReleaseBundle name: releaseBundleName, version: releaseBundleVersion
+    }
+
+    stage ("Distribute release bundle") {
+        dsServer.distributeReleaseBundle name: releaseBundleName, version: releaseBundleVersion, distRules: distributionRules, sync: true
+    }
+
+    stage ("Delete release bundle") {
+        dsServer.deleteReleaseBundle name: releaseBundleName, version: releaseBundleVersion, distRules: distributionRules, sync: true, deleteFromDist: true
+    }
+
+}
