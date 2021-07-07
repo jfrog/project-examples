@@ -1,0 +1,8 @@
+{
+  "\"auths\"": {
+    "\"$ARTIFACTORY_DOCKER_REGISTRY\"": {
+      "\"username\"": "\"$ARTIFACTORY_USER\"",
+      "\"password\"": "\"$ARTIFACTORY_PASSWORD\""
+    }
+  }
+}

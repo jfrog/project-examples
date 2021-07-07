@@ -1,0 +1,42 @@
+node {
+    def server
+    def rtDocker
+    def buildInfo
+
+    cleanWs()
+    stage ('Clone') {
+        git url: 'https://github.com/jfrog/project-examples.git'
+    }
+
+    stage ('Artifactory configuration') {
+        // Obtain a JFrog instance, defined in Jenkins --> Manage Jenkins --> Configure System:
+        def jfrogInstance = JFrog.instance SERVER_ID
+        rtServer = jfrogInstance.artifactory
+
+        rtDocker = Artifactory.docker server: rtServer
+        buildInfo = Artifactory.newBuildInfo()
+    }
+
+    dir ('jenkins-examples/pipeline-examples/resources/kaniko') {
+        stage ('Exec Kaniko') {
+            withCredentials([usernamePassword(credentialsId: CREDENTIALS, usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                try {
+                    sh '''
+                        eval "echo \"$(<kaniko-config-template.json)\"" > kaniko-config.json
+                        docker run --rm -v ${PWD}:/workspace -v ${PWD}/kaniko-config.json:/kaniko/.docker/config.json:ro gcr.io/kaniko-project/executor:latest --dockerfile=Dockerfile --destination=${ARTIFACTORY_DOCKER_REGISTRY}/artifactory-kaniko-example:latest --image-name-with-digest-file=image-file
+                    '''
+                } finally {
+                    sh 'rm kaniko-config.json'
+                }
+            }
+        }
+
+        stage ('Run create Docker build') {
+            rtDocker.createDockerBuild sourceRepo: ARTIFACTORY_DOCKER_REPO, kanikoImageFile: "image-file", buildInfo: buildInfo
+        }
+    }
+
+    stage ('Publish build info') {
+        rtServer.publishBuildInfo buildInfo
+    }
+}

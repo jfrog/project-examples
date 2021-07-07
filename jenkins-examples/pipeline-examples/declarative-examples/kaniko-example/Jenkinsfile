@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+    stages {
+        stage ('Clone') {
+            steps {
+                git url: "https://github.com/jfrog/project-examples.git"
+            }
+        }
+
+        stage ('Exec Kaniko') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: CREDENTIALS, usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                    dir('jenkins-examples/pipeline-examples/resources/kaniko') {
+                        sh '''
+                            eval "echo \"$(<kaniko-config-template.json)\"" > kaniko-config.json
+                            docker run --rm -v ${PWD}:/workspace -v ${PWD}/kaniko-config.json:/kaniko/.docker/config.json:ro gcr.io/kaniko-project/executor:latest --dockerfile=Dockerfile --destination=${ARTIFACTORY_DOCKER_REGISTRY}/artifactory-kaniko-example:latest --image-name-with-digest-file=image-file
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage ('Run create Docker build') {
+            steps {
+                rtCreateDockerBuild (
+                    serverId: SERVER_ID,
+                    sourceRepo: ARTIFACTORY_DOCKER_REPO,
+                    kanikoImageFile: "jenkins-examples/pipeline-examples/resources/kaniko/image-file"
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: SERVER_ID
+                )
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'rm jenkins-examples/pipeline-examples/resources/kaniko/kaniko-config.json'
+        }
+    }
+}
