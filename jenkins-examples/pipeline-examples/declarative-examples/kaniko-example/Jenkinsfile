@@ -7,16 +7,6 @@ pipeline {
             }
         }
 
-        stage ('Artifactory configuration') {
-            steps {
-                jfrogInstance (
-                    id: "JFROG_INSTANCE",
-                    url: SERVER_URL,
-                    credentialsId: CREDENTIALS
-                )
-            }
-        }
-
         stage ('Exec Kaniko') {
             steps {
                 withCredentials([usernamePassword(credentialsId: CREDENTIALS, usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
@@ -33,7 +23,7 @@ pipeline {
         stage ('Run create Docker build') {
             steps {
                 rtCreateDockerBuild (
-                    serverId: "JFROG_INSTANCE",
+                    serverId: SERVER_ID,
                     sourceRepo: ARTIFACTORY_DOCKER_REPO,
                     kanikoImageFile: "jenkins-examples/pipeline-examples/resources/kaniko/image-file"
                 )
@@ -43,7 +33,7 @@ pipeline {
         stage ('Publish build info') {
             steps {
                 rtPublishBuildInfo (
-                    serverId: "JFROG_INSTANCE"
+                    serverId: SERVER_ID
                 )
             }
         }

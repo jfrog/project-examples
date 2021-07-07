@@ -9,7 +9,8 @@ node {
     }
 
     stage ('Artifactory configuration') {
-        def jfrogInstance = JFrog.newInstance url: SERVER_URL, credentialsId: CREDENTIALS
+        // Obtain a JFrog instance, defined in Jenkins --> Manage Jenkins --> Configure System:
+        def jfrogInstance = JFrog.instance SERVER_ID
         rtServer = jfrogInstance.artifactory
 
         rtDocker = Artifactory.docker server: rtServer
