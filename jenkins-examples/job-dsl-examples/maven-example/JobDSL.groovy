@@ -6,7 +6,7 @@ mavenJob('job-dsl-artifactory-maven-example') {
     configure { node ->
         // === Configure the Maven builder ===
         node / methodMissing('goals', 'clean install') // Specifies the goals to execute, such as "clean install" or "deploy"
-        node / methodMissing('rootPOM', 'maven-example/pom.xml') // Specify pom.xml path
+        node / methodMissing('rootPOM', 'maven-examples/maven-example/pom.xml') // Specify pom.xml path
         node / 'mavenName'(M3) // Tool name from Jenkins configuration
 
         // === Resolver ===

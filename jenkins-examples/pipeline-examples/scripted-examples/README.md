@@ -24,6 +24,7 @@ To set up Jenkins to use the example, read [this](https://github.com/jfrog/proje
 * The [maven-container-example](maven-container-example) demonstrates how to run Maven in a Docker container.
 * The [maven-deploy-example](maven-deploy-example) demonstrates how to defer the build artifacts deployment to a separate stage.
 * The [maven-example](maven-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a Maven build.
+* The [maven-jib-example](maven-example) demonstrates how to collect and publish build-info for a Maven JIB build.
 * The [npm-container-example](npm-container-example) demonstrates how to run npm in a Docker container.
 * The [npm-example](npm-example) resolves dependencies, deploys artifacts and publishes build-info to Artifactory for a npm build.
 * The [nuget-example](nuget-example) resolves dependencies and publishes build-info to Artifactory for a NuGet build.

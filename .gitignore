@@ -3,11 +3,8 @@
 *.iws
 *.iml
 atlassian*.xml
-maven-example/target
-maven-example/*/target
-gradle-example/build
-gradle-example/*/build
-gradle-example/*/*/build
+maven-examples/**/target
+gradle-example/**/build
 _ReSharper*
 bin
 obj

@@ -1,0 +1,37 @@
+node {
+    def server
+    def rtMaven = Artifactory.newMavenBuild()
+    def rtDocker
+    def buildInfo
+
+    stage ('Clone') {
+        git url: 'https://github.com/jfrog/project-examples.git'
+    }
+
+    stage ('Artifactory configuration') {
+        def jfrogInstance = JFrog.instance SERVER_ID
+        rtServer = jfrogInstance.artifactory
+        rtDocker = Artifactory.docker server: rtServer
+
+        // Tool name from Jenkins configuration
+        rtMaven.tool = MAVEN_TOOL
+        rtMaven.deployer releaseRepo: ARTIFACTORY_LOCAL_RELEASE_REPO, snapshotRepo: ARTIFACTORY_LOCAL_SNAPSHOT_REPO, server: rtServer
+        rtMaven.resolver releaseRepo: ARTIFACTORY_VIRTUAL_RELEASE_REPO, snapshotRepo: ARTIFACTORY_VIRTUAL_SNAPSHOT_REPO, server: rtServer
+
+        buildInfo = Artifactory.newBuildInfo()
+    }
+
+    stage ('Exec Maven') {
+        withCredentials([usernamePassword(credentialsId: CREDENTIALS, usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+            rtMaven.run pom: 'maven-examples/maven-jib-example/pom.xml', goals: 'clean install jib:build -B', buildInfo: buildInfo
+        }
+    }
+
+    stage ('Run create Docker build') {
+        rtDocker.createDockerBuild sourceRepo: ARTIFACTORY_DOCKER_REPO, jibImageFiles: "maven-examples/maven-jib-example/*/target/jib-image.json", buildInfo: buildInfo
+    }
+
+    stage ('Publish build info') {
+        rtServer.publishBuildInfo buildInfo
+    }
+}

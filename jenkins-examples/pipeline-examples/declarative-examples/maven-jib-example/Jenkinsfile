@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+    stages {
+        stage ('Clone') {
+            steps {
+                git url: "https://github.com/jfrog/project-examples.git"
+            }
+        }
+
+        stage ('Artifactory configuration') {
+            steps {
+                rtMavenDeployer (
+                    id: "MAVEN_DEPLOYER",
+                    serverId: SERVER_ID,
+                    releaseRepo: ARTIFACTORY_LOCAL_RELEASE_REPO,
+                    snapshotRepo: ARTIFACTORY_LOCAL_SNAPSHOT_REPO
+                )
+
+                rtMavenResolver (
+                    id: "MAVEN_RESOLVER",
+                    serverId: SERVER_ID,
+                    releaseRepo: ARTIFACTORY_VIRTUAL_RELEASE_REPO,
+                    snapshotRepo: ARTIFACTORY_VIRTUAL_SNAPSHOT_REPO
+                )
+            }
+        }
+
+        stage ('Exec Maven') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: CREDENTIALS, usernameVariable: 'ARTIFACTORY_USERNAME', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                    rtMavenRun (
+                        tool: MAVEN_TOOL, // Tool name from Jenkins configuration
+                        pom: 'maven-examples/maven-jib-example/pom.xml',
+                        goals: 'clean install jib:build -B',
+                        deployerId: "MAVEN_DEPLOYER",
+                        resolverId: "MAVEN_RESOLVER"
+                    )
+                }
+            }
+        }
+
+        stage ('Run create Docker build') {
+            steps {
+                rtCreateDockerBuild(
+                        serverId: SERVER_ID,
+                        sourceRepo: "${env.JENKINS_ARTIFACTORY_DOCKER_PUSH_REPO}",
+                        jibImageFiles: "maven-examples/maven-jib-example/*/target/jib-image.json"
+                )
+            }
+        }
+
+        stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: SERVER_ID
+                )
+            }
+        }
+    }
+}
