@@ -3,28 +3,22 @@ pipeline {
     stages {
         stage ('Clone') {
             steps {
-                git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
+                git url: "https://github.com/jfrog/project-examples.git"
             }
         }
 
         stage ('Artifactory configuration') {
             steps {
-                jfrogInstance (
-                    id: "JFROG_INSTANCE",
-                    url: SERVER_URL,
-                    credentialsId: CREDENTIALS
-                )
-
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
-                    serverId: "JFROG_INSTANCE",
+                    serverId: SERVER_ID,
                     releaseRepo: ARTIFACTORY_LOCAL_RELEASE_REPO,
                     snapshotRepo: ARTIFACTORY_LOCAL_SNAPSHOT_REPO
                 )
 
                 rtMavenResolver (
                     id: "MAVEN_RESOLVER",
-                    serverId: "JFROG_INSTANCE",
+                    serverId: SERVER_ID,
                     releaseRepo: ARTIFACTORY_VIRTUAL_RELEASE_REPO,
                     snapshotRepo: ARTIFACTORY_VIRTUAL_SNAPSHOT_REPO
                 )
@@ -48,7 +42,7 @@ pipeline {
         stage ('Run create Docker build') {
             steps {
                 rtCreateDockerBuild(
-                        serverId: "JFROG_INSTANCE",
+                        serverId: SERVER_ID,
                         sourceRepo: "${env.JENKINS_ARTIFACTORY_DOCKER_PUSH_REPO}",
                         jibImageFiles: "maven-examples/maven-jib-example/*/target/jib-image.json"
                 )
@@ -58,7 +52,7 @@ pipeline {
         stage ('Publish build info') {
             steps {
                 rtPublishBuildInfo (
-                    serverId: "JFROG_INSTANCE"
+                    serverId: SERVER_ID
                 )
             }
         }

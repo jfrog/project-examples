@@ -3,7 +3,7 @@
 ## Prerequisites
 
 * Make sure to have the following job parameters configured:
-    * `SERVER_URL` - JFrog platform URL (i.e. https://acme.jfrog.io)
+    * `SERVER_ID` - JFrog instance ID, defined in Jenkins --> Manage Jenkins --> Configure System
     * `CREDENTIALS` - Credentials parameter type with username and password
     * `ARTIFACTORY_LOCAL_RELEASE_REPO` - Artifactory local releases repository for deployment (i.e. libs-release-local)
     * `ARTIFACTORY_LOCAL_SNAPSHOT_REPO` - Artifactory local snapshots repository for deployment (i.e.
