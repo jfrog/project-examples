@@ -1,0 +1,82 @@
+image: jangrewe/gitlab-ci-android
+
+
+before_script:
+  - export GRADLE_USER_HOME=$(pwd)/.gradle
+  - chmod +x ./gradlew
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .gradle/
+
+
+# IMPORTANT!!!!
+#   The GRADLE_VERSION should match the version in the gradle-wrapper.properties
+#   the "-all" is added in the Artifacotyr donwload script so I can have the version
+#   numbre alone which is used to determine the folder of the extraction
+#
+# Disable the Gradle daemon for Continuous Integration servers as correctness
+# is usually a priority over speed in CI environments. Using a fresh
+# runtime for each build is more reliable since the runtime is completely
+# isolated from any previous builds.
+variables:
+  GRADLE_VERSION: "6.8.3"
+  ARTIFACT_NAME: "test-library-name"
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+
+stages:
+  - test
+  - deploy
+
+
+unitTests:
+  stage: test
+  script:
+    - ./gradlew test
+
+
+
+.connect_artifactory: &connect_artifactory |
+  curl -fL https://getcli.jfrog.io | sh
+  ./jfrog config add --artifactory-url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS --interactive=false
+  ./jfrog c show
+
+
+
+
+.upload_artifact: &upload_artifact |
+  ./jfrog rt gradle-config --use-wrapper=true --repo-resolve=$GRADLE_REPO_KEY --server-id-resolve=Default-Server --repo-deploy=$GRADLE_REPO_KEY --server-id-deploy=Default-Server
+  ./jfrog rt gradle clean assembleRelease artifactoryPublish -b build.gradle --build-name=$ARTIFACT_NAME --build-number=$CI_JOB_ID
+
+
+
+
+# This docker image does not have Gradle installed, so install it
+# unzip -q (quiet) so the output won't be printed
+# the "-all" modifier for the gradle version is added here
+.install_gradle: &install_gradle |
+  curl -L https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-all.zip -o gradle.zip
+  unzip -q gradle.zip
+  export GRADLE_HOME=$(pwd)/gradle-$GRADLE_VERSION
+  export PATH=${GRADLE_HOME}/bin:${PATH}
+  echo $GRADLE_HOME
+  echo $PATH
+  gradle -v
+
+
+
+
+publish:
+  stage: deploy
+  cache: {}
+  script:
+    # Download and Install Gradle
+    - *install_gradle
+    # Connect to JFrog Artifactory
+    - *connect_artifactory
+    # Replace the repository name in the configuration.yml to the correct one.
+    - sed -i 's,GRADLE_REPO_KEY,'"$GRADLE_REPO_KEY"',g' configuration.yaml
+    # Upload artifact to JFrog Artifactory
+    - *upload_artifact
