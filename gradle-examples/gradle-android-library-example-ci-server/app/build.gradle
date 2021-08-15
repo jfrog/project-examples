@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.1s"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // How to Rename the output AAR file:
+    //      - https://stackoverflow.com/questions/24728591/how-to-set-name-of-aar-output-from-gradle
+    // Note that 'defaultConfig' references the above closure with that name
+    // And rootProject.name is defined in settings.gradle
+    libraryVariants.all { variant ->
+        variant.outputs.all {
+            // Do not add Variant (buildType) Name at the end
+            outputFileName = "${rootProject.name}-${defaultConfig.versionName}.aar"
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                artifactId = "${rootProject.name}"
+                version = "${android.defaultConfig.versionName}"
+            }
+        }
+    }
+    pluginManager.withPlugin('com.jfrog.artifactory') {
+        artifactoryPublish {
+            publications(publishing.publications.release)
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
