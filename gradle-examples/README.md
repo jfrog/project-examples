@@ -49,7 +49,7 @@ In this example, the only Artifactory property configured is "artifactoryPublish
 
 * Make sure to have the "Project uses the Artifactory Gradle Plugin" check box in the CI Server UI unchecked, so that the CI Server Plugin automatically applies the Gradle Artifactory Plugin to your
 build script.
-* In order to publish the build artifacts to Artifactory, the published arrtifacts are added to the archives Gradle configuration.
+* In order to publish the build artifacts to Artifactory, the published artifacts are added to the archives Gradle configuration.
 
 ### gradle-example
 Sample project that uses the Gradle Artifactory Plugin with Gradle Configurations.
@@ -64,6 +64,9 @@ Sample project that configures the Gradle Artifactory Plugin with the Gradle Kot
 Sample project that uses the Gradle Artifactory Plugin to deploy Android application(apk) and library(aar) to Artifactory.
 
 Compatible with Android gradle plugin version 3.0.x
+
+### gradle-android-library-ci-server
+Sample project that uses the Gradle Artifactory Plugin to deploy Android library(aar) to Artifactory using one of the [Artifactory CI clients or plugins](#gradle-example-ci-server).
 
 ### gradle-cache-example
 Simple copy of the `gradle-example` project with modified configuration to use Artifactory as an external
