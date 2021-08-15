@@ -47,8 +47,10 @@ afterEvaluate {
             }
         }
     }
-    artifactoryPublish {
-        publications(publishing.publications.release)
+    pluginManager.withPlugin('com.jfrog.artifactory') {
+        artifactoryPublish {
+            publications(publishing.publications.release)
+        }
     }
 }
 
