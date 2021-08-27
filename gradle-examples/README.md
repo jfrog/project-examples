@@ -61,12 +61,12 @@ Sample project that uses the Gradle Artifactory Plugin with Gradle Publications.
 Sample project that configures the Gradle Artifactory Plugin with the Gradle Kotlin DSL.
 
 ### gradle-android-example
-Sample project that uses the Gradle Artifactory Plugin to deploy Android application(apk) and library(aar) to Artifactory.
+Sample project that uses the Gradle Artifactory Plugin to deploy Android application (apk) and library (aar) to Artifactory.
 
 Compatible with Android gradle plugin version 3.0.x
 
 ### gradle-android-library-ci-server
-Sample project that uses the Gradle Artifactory Plugin to deploy Android library(aar) to Artifactory using one of the [Artifactory CI clients or plugins](#gradle-example-ci-server).
+Sample project that uses the Gradle Artifactory Plugin to deploy Android library (aar) to Artifactory using one of the [Artifactory CI clients or plugins](#gradle-example-ci-server).
 
 ### gradle-cache-example
 Simple copy of the `gradle-example` project with modified configuration to use Artifactory as an external
