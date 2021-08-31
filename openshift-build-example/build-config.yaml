@@ -13,6 +13,6 @@ spec:
   output:
     to:
       kind: DockerImage
-      name: '<Docker repository address>/jfrog-ecosystem-integration-env:latest'
+      name: '<Docker registry address>/jfrog-cli-oc-build-example:latest'
     pushSecret:
       name: rt-docker-registry

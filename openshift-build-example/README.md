@@ -11,9 +11,9 @@ This is an example showing how to add a BuildConfig in OpenShift, using it to bu
 * Log in to the OpenShift CLI ([instructions in OpenShift documentation](https://docs.openshift.com/container-platform/latest/cli_reference/openshift_cli/getting-started-cli.html#cli-logging-in_cli-developer-commands)). If you get notified that you don't have any projects, follow the instructions to create a new one.
 * Create a credentials secret for Artifactory. Replace the placeholders and run:
   ```
-  oc create secret docker-registry rt-docker-registry --docker-server=<Docker repository address> --docker-username=<Artifactory username> --docker-password=<Artifactory password>
+  oc create secret docker-registry rt-docker-registry --docker-server=<Docker registry address> --docker-username=<Artifactory username> --docker-password=<Artifactory password>
   ```
-* Download build-config.yaml to your computer and replace the placeholder `<Docker repository address>` with the address of your Docker repository in Artifactory.
+* Download build-config.yaml to your computer and replace the placeholder `<Docker registry address>` with the address of your Docker repository in Artifactory.
 * Apply the build config YAML to create a new build config in OpenShift:
   ```
   oc apply -f ./build-config.yaml
