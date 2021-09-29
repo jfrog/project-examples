@@ -24,7 +24,7 @@ This is an example showing how to add a BuildConfig in OpenShift and use it to b
   ```
 * Use JFrog CLI to start a new build from the BuildConfig we just created and collect build info. Replace the placeholders and run:
   ```
-  jfrog rt oc-start-build jfrog-oc-build-example --server-id=<JFrog CLI config server ID> --repo=<Docker repository name> --build-name=oc-build-example --build-number=1
+  jfrog rt oc start-build jfrog-oc-build-example --server-id=<JFrog CLI config server ID> --repo=<Docker repository name> --build-name=oc-build-example --build-number=1
   ```
 * Publish build info to Artifactory. Replace the placeholder and run:
   ```
