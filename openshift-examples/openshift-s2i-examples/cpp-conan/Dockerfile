@@ -14,7 +14,7 @@ RUN yum install -y python-pip && pip install conan
 ENV GIT_COMMITTER_EMAIL=ankushc@jfrog.com
 ENV GIT_COMMITTER_NAME=AnkushC
 
-COPY ./.s2i/bin/ /usr/local/s2i
+COPY .s2i/bin /usr/local/s2i
 
 LABEL io.openshift.s2i.scripts-url="image:///usr/local/s2i"
 RUN mkdir -p /opt/app-root && chown -R 1001:0 /opt/app-root

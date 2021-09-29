@@ -1,0 +1,18 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: "jfrog-oc-build-example"
+spec:
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/jfrog/project-examples'
+    contextDir: /openshift-examples/openshift-build-example
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: DockerImage
+      name: '<Docker registry address>/jfrog-cli-oc-build-example:latest'
+    pushSecret:
+      name: rt-docker-registry
