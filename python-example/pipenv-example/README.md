@@ -13,7 +13,7 @@ This example demonstrates how to build a Python Pipenv project with Artifactory,
 * The virtual repository should include the remote repository.
 * The virtual repository should have the local repository set as the *Default Deployment Repository*.
 4. Make sure **wheel** and **setuptools** are installed. You can use the [Installing Packages Documentation](https://packaging.python.org/tutorials/installing-packages/).
-5. Make sure version 1.28.0 or above of [JFrog CLI](https://jfrog.com/getcli/) is installed.
+5. Make sure version 2.9.0 or above of [JFrog CLI](https://jfrog.com/getcli/) is installed.
 
 ### Validate the Setup
 In your terminal, validate that the following commands work.
@@ -54,6 +54,6 @@ Publish the build info to Artifactory:
 > jfrog rt bp my-pipenv-build 1
 
 Install published package by installing it from Artifactory using pip:
-> jfrog pipenv-install jfrog-pipenv-example
+> jfrog pipenv install jfrog-pipenv-example
 
 Learn about [Building Python Packages with JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingPythonPackages).
