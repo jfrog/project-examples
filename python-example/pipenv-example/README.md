@@ -1,12 +1,12 @@
-# Python Example
+# Pipenv Example
 
 ## Overview
-This example demonstrates how to build a Python project with Artifactory, while collecting build-info.
+This example demonstrates how to build a Python Pipenv project with Artifactory, while collecting build-info.
 
 ## Before Running the Example
 ### Set Up the Environment 
 1. Make sure **Python** is installed and the **python** command is in your PATH.
-2. Install **pip**. You can use the [Pip Documentation](https://pip.pypa.io/en/stable/installing/) and also [Installing packages using pip and virtual environments](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
+2. Install **pipenv**. You can use the [Pip Documentation](https://pipenv.pypa.io/en/latest/) and also [Installing packages using pip and virtual environments](https://realpython.com/pipenv-guide/)
 3. Create three Pypi repositories in Artifactory - a local, remote and a virtual repository. You can use the [PyPi Repositories Documentation](https://www.jfrog.com/confluence/display/RTF/PyPI+Repositories).
 * The remote repository should proxy *https://files.pythonhosted.org* (the default when creating a Pypi remote repository). 
 * Name the virtual repository *pipy*.
@@ -21,17 +21,8 @@ In your terminal, validate that the following commands work.
 Output Python version:
 > python --version
 
-Output pip version:
-> pip --version
-
-Verify wheel is installed:
-> wheel -h
-
-Verify setuptools is installed:
-> pip show setuptools
-
-Verify that virtual-environment is activated:
-> echo $VIRTUAL_ENV
+Output pipenv version:
+> pipenv --version
 
 Output JFrog CLI version:
 > jfrog --version
@@ -45,28 +36,24 @@ Configure Artifactory:
 > jfrog c add
 
 Configure the project's resolution repository. You shoud set the virtual repository you created.
-> jfrog rt pipc
+> jfrog pipec
 
 Install project dependencies with pip from Artifactory:
-> jfrog rt pipi -r requirements.txt --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+> jfrog pipenv install --build-name=my-pipenv-build --build-number=1 --module=jfrog-pipenv-example
 
 Package the project, create distribution archives (tar.gz and whl):
 > python setup.py sdist bdist_wheel
 
 Upload the packages to the pypi repository in Artifactory:
-> jfrog rt u dist/ pypi/ --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+> jfrog rt u dist/ pypi/ --build-name=my-pipenv-build --build-number=1 --module=jfrog-pipenv-example
 
 Collect environment variables and add them to the build info:
-> jfrog rt bce my-pip-build 1
+> jfrog rt bce my-pipenv-build 1
 
 Publish the build info to Artifactory:
-> jfrog rt bp my-pip-build 1
+> jfrog rt bp my-pipenv-build 1
 
 Install published package by installing it from Artifactory using pip:
-> jfrog rt pip-install jfrog-python-example
-
-Validate package successfully installed:
-> pip show jfrog-python-example
-```
+> jfrog pipenv-install jfrog-pipenv-example
 
 Learn about [Building Python Packages with JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingPythonPackages).
