@@ -40,4 +40,7 @@ For this demo, we will be using [buildx](https://github.com/docker/buildx) in or
 
     Publish build info:
     > jf rt build-publish --server-id=MY_SERVER_ID  myBuild 1
+
+    Remove buildx alias
+    > docker buildx uninstall
     ```
