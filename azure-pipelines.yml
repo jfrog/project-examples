@@ -47,10 +47,6 @@ steps:
     buildNumber: '$(Build.BuildNumber)'
 - task: ArtifactoryPublishBuildInfo@1
   inputs:
-- task: ArtifactoryDiscardBuilds@1
-  inputs:
-    buildName: '$(Build.DefinitionName)'
     artifactoryService: 'jy-service'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
-    projectKey: 'devops'
