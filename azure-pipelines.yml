@@ -40,9 +40,9 @@ steps:
 - task: ArtifactoryDotnetCore@1
   inputs:
     command: 'push'
-    artifactoryService: 'Artifactory Dev Deploy'
-    targetDeployRepo: 'bg-builds-dev'
-    pathToNupkg: '$(Build.ArtifactStagingDirectory)/pack/*.nupkg'
+    artifactoryService: 'Amith_service'
+    targetDeployRepo: 'san-nuget'
+    pathToNupkg: '*.nupkg'
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
