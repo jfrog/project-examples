@@ -26,6 +26,15 @@ steps:
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+- task: ArtifactoryNuGet@2
+  inputs:
+    command: 'push'
+    artifactoryService: 'Amith_service'
+    targetDeployRepo: 'san-nuget'
+    pathToNupkg: '*.nupkg'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
 - task: ArtifactoryPublishBuildInfo@1
   inputs:
     artifactoryService: 'Amith_service'
