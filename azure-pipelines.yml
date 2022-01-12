@@ -17,10 +17,17 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
-- task: ArtifactoryNuGet@1
+- task: ArtifactoryNuGet@2
   inputs:
     command: 'restore'
-    artifactoryService: 'Kayal_Art'
+    artifactoryService: 'Gaja-Art'
     targetResolveRepo: 'nuget'
     solutionPath: '**/*.sln'
-
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+- task: ArtifactoryPublishBuildInfo@1
+  inputs:
+    artifactoryService: 'Gaja-Art'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
