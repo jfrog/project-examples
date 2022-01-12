@@ -21,7 +21,7 @@ steps:
   inputs:
     command: 'restore'
     artifactoryService: 'Amith_service'
-    targetResolveRepo: 'test-nuget'
+    targetResolveRepo: 'san-nuget'
     solutionPath: '**/*.sln'
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
