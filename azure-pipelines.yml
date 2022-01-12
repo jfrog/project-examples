@@ -45,6 +45,7 @@ steps:
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+    projectKey: 'test'
 - task: ArtifactoryPublishBuildInfo@1
   inputs:
     artifactoryService: 'jy-service'
