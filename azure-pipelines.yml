@@ -26,6 +26,28 @@ steps:
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'nuget-example/MyLogger/MyLogger/MyLogger.csproj'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'pack'
+    packagesToPack: nuget-example/MyLogger/MyLogger/MyLogger.csproj
+    includesymbols: true
+    versioningScheme: byEnvVar
+    versionEnvVar: 'BUILD_BUILDNUMBER'
+- task: ArtifactoryDotnetCore@1
+  inputs:
+    command: 'push'
+    artifactoryService: 'Artifactory Dev Deploy'
+    targetDeployRepo: 'bg-builds-dev'
+    pathToNupkg: '$(Build.ArtifactStagingDirectory)/pack/*.nupkg'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+    includeEnvVars: true
+    targetDeployPath: ''
 - task: ArtifactoryNuGet@2
   inputs:
     command: 'push'
