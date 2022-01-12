@@ -20,14 +20,14 @@ steps:
 - task: ArtifactoryNuGet@2
   inputs:
     command: 'restore'
-    artifactoryService: 'Gaja-Art'
-    targetResolveRepo: 'nuget'
+    artifactoryService: 'Amith-service'
+    targetResolveRepo: 'test-nuget'
     solutionPath: '**/*.sln'
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
 - task: ArtifactoryPublishBuildInfo@1
   inputs:
-    artifactoryService: 'Gaja-Art'
+    artifactoryService: 'Amith-service'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
