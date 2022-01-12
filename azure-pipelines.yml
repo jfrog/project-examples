@@ -26,6 +26,7 @@ steps:
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+    projectKey: 'devops'
 - task: ArtifactoryDotnetCore@1
   inputs:
     command: 'push'
@@ -49,3 +50,4 @@ steps:
     artifactoryService: 'Amith_service'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+    projectKey: 'devops'
