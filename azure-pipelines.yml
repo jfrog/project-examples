@@ -50,3 +50,4 @@ steps:
     artifactoryService: 'jy-service'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+    projectKey: 'devops'
