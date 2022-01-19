@@ -27,11 +27,15 @@ steps:
     threads: '1'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
-- task: Npm@1
+- task: ArtifactoryNpm@2
   inputs:
-    command: 'custom'
-    workingDir: 'npm-example'
-    customCommand: 'run build'
+    command: 'pack and publish'
+    artifactoryService: 'jy-service'
+    targetRepo: 'san-npm'
+    workingFolder: 'npm-example'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
 - task: ArtifactoryPublishBuildInfo@1
   inputs:
     artifactoryService: 'jy-service'
