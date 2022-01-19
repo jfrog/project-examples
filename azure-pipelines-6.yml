@@ -29,10 +29,9 @@ steps:
     buildNumber: '$(Build.BuildNumber)'
 - task: Npm@1
   inputs:
-    command: 'publish'
+    command: 'custom'
     workingDir: 'npm-example'
-    publishRegistry: 'useFeed'
-    publishFeed: '1bc7476f-a4d9-4eed-b1a2-365586650848'
+    customCommand: 'run build'
 - task: ArtifactoryPublishBuildInfo@1
   inputs:
     artifactoryService: 'jy-service'
