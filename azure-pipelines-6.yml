@@ -19,7 +19,7 @@ steps:
   displayName: 'Run a multi-line script'
 - task: ArtifactoryNpm@2
   inputs:
-    command: 'ci'
+    command: 'install'
     artifactoryService: 'jy-service'
     sourceRepo: 'san-npm'
     workingFolder: 'npm-example'
