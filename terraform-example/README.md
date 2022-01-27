@@ -7,20 +7,15 @@ This example demonstrates how to publish terraform modules to Artifactory.
 
 ## Before Running the Example
 ### Set Up the Environment
-1. Create local repository in Artifactory.
+1. Create a local Terraform repository in Artifactory.
 2. Make sure version 2.12.0 or above of [JFrog CLI](https://jfrog.com/getcli/) is installed.
 
 ### Validate the Setup
 In your terminal, validate that the following commands work.
 ```console
 Output JFrog CLI version:
-> jfrog --version
+> jf --v
 ```
-
-### Scanning filesystem and packing modules
-File system is being scanned from the current working directory.
-A directory that contains at least one file with a “.tf” extension is considered as a terraform module and all its content will be packed in one zip file (including submodules directories) and will be deployed to Artifactory.
-There won’t be a recursive scanning inside the module directory after packing, that means subnodules won’t be packed and deploy separately to Artifactory.
 
 ## Running the Example
 CD to the root project directory
@@ -38,10 +33,11 @@ CD to directory which contains the modules. for example "aws" directory.
 Publish modules to Artifactory:
 > jf tf p --namespace=example --provider=aws --tag=v0.0.1
 
-To publish spesific modules cd into the module's root dierctory and run the publish command. module's name is determains by the directory name. 
-> cd modules/module1
-> jf tf p --namespace=example --provider=aws --tag=v0.0.2
-
-To exclude files and directories (in this example, files which include "test" in their path) use --exclusions.
-> jf tf p --namespace=example --provider=aws --tag=v0.0.3 --exclusions=*test*
+You can exclude files and directories from being scanned by the commandm using the --exclusions option. In this example, files and directories which include test or ignore anywhere in their path, won't be scanned.
+> jf tf p --namespace=example --provider=aws --tag=v0.0.2 --exclusions="*test*;*ignore*"
 ```
+
+## How are the modules packed and published?
+The jf tf command scans the local file-system under the current working directory recursively.
+It searches for directories which includes at least one file with a .tf extension. Such a directory is assumed to be a terraform module, and it is therefore packed into one zip file (including submodules directories) and then published to Artifactory.
+There isn't any recursive scanning inside the module directory after it is packed. This means that sub-nodules aren't packed and deployed separately to Artifactory.
