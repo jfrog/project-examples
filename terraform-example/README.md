@@ -1,5 +1,6 @@
+## This example and documentation are for the Beta v.1 of the Terraform Repositories, available exclusively to JFrog Beta customers.
+
 # Terraform Example
-## This example and documentation is for the Beta v.1 of the Terraform Repositories, available exclusively to JFrog Beta customers.  
 
 ## Overview
 This example demonstrates how to publish terraform modules to Artifactory.
