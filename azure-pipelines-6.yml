@@ -20,7 +20,7 @@ steps:
 - task: ArtifactoryNpm@2
   inputs:
     command: 'pack and publish'
-    artifactoryService: 'jy-test'
+    artifactoryService: 'jy-prd'
     sourceRepo: 'prjt-npm-remote'    
     targetRepo: 'prjt-test-dev'
     workingFolder: 'npm-example'
@@ -30,13 +30,13 @@ steps:
     buildNumber: '$(Build.BuildNumber)'
 - task: ArtifactoryPublishBuildInfo@1
   inputs:
-    artifactoryService: 'jy-test'
+    artifactoryService: 'jy-prd'
     projectKey: 'prjt'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
 - task: ArtifactoryBuildPromotion@1
   inputs:
-    artifactoryService: 'jy-test'
+    artifactoryService: 'jy-prd'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     projectKey: 'prjt'
