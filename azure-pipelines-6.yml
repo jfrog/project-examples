@@ -50,7 +50,7 @@ steps:
 
 - task: ArtifactoryBuildPromotion@1
   inputs:
-    artifactoryService: 'jy_prd'
+    artifactoryService: 'jy_dev'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     projectKey: 'prjt'
