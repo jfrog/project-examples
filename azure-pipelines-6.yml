@@ -44,7 +44,7 @@ steps:
     status: 'Released'
     sourceRepo: 'prjt-test-dev'
     includeDependencies: true
-    copy: true
+    copy: false
     dryRun: false
 
 
@@ -58,5 +58,5 @@ steps:
     status: 'Released'
     sourceRepo: 'prjt-test-stg'
     includeDependencies: true
-    copy: true
+    copy: false
     dryRun: false
