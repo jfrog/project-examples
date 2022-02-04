@@ -43,3 +43,15 @@ steps:
     projectKey: 'prjt'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+- task: ArtifactoryBuildPromotion@1
+  inputs:
+    artifactoryService: 'jy-service'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+    projectKey: 'prjt'
+    targetRepo: 'prjt-test-stg'
+    status: 'Released'
+    sourceRepo: 'prjt-test-dev'
+    includeDependencies: true
+    copy: false
+    dryRun: false
