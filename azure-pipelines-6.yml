@@ -19,18 +19,9 @@ steps:
   displayName: 'Run a multi-line script'
 - task: ArtifactoryNpm@2
   inputs:
-    command: 'install'
-    artifactoryService: 'jy-prd'
-    sourceRepo: 'san-npm'
-    workingFolder: 'npm-example'
-    collectBuildInfo: true
-    threads: '1'
-    buildName: '$(Build.DefinitionName)'
-    buildNumber: '$(Build.BuildNumber)'
-- task: ArtifactoryNpm@2
-  inputs:
     command: 'pack and publish'
-    artifactoryService: 'jy-prd'
+    artifactoryService: 'jy-test'
+    sourceRepo: 'prjt-npm-remote'    
     targetRepo: 'prjt-test-dev'
     workingFolder: 'npm-example'
     projectKey: 'prjt'
@@ -45,7 +36,7 @@ steps:
     buildNumber: '$(Build.BuildNumber)'
 - task: ArtifactoryBuildPromotion@1
   inputs:
-    artifactoryService: 'jy-prd'
+    artifactoryService: 'jy-test'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     projectKey: 'prjt'
