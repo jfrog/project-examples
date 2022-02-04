@@ -44,7 +44,7 @@ steps:
     status: 'Released'
     sourceRepo: 'prjt-test-dev'
     includeDependencies: true
-    copy: false
+    copy: true
     dryRun: false
 
 - task: ArtifactoryBuildPromotion@1
@@ -57,5 +57,5 @@ steps:
     status: 'Released'
     sourceRepo: 'prjt-test-stg'
     includeDependencies: true
-    copy: false
+    copy: true
     dryRun: false
