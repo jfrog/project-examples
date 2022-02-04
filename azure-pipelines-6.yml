@@ -20,7 +20,7 @@ steps:
 - task: ArtifactoryNpm@2
   inputs:
     command: 'install'
-    artifactoryService: 'jy-service'
+    artifactoryService: 'jy-test'
     sourceRepo: 'san-npm'
     workingFolder: 'npm-example'
     collectBuildInfo: true
@@ -30,7 +30,7 @@ steps:
 - task: ArtifactoryNpm@2
   inputs:
     command: 'pack and publish'
-    artifactoryService: 'jy-service'
+    artifactoryService: 'jy-test'
     targetRepo: 'prjt-test-dev'
     workingFolder: 'npm-example'
     projectKey: 'prjt'
@@ -39,13 +39,13 @@ steps:
     buildNumber: '$(Build.BuildNumber)'
 - task: ArtifactoryPublishBuildInfo@1
   inputs:
-    artifactoryService: 'jy-service'
+    artifactoryService: 'jy-test'
     projectKey: 'prjt'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
 - task: ArtifactoryBuildPromotion@1
   inputs:
-    artifactoryService: 'jy-service'
+    artifactoryService: 'jy-test'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     projectKey: 'prjt'
