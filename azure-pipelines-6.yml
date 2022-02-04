@@ -31,13 +31,15 @@ steps:
   inputs:
     command: 'pack and publish'
     artifactoryService: 'jy-service'
-    targetRepo: 'san-npm'
+    targetRepo: 'prjt-test-dev'
     workingFolder: 'npm-example'
+    projectKey: 'prjt'
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
 - task: ArtifactoryPublishBuildInfo@1
   inputs:
     artifactoryService: 'jy-service'
+    projectKey: 'prjt'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
