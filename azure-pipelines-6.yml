@@ -46,3 +46,16 @@ steps:
     includeDependencies: true
     copy: false
     dryRun: false
+
+- task: ArtifactoryBuildPromotion@1
+  inputs:
+    artifactoryService: 'jy_prd'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+    projectKey: 'prjt'
+    targetRepo: 'prjt-test-prd'
+    status: 'Released'
+    sourceRepo: 'prjt-test-stg'
+    includeDependencies: true
+    copy: false
+    dryRun: false
