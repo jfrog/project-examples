@@ -12,4 +12,6 @@ repositories {
 dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.12'
     implementation 'org.jfrog.artifactory.client:artifactory-java-client-services:+'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'commons-io:commons-io:2.11.0'
 }
