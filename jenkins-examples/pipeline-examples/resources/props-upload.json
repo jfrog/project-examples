@@ -2,12 +2,12 @@
   "files": [
     {
       "pattern": "jenkins-examples/pipeline-examples/resources/ArtifactoryPipeline.zip",
-      "target": "k-libs-snapshot-local",
+      "target": "prjt-maven-local",
       "props": "p1=v1;p2=v2"
     },
     {
       "pattern": "jenkins-examples/pipeline-examples/resources/ArtifactoryPipelineNoProps.zip",
-      "target": "k-libs-snapshot-local"
+      "target": "prjt-maven-local"
     }
   ]
 }
