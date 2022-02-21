@@ -20,7 +20,7 @@ node {
         if(CLEAN_REPO == "YES") {
             sh 'rm -rf ~/.gradle/caches'
         }
-        rtGradle.run rootDir: "gradle-example/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo: buildInfo
+        rtGradle.run rootDir: "gradle-example/", tasks: 'clean artifactoryPublish', buildInfo: buildInfo
 
     //Publish artifacts to Artifactory along with build information and scan build artifacts in Xray
     stage 'Publish Build Information & Scan Artifacts'

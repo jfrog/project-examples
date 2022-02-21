@@ -19,7 +19,7 @@ node {
 
     stage ('Exec Gradle') {
         docker.image('gradle').inside {
-            rtGradle.run rootDir: 'gradle-examples/gradle-example-ci-server/', buildFile: 'build.gradle', tasks: 'aP', buildInfo: buildInfo
+            rtGradle.run rootDir: 'gradle-examples/gradle-example-ci-server/', tasks: 'aP', buildInfo: buildInfo
         }
     }
 

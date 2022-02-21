@@ -21,11 +21,11 @@ node {
     }
  
     stage ('Test') {
-        rtGradle.run rootDir: 'gradle-examples/gradle-example-ci-server/', buildFile: 'build.gradle', tasks: 'clean test'
+        rtGradle.run rootDir: 'gradle-examples/gradle-example-ci-server/', tasks: 'clean test'
     }
  
     stage ('Deploy') {
-        rtGradle.run rootDir: 'gradle-examples/gradle-example-ci-server/', buildFile: 'build.gradle', tasks: 'artifactoryPublish', buildInfo: buildInfo
+        rtGradle.run rootDir: 'gradle-examples/gradle-example-ci-server/', tasks: 'artifactoryPublish', buildInfo: buildInfo
         rtGradle.deployer.deployArtifacts buildInfo
     }
     
