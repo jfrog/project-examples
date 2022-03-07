@@ -20,7 +20,7 @@ jobs:
     name: calculate-ci-job
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
          
     - name: Setup JDK 1.8
       uses: actions/setup-java@v1
@@ -28,13 +28,13 @@ jobs:
         java-version: 1.8
 
     - name: Setup JFrog CLI
-      uses: jfrog/setup-jfrog-cli@v1
+      uses: jfrog/setup-jfrog-cli@v2
       env:
-        JF_ARTIFACTORY_1: ${{ secrets.JF_ARTIFACTORY_SECRET_1 }}
+        JF_ENV_1: ${{ secrets.JF_SECRET_ENV_1 }}
         M2_HOME: /usr/local/apache-maven/apache-maven-3.6.3 
         
     - name: Ping JFrog CLI
-      run: jfrog rt ping
+      run: jf rt ping
 
     - name: Set Environment Variables
       run: |
@@ -44,9 +44,9 @@ jobs:
     # if pushed from a feature branch, should create a proper repository in artifactory for that  
     - name: Feature Branch Repository Creation
       run: |
-        jfrog rt rc templates/local-repo-template.json --vars key1=$repository
-        jfrog rt rc templates/remote-repo-template.json --vars key1=$repository
-        jfrog rt rc templates/virtual-repo-template.json --vars key1=$repository
+        jf rt rc templates/local-repo-template.json --vars key1=$repository
+        jf rt rc templates/remote-repo-template.json --vars key1=$repository
+        jf rt rc templates/virtual-repo-template.json --vars key1=$repository
   
     - if: always()   
       name: Feature Branch Repository Update
@@ -54,27 +54,27 @@ jobs:
         SERVER_ID: tal-eplus-saas
       run: |
         echo "::set-env name=repository::$(echo ${GITHUB_REF#refs/heads/} | sed 's/\//_/g')"
-        jfrog rt mvnc --server-id-resolve=$SERVER_ID --server-id-deploy=$SERVER_ID --repo-resolve-releases=auto-cli-virtual-$repository --repo-resolve-snapshots=auto-cli-virtual-$repository --repo-deploy-releases=auto-cli-virtual-$repository --repo-deploy-snapshots=auto-cli-virtual-$repository
+        jf mvnc --server-id-resolve=$SERVER_ID --server-id-deploy=$SERVER_ID --repo-resolve-releases=auto-cli-virtual-$repository --repo-resolve-snapshots=auto-cli-virtual-$repository --repo-deploy-releases=auto-cli-virtual-$repository --repo-deploy-snapshots=auto-cli-virtual-$repository
      
     - if: always()
       name: Build & Deploy
       run: | 
-        cd maths && jfrog rt mvn clean install
+        cd maths && jf mvn clean install
         
     - if: always() 
       name: Publish Build Information
       run: |
         # Collect environment variables for the build
-        jfrog rt bce
+        jf rt bce
         # Collect VCS details from git and add them to the build
-        jfrog rt bag
+        jf rt bag
         # Publish build info
-        jfrog rt bp       
+        jf rt bp       
         
     - if: always()
       name: Xray Scan
       run: |
-        jfrog rt bs
+        jf bs
 
     - if: always()
       name: Feature Branch Repository Deletion
@@ -82,7 +82,7 @@ jobs:
         NUMBER_OF_DAYS_TO_KEEP: 90
       run: |
         # Extract all the LOCAL repositories created automatically by the CI process
-        jfrog rt curl -XGET /api/repositories | jq '[.[] | .key | select(test("auto-cli-local"))]' > deletion/auto_created_repositories.json && cat deletion/auto_created_repositories.json
+        jf rt curl -XGET /api/repositories | jq '[.[] | .key | select(test("auto-cli-local"))]' > deletion/auto_created_repositories.json && cat deletion/auto_created_repositories.json
 
         # Calculate for which month are we going back to verify who should be deleted
         jq -n 'now - 3600 * 24 * '$NUMBER_OF_DAYS_TO_KEEP' | gmtime | todate' > deletion/months_indicator && cat deletion/months_indicator
@@ -90,15 +90,15 @@ jobs:
         # Iterate over all the repositories, delete those by the latest file that was modified
         jq -c '.[]' deletion/auto_created_repositories.json | while read i; do
           echo Iterating repository = $i
-          sh -c "jfrog rt s --spec deletion/repositories-spec.json --spec-vars='key1="$i"' > deletion/search_results && cat deletion/search_results"
+          sh -c "jf rt s --spec deletion/repositories-spec.json --spec-vars='key1="$i"' > deletion/search_results && cat deletion/search_results"
           
           # If the repository is empty / latest modified file is older > NUMBER_OF_DAYS_TO_KEEP days => DELETE the repository
           if [[ $(cat deletion/search_results) == "[]" ]]; then
              echo "Deleting repository: $i, repository is empty"
-             sh -c "jfrog rt rdel $i --quiet && jfrog rt rdel ${i//local/virtual} --quiet && jfrog rt rdel ${i//local/jcenter} --quiet"
+             sh -c "jf rt rdel $i --quiet && jf rt rdel ${i//local/virtual} --quiet && jf rt rdel ${i//local/jcenter} --quiet"
           elif [[ $(cat deletion/search_results | jq --arg month_indicator $(cat deletion/months_indicator) '.[] | .modified | . <= $month_indicator') = "true" ]]; then             
              echo "Deleting repository: $i, too old to keep in Artifactory"
-             sh -c "jfrog rt rdel $i --quiet && jfrog rt rdel ${i//local/virtual} --quiet && jfrog rt rdel ${i//local/jcenter} --quiet"
+             sh -c "jf rt rdel $i --quiet && jf rt rdel ${i//local/virtual} --quiet && jf rt rdel ${i//local/jcenter} --quiet"
           else
              echo "Skipping Repository deletion - repository is still relevant"
           fi
