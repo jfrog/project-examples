@@ -6,16 +6,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Setup JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v1
+        uses: jfrog/setup-jfrog-cli@v2
         env:
-          JF_ARTIFACTORY_SERVER: ${{ secrets.JF_ARTIFACTORY_SERVER_1 }}
+          JF_ENV_1: ${{ secrets.JF_SECRET_ENV_1 }}
       - name: Run JFrog CLI
         run: |
           # Collect environment variables for the build
-          jfrog rt bce
+          jf rt bce
           # Collect VCS details from git and add them to the build
-          jfrog rt bag
+          jf rt bag
           # Publish build info
-          jfrog rt bp
+          jf rt bp
