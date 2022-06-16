@@ -14,7 +14,7 @@ It than uses JFrog Xray to scan the build for OSS vulnerabilities.
    5. ARTIFCATORY_REPO - a virtual repository used to upload and download artifacts from artifactory
 4. Create a new pipeline in GitLab and copy the content of gitlab-ci.yml file to it
 
-*** sensitive variables like user or password should be masked in order to make sure their value is not exposed in the pipeline logs
+*** sensitive variables like user or password should be masked in order to make sure their value is not exposed in the pipeline logs.
 
 ## Running the pipeline
 By default GitLab pipelines are triggered whenever a change is commited to the project repo.
