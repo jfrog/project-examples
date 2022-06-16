@@ -18,6 +18,6 @@ It than uses JFrog Xray to scan the build for OSS vulnerabilities.
 
 ## Running the pipeline
 By default GitLab pipelines are triggered whenever a change is commited to the project repo.
-However, you can manually trigger the pipline by going to: CI/CD->Piplines and press the "Run pipeline" button.
+However, you can manually trigger the pipeline by going to: CI/CD->Pipelines and press the "Run pipeline" button.
 to view the pipeline execution logs navigate to: CI/CD->Jobs, and click the required job execution line.
 
