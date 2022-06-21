@@ -7,7 +7,7 @@ before_script:
   # Download JFrog CLI
   -  curl -fL https://install-cli.jfrog.io | sh
   # configure artifactory server
-  - jf config add $ARTIFACTORY_SERVER_ID--url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
+  - jf config add $ARTIFACTORY_SERVER_ID --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
   - jf config show
 
   # configure gradle, set upload and download repos
