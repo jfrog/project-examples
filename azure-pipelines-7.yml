@@ -16,6 +16,6 @@ steps:
 - task: ArtifactoryNpm@2
   inputs:
     command: 'pack and publish'
-    artifactoryService: 'clouddsein'
-    targetRepo: 'sand-npm'
+    artifactoryService: 'sandy'
+    targetRepo: 'san-npm'
     workingFolder: 'npm-example/'
