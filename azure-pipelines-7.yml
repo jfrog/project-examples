@@ -15,7 +15,7 @@ steps:
 
 - task: ArtifactoryNpm@2
   inputs:
-    command: 'install'
+    command: 'pack and publish'
     artifactoryService: 'clouddsein'
-    sourceRepo: 'sand-npm'
+    targetRepo: 'sand-npm'
     workingFolder: 'npm-example/'
