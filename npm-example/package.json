@@ -1,18 +1,29 @@
 {
-  "name": "npm-example",
-  "version": "0.0.3",
-  "scripts": {
-    "start": "node helloworld"
+  "name": "oculr-ngx",
+  "description": "An analytics library that makes collecting data in an Angular app simple.",
+  "version": "1.0.0-rc3",
+  "author": "Progressive Insurance",
+  "license": "MIT",
+  "keywords": [
+    "analytics",
+    "angular"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Progressive-Insurance/oculr-ngx"
+  },
+  "peerDependencies": {
+    "@angular/common": "^12.2.0",
+    "@angular/core": "^12.2.0"
   },
   "dependencies": {
-    "send": "^0.16.2",
-        "vue-scrollto": "^2.18.1",
-        "vue-top-progress": "^0.7.0",
-        "vue2-dropzone": "^3.5.2",
-        "vuetify": "^1.5.18",
-        "zxcvbn": "^4.4.2"
+    "tslib": "^2.3.0"
   },
-  "devDependencies": {
-    "debug": "^4.1.1"
-  }
+  "main": "bundles/oculr-ngx.umd.js",
+  "module": "fesm2015/oculr-ngx.js",
+  "es2015": "fesm2015/oculr-ngx.js",
+  "esm2015": "esm2015/oculr-ngx.js",
+  "fesm2015": "fesm2015/oculr-ngx.js",
+  "typings": "oculr-ngx.d.ts",
+  "sideEffects": false
 }
