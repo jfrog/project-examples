@@ -1,16 +1,8 @@
 {
-  "name": "oculr-ngx",
-  "description": "An analytics library that makes collecting data in an Angular app simple.",
-  "version": "1.0.0-rc3",
-  "author": "Progressive Insurance",
-  "license": "MIT",
-  "keywords": [
-    "analytics",
-    "angular"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Progressive-Insurance/oculr-ngx"
+  "name": "monocle-ngx",
+  "version": "0.0.1-alpha.4",
+  "publishConfig": {
+    "registry": "https://sandeepmkp.jfrog.io/artifactory/api/npm/san-npm/"
   },
   "peerDependencies": {
     "@angular/common": "^12.2.0",
@@ -19,11 +11,11 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "main": "bundles/oculr-ngx.umd.js",
-  "module": "fesm2015/oculr-ngx.js",
-  "es2015": "fesm2015/oculr-ngx.js",
-  "esm2015": "esm2015/oculr-ngx.js",
-  "fesm2015": "fesm2015/oculr-ngx.js",
-  "typings": "oculr-ngx.d.ts",
+  "main": "bundles/monocle-ngx.umd.js",
+  "module": "fesm2015/monocle-ngx.js",
+  "es2015": "fesm2015/monocle-ngx.js",
+  "esm2015": "esm2015/monocle-ngx.js",
+  "fesm2015": "fesm2015/monocle-ngx.js",
+  "typings": "monocle-ngx.d.ts",
   "sideEffects": false
 }
