@@ -17,22 +17,4 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-# Artifactory & Pub intergration 
-From JFrog Artifactory version 7.31.10, the [Pub repository](https://www.jfrog.com/confluence/display/JFROG/Pub+Repositories) is supported for the Dart programming language, which contains reusable libraries & packages for Flutter, Angular Dart, and general Dart programs.
-
-# Local Pub Repositories
-For the [private Dart packages](https://medium.com/dartlang/hosting-a-private-dart-package-repository-774c3c51dff9) that you will create and share only within your team or department, you should maintain local Pub repositories in Artifactory. You can create as many as you need, and specify their URLs in your pubspec file for your dependencies.
-
-Read more about the local configuration [here] (https://jfrog.com/blog/how-to-use-pub-repositories-in-artifactory/)
-
-# Remote Pub Repositories
-
-As a Dart developer, you’ll rely on the growing pub.dev package repository for Flutter, Angular, and many other core services.
-
-To help assure uninterrupted speed and consistency of your Dart builds and Flutter or Angular apps across teams, use an Artifactory remote repository to proxy pub.dev.
-
-A remote repository in Artifactory serves as a read-only caching proxy for a repository or registry managed at a remote URL. There will be no difference between the contents of the remote repo and the native source.
-
-# Virtual Pub Repositories
-
-With Artifactory, you can combine any set of local and/or remote repositories into a (virtual repository) [https://www.jfrog.com/confluence/display/JFROG/Virtual+Repositories]  that acts as a single, logical repository that can be accessed through a common URL.
+![alt text](https://i.ibb.co/FhDqzfv/app-img.png")
