@@ -1,4 +1,4 @@
-![alt text](https://speedmedia.jfrog.com/08612fe1-9391-4cf3-ac1a-6dd49c36b276/https://media.jfrog.com/wp-content/uploads/2022/03/16163435/863x300-1.png/mxw_1024,f_auto)
+![alt text](https://speedmedia.jfrog.com/08612fe1-9391-4cf3-ac1a-6dd49c36b276/https://media.jfrog.com/wp-content/uploads/2022/07/06131715/Creating-your-first-Pub-project-with-JFrog-Artifactory-863x300-1.png/mxw_1024,f_auto)
 
 # Pub example part 2 
 In this part we also creating a card package that we are gonna upload to our binary repository manager and use it as a dependecy to our project 
