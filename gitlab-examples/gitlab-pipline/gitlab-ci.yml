@@ -16,7 +16,7 @@ before_script:
 gitlab-ci-gradle-build:
   stage: build
   script:
-    # upload the built artifact to artifactory
+    # Build and upload the JAR to Artifactory
     - jf gradle clean artifactoryPublish -b build.gradle --build-name=$CI_JOB_NAME --build-number=$CI_JOB_ID
     # Collect environment variables for the build
     - jf rt bce $CI_JOB_NAME $CI_JOB_ID
