@@ -1,9 +1,6 @@
 image: gradle:latest
 
 before_script:
-  # This variable is used to tell Gradle from which repository to download the build-info-extractor.jar. Should be server-id/repo-name
-  - JFROG_CLI_EXTRACTORS_REMOTE=$ARTIFACTORY_SERVER_ID/$ARTIFCATORY_REPO
-
   # Install JFrog CLI
   - curl -fL https://install-cli.jfrog.io | sh
   # Configure Artifactory server
@@ -17,7 +14,7 @@ gitlab-ci-gradle-build:
   stage: build
   script:
     # Build and upload the JAR to Artifactory
-    - jf gradle clean artifactoryPublish -b build.gradle --build-name=$CI_JOB_NAME --build-number=$CI_JOB_ID
+    - jf gradle clean artifactoryPublish --build-name=$CI_JOB_NAME --build-number=$CI_JOB_ID
     # Collect environment variables for the build
     - jf rt bce $CI_JOB_NAME $CI_JOB_ID
     # Collect VCS details from Git and add them to the build
