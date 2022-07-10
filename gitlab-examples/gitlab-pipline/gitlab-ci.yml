@@ -12,7 +12,8 @@ before_script:
   # Configure Gradle, set upload and download repositories
   - jf gradlec --repo-resolve $ARTIFCATORY_REPO --repo-deploy $ARTIFCATORY_REPO
 
-gitlab-ci-gradle-build: #This job name will be used as the build info repository name in artifactory
+# This job name will be used as the build info repository name in artifactory
+gitlab-ci-gradle-build:
   stage: build
   script:
     # upload the built artifact to artifactory
