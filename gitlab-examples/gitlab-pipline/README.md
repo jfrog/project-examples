@@ -8,7 +8,7 @@ It than uses JFrog Xray to scan the build for OSS vulnerabilities.
 2. import a gradle repository into the project
 3. configure the following variables in GitLab (Settings->CI/CD->Variables):
    1. ARTIFACTORY_SERVER_ID - a unique server ID used to reference the server configuration from within the pipeline code
-   2. ARTIFACTORY_URL - the artifactory server used
+   2. ARTIFACTORY_URL - the Artifactory server used
    3. ARTIFACTORY_USER - the user name used to access artifactory
    4. ARTIFACTORY_PASS - a password or token used to validate the user
    5. ARTIFCATORY_REPO - a virtual repository used to upload and download artifacts from artifactory
