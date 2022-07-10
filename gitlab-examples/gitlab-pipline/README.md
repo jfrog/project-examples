@@ -1,5 +1,5 @@
 # GitLab pipeline example
-This is an example of a GitLab pipeline which uses JFrog CLI to integrate with artifactory.
+This is an example of a GitLab pipeline which uses JFrog CLI to integrate with Artifactory.
 This sample uses a gradle project, builds it, and push the artifact to artifactory, including build info, environment variables and SBOM.
 It than uses JFrog Xray to scan the build for OSS vulnerabilities.
 
