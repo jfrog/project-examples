@@ -4,7 +4,7 @@ This sample uses a gradle project, builds it, and push the artifact to artifacto
 It than uses JFrog Xray to scan the build for OSS vulnerabilities.
 
 ## Configuring the GitLab project
-1. create a GitLab project
+1. Create a GitLab project
 2. import a gradle repository into the project (I used https://github.com/spring-projects/spring-petclinic)
 3. configure the following variables in GitLab (Settings->CI/CD->Variables):
    1. ARTIFACTORY_SERVER_ID - a unique server ID used to reference the server configuration from within the pipeline code
