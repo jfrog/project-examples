@@ -4,7 +4,7 @@ before_script:
   # this variable is used to tell gradle from which repository to download the build-info-extractor.jar, should be server-id/repo-name
   - JFROG_CLI_EXTRACTORS_REMOTE=$ARTIFACTORY_SERVER_ID/$ARTIFCATORY_REPO
 
-  # Download JFrog CLI
+  # Install JFrog CLI
   - curl -fL https://install-cli.jfrog.io | sh
   # configure artifactory server
   - jf config add $ARTIFACTORY_SERVER_ID --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
