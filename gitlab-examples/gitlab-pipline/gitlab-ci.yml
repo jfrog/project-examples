@@ -9,7 +9,7 @@ before_script:
   # Configure Artifactory server
   - jf config add $ARTIFACTORY_SERVER_ID --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
 
-  # configure gradle, set upload and download repos
+  # Configure Gradle, set upload and download repositories
   - jf gradlec --repo-resolve $ARTIFCATORY_REPO --repo-deploy $ARTIFCATORY_REPO
 
 gitlab-ci-gradle-build: #This job name will be used as the build info repository name in artifactory
