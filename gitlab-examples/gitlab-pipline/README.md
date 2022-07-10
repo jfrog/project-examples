@@ -11,7 +11,7 @@ It than uses JFrog Xray to scan the build for OSS vulnerabilities.
    2. ARTIFACTORY_URL - the Artifactory server used
    3. ARTIFACTORY_USER - the user name used to access Artifactory
    4. ARTIFACTORY_PASS - a password used to validate the user
-   5. ARTIFCATORY_REPO - a virtual repository used to upload and download artifacts from artifactory
+   5. ARTIFCATORY_REPO - a virtual repository used to upload and download artifacts from Artifactory
 4. Create a new pipeline in GitLab and copy the content of gitlab-ci.yml file to it
 
 *** sensitive variables like user or password should be masked in order to make sure their value is not exposed in the pipeline logs.
