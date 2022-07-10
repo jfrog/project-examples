@@ -1,7 +1,7 @@
 image: gradle:latest
 
 before_script:
-  # this variable is used to tell gradle from which repository to download the build-info-extractor.jar, should be server-id/repo-name
+  # This variable is used to tell Gradle from which repository to download the build-info-extractor.jar. Should be server-id/repo-name
   - JFROG_CLI_EXTRACTORS_REMOTE=$ARTIFACTORY_SERVER_ID/$ARTIFCATORY_REPO
 
   # Install JFrog CLI
