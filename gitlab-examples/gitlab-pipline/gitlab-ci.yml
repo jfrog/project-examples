@@ -8,7 +8,6 @@ before_script:
   - curl -fL https://install-cli.jfrog.io | sh
   # configure artifactory server
   - jf config add $ARTIFACTORY_SERVER_ID --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
-  - jf config show
 
   # configure gradle, set upload and download repos
   - jf gradlec --repo-resolve $ARTIFCATORY_REPO --repo-deploy $ARTIFCATORY_REPO
