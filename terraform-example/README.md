@@ -23,7 +23,7 @@ Configure Artifactory:
 > jf c add
 
 Configure the project's deployment repository. You shoud set the local repository you created.
-> jf rt tfc
+> jf tfc
 
 CD to directory which contains the modules. for example "aws" directory.
 > cd aws
