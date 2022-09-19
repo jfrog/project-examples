@@ -4,10 +4,10 @@ before_script:
   # Install JFrog CLI
   - curl -fL https://install-cli.jfrog.io | sh
   # Configure Artifactory server
-  - jf config add $ARTIFACTORY_SERVER_ID --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASS
+  - jf config add $JFROG_PLATFORM_SERVER_ID --url=$JFROG_PLATFORM_URL --user=$JFROG_PLATFORM_USER --password=$JFROG_PLATFORM_PASS
 
   # Configure Gradle, set upload and download repositories
-  - jf gradlec --repo-resolve $ARTIFCATORY_REPO --repo-deploy $ARTIFCATORY_REPO
+  - jf gradlec --repo-resolve $JFROG_PLATFORM_REPO --repo-deploy $JFROG_PLATFORM_REPO
 
 # This job name will be used as the build info repository name in artifactory
 gitlab-ci-gradle-build:
