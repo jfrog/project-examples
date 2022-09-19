@@ -7,7 +7,7 @@ spec:
     type: Git
     git:
       uri: 'https://github.com/jfrog/project-examples'
-    contextDir: /openshift-examples/openshift-build-example
+    contextDir: /docker-oci-examples/openshift-examples/openshift-build-example
   strategy:
     type: Docker
   output:
