@@ -7,7 +7,7 @@ It than uses JFrog Xray to scan the build for OSS vulnerabilities.
 1. Create a GitLab project
 2. Import a Gradle repository into the project (I used https://github.com/spring-projects/spring-petclinic)
 3. Configure the following variables in GitLab (Settings->CI/CD->Variables):
-   1. JFROG_PLATFORM_ID - a unique server ID used to reference the server configuration from within the pipeline code
+   1. JFROG_PLATFORM_SERVER_ID - a unique server ID used to reference the server configuration from within the pipeline code
    2. JFROG_PLATFORM_URL - the JFrog platform server used
    3. JFROG_PLATFORM_USER - the user name used to access JFrog platform
    4. JFROG_PLATFORM_PASS - a password used to validate the user
