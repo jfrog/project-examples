@@ -7,11 +7,12 @@ It than uses JFrog Xray to scan the build for OSS vulnerabilities.
 1. Create a GitLab project
 2. Import a Gradle repository into the project (I used https://github.com/spring-projects/spring-petclinic)
 3. Configure the following variables in GitLab (Settings->CI/CD->Variables):
-   1. ARTIFACTORY_SERVER_ID - a unique server ID used to reference the server configuration from within the pipeline code
-   2. ARTIFACTORY_URL - the Artifactory server used
-   3. ARTIFACTORY_USER - the user name used to access Artifactory
-   4. ARTIFACTORY_PASS - a password used to validate the user
-   5. ARTIFCATORY_REPO - a virtual repository used to upload and download artifacts from Artifactory
+   1. JFROG_PLATFORM_SERVER_ID - a unique server ID used to reference the server configuration from within the pipeline code
+   2. JFROG_PLATFORM_URL - the JFrog platform server used
+   3. JFROG_PLATFORM_USER - the user name used to access JFrog platform
+   4. JFROG_PLATFORM_PASS - a password used to validate the user
+   5. JFROG_PLATFORM_REPO - a virtual repository used to upload and download artifacts from JFrog platform
+
 4. Create a new pipeline in GitLab and copy the content of gitlab-ci.yml file to it
 
 *** Sensitive variables like user or password should be masked in order to make sure their value is not exposed in the pipeline logs.
