@@ -25,35 +25,35 @@ Output pipenv version:
 > pipenv --version
 
 Output JFrog CLI version:
-> jfrog --version
+> jf --version
 ```
 
 ## Running the Example
-CD to the root project directory
+'cd' to the root project directory
 
 ```console
 Configure Artifactory:
-> jfrog c add
+> jf c add
 
 Configure the project's resolution repository. You shoud set the virtual repository you created.
-> jfrog pipec
+> jf pipec
 
-Install project dependencies with pip from Artifactory:
-> jfrog pipenv install --build-name=my-pipenv-build --build-number=1 --module=jfrog-pipenv-example
+Install project dependencies with pipenv from Artifactory:
+> jf pipenv install --build-name=my-pipenv-build --build-number=1 --module=jfrog-pipenv-example
 
 Package the project, create distribution archives (tar.gz and whl):
 > python setup.py sdist bdist_wheel
 
 Upload the packages to the pypi repository in Artifactory:
-> jfrog rt u dist/ pypi/ --build-name=my-pipenv-build --build-number=1 --module=jfrog-pipenv-example
+> jf rt u dist/ pypi/ --build-name=my-pipenv-build --build-number=1 --module=jfrog-pipenv-example
 
 Collect environment variables and add them to the build info:
-> jfrog rt bce my-pipenv-build 1
+> jf rt bce my-pipenv-build 1
 
 Publish the build info to Artifactory:
-> jfrog rt bp my-pipenv-build 1
+> jf rt bp my-pipenv-build 1
 
 Install published package by installing it from Artifactory using pip:
-> jfrog pipenv install jfrog-pipenv-example
+> jf pipenv install jfrog-pipenv-example
 
 Learn about [Building Python Packages with JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingPythonPackages).

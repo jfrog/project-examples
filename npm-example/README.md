@@ -34,7 +34,7 @@ Create the following repositories on your Artifactory instance:
 
 # Running the Example
 
-CD to the root project directory.
+'cd' to the root project directory.
 
 Configure Artifactory:
 

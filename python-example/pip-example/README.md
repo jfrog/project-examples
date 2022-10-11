@@ -34,36 +34,36 @@ Verify that virtual-environment is activated:
 > echo $VIRTUAL_ENV
 
 Output JFrog CLI version:
-> jfrog --version
+> jf --version
 ```
 
 ## Running the Example
-CD to the root project directory
+'cd' to the root project directory
 
 ```console
 Configure Artifactory:
-> jfrog c add
+> jf c add
 
 Configure the project's resolution repository. You shoud set the virtual repository you created.
-> jfrog rt pipc
+> jf rt pipc
 
 Install project dependencies with pip from Artifactory:
-> jfrog rt pipi -r requirements.txt --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+> jf rt pipi -r requirements.txt --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
 
 Package the project, create distribution archives (tar.gz and whl):
 > python setup.py sdist bdist_wheel
 
 Upload the packages to the pypi repository in Artifactory:
-> jfrog rt u dist/ pypi/ --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+> jf rt u dist/ pypi/ --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
 
 Collect environment variables and add them to the build info:
-> jfrog rt bce my-pip-build 1
+> jf rt bce my-pip-build 1
 
 Publish the build info to Artifactory:
-> jfrog rt bp my-pip-build 1
+> jf rt bp my-pip-build 1
 
 Install published package by installing it from Artifactory using pip:
-> jfrog rt pip-install jfrog-python-example
+> jf rt pip-install jfrog-python-example
 
 Validate package successfully installed:
 > pip show jfrog-python-example

@@ -16,7 +16,7 @@ Output JFrog CLI version:
 ```
 
 ## Running the Example
-CD to the root project directory
+'cd' to the root project directory
 
 ```console
 Configure Artifactory:

@@ -12,26 +12,26 @@ To work with Go repositories you need to use [JFrog CLI](https://www.jfrog.com/c
 * Make sure your JFrog CLI version is 1.26.0 or above
 
 ## Running the Example
-CD to the root project directory
+'cd' to the root project directory
 
 ```console
 Configure Artifactory:
-> jfrog c add
+> jf c add
 
 Configure the project's repositories:
-> jfrog rt go-config
+> jf rt go-config
 
 Build the project with go and resolve the project dependencies from Artifactory.
-> jfrog rt go build --build-name=my-build --build-number=1 
+> jf rt go build --build-name=my-build --build-number=1 
 
 Publish version v1.0.0 of the package to the go-local repository in Artifactory.
-> jfrog rt gp go-local v1.0.0 --build-name=my-build --build-number=1
+> jf rt gp go-local v1.0.0 --build-name=my-build --build-number=1
 
 Collect environment variables and add them to the build info.
-> jfrog rt bce my-build 1
+> jf rt bce my-build 1
 
 Publish the build info to Artifactory.
-> jfrog rt bp my-build 1
+> jf rt bp my-build 1
 ```
 
 Learn about [building go packages](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingGoPackages) and about Artifactory and [go registry](https://jfrog.com/integration/go-registry/) integration.

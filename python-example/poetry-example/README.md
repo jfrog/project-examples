@@ -24,35 +24,35 @@ Output pipenv version:
 > poetry --version
 
 Output JFrog CLI version:
-> jfrog --version
+> jf --version
 ```
 
 ## Running the Example
-CD to the root project directory
+'cd' to the root project directory
 
 ```console
 Configure Artifactory:
-> jfrog c add
+> jf c add
 
 Configure the project's resolution repository. You shoud set the virtual repository you created.
-> jfrog poetry-config
+> jf poetry-config
 
-Install project dependencies with pip from Artifactory:
-> jfrog poetry install --build-name=my-poetry-build --build-number=1 --module=jfrog-poetry-example
+Install project dependencies with poetry from Artifactory:
+> jf poetry install --build-name=my-poetry-build --build-number=1 --module=jfrog-poetry-example
 
 Package the project, create distribution archives (tar.gz and whl):
-> poetry build
+> jf build
 
 Upload the packages to the pypi repository in Artifactory:
-> jfrog rt u dist/ pypi/ --build-name=my-poetry-build --build-number=1 --module=jfrog-poetry-example
+> jf rt u dist/ pypi/ --build-name=my-poetry-build --build-number=1 --module=jfrog-poetry-example
 
 Collect environment variables and add them to the build info:
-> jfrog rt bce my-poetry-build 1
+> jf rt bce my-poetry-build 1
 
 Publish the build info to Artifactory:
-> jfrog rt bp my-poetry-build 1
+> jf rt bp my-poetry-build 1
 
 Install published package by installing it from Artifactory using pip:
-> jfrog poetry install jfrog-pipenv-example
+> jf poetry install jfrog-pipenv-example
 
 Learn about [Building Python Packages with JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingPythonPackages).
