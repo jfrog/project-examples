@@ -29,6 +29,11 @@ steps:
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
 
+- task: ArtifactoryPublishBuildInfo@1
+  inputs:
+    artifactoryService: 'sandy'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
 - task: JFrogBuildScan@1
   inputs:
     xrayConnection: 'sandeepxray'
