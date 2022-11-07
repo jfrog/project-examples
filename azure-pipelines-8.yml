@@ -28,6 +28,7 @@ steps:
     threads: '1'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+    arguments: '--prefer-offline --audit=false --no-audit --prefix $(System.DefaultWorkingDirectory'
 
 - task: ArtifactoryPublishBuildInfo@1
   inputs:
