@@ -29,10 +29,10 @@ steps:
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
 
-- task: ArtifactoryXrayScan@1
+- task: JFrogBuildScan@1
   inputs:
-    artifactoryService: 'sandeepxray'
+    xrayConnection: 'sandeepxray'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     allowFailBuild: true
-
+    vuln: false
