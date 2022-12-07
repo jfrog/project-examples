@@ -9,6 +9,6 @@ setup(
     author='JFrog',
     author_email='jfrog@jfrog.com',
     url='https://github.com/jfrog/project-examples',
-    packages=['python-examples.pip-example.pythonExample'],
+    packages=['python-example.pip-example.pythonExample'],
     install_requires=['PyYAML>3.11', 'nltk'],
 )
