@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('') {
+    stage('error') {
       steps {
         script {
           node {
@@ -19,8 +19,8 @@ pipeline {
 
               // Tool name from Jenkins configuration
               rtMaven.tool = 'maven'
-              rtMaven.deployer releaseRepo: 'libs-release-local, snapshotRepo: 'libs-snapshot-local, server: server
-              rtMaven.resolver releaseRepo: 'libs-release, snapshotRepo: 'libs-snapshot, server: server
+              rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: server
+              rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
               buildInfo = Artifactory.newBuildInfo()
             }
 
