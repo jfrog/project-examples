@@ -1,7 +1,7 @@
 package org.jfrog.example.jfrogandroid
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import org.jfrog.example.jfrogandroid.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -12,5 +12,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.buttonArtifactory.setOnClickListener {
+            JFrogHelper.checkArtifactoryDialog(this)
+        }
     }
+
 }
