@@ -5,6 +5,7 @@
 atlassian*.xml
 maven-examples/**/target
 gradle-example/**/build
+local.properties
 _ReSharper*
 bin
 obj
@@ -14,3 +15,5 @@ packages
 *.tmp
 .idea
 .DS_Store
+build
+
