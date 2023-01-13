@@ -1,5 +1,3 @@
-## This example and documentation are for the Beta v.1 of the Terraform Repositories, available exclusively to JFrog Beta customers.
-
 # Terraform Example
 
 ## Overview
@@ -18,14 +16,14 @@ Output JFrog CLI version:
 ```
 
 ## Running the Example
-CD to the root project directory
+'cd' to the root project directory
 
 ```console
 Configure Artifactory:
 > jf c add
 
 Configure the project's deployment repository. You shoud set the local repository you created.
-> jf rt tfc
+> jf tfc
 
 CD to directory which contains the modules. for example "aws" directory.
 > cd aws

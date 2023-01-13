@@ -9,5 +9,5 @@
             * rtGradle.tool = GRADLE_TOOL
     * Option 2: Set `GRADLE_HOME` environment variable as configured in the container.
         *     withEnv(['GRADLE_HOME=/opt/gradle']) {
-                rtGradle.run rootDir: "gradle-examples/gradle-example/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo: buildInfo
+                rtGradle.run rootDir: "gradle-examples/gradle-example/", tasks: 'clean artifactoryPublish', buildInfo: buildInfo
               }

@@ -36,7 +36,8 @@ For this demo, we will be using [buildx](https://github.com/docker/buildx) in or
   Build and push multi platforms image:
   > docker login DOCKER_REG_URL
   > docker buildx install
-  > docker build --platform=linux/amd64,linux/arm64,linux/arm/v7 --tag=DOCKER_REG_URL/TARGET_REPO/multiarch-image:1 -f=Dockerfile.Fatmanifest --metadata-file=build-metadata --push .
+  > docker buildx create --use --name mybuilder --driver docker-container
+  > docker buildx build --platform=linux/amd64,linux/arm64,linux/arm/v7 --tag=DOCKER_REG_URL/TARGET_REPO/multiarch-image:1 -f=Dockerfile.Fatmanifest --metadata-file=build-metadata --push .
 
   Configure Artifactory:
   > jf c add MY_SERVER_ID

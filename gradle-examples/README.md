@@ -11,6 +11,7 @@ We have included a few sample projects to help you get started using the plugin.
 http://localhost:8081/artifactory<br>
 This URL is defined inside the *build.gradle* file of each project. Please change it if your Artifactory instance is accessible through a different URL.
 * Configure your Artifactory username and password in the *gradle.properties* file for each project
+* Since all example projects are configured to deploy artifacts to 'libs-snapshot-local' repository, it is recommended to create a local repository named *libs-snapshot-local* or change it inside the build.gradle file of each project.
 * Since all example projects are configured to resolve dependencies from 'Maven Central', it is recommended to create a remote repository named *mvn-central*, which proxies *https://repo1.maven.org/maven2* as its URL.
 * CD to one of the project's root directory and run the build using one of the following commands:
 

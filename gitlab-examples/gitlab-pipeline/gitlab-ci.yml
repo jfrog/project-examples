@@ -1,0 +1,30 @@
+image: gradle:latest
+
+before_script:
+  # Install JFrog CLI
+  - curl -fL https://install-cli.jfrog.io | sh
+  
+  # Configure Artifactory server
+  - jf config add $JFROG_PLATFORM_SERVER_ID --url=$JFROG_PLATFORM_URL --user=$JFROG_PLATFORM_USER --password=$JFROG_PLATFORM_PASS
+
+  # Configure Gradle, set upload and download repositories
+  - jf gradlec --repo-resolve $JFROG_PLATFORM_REPO --repo-deploy $JFROG_PLATFORM_REPO
+
+# This job name will be used as the build info repository name in artifactory
+gitlab-ci-gradle-build:
+  stage: build
+  script:
+    # Build and upload the JAR to Artifactory
+    - jf gradle clean artifactoryPublish --build-name=$CI_JOB_NAME --build-number=$CI_JOB_ID
+    
+    # Collect environment variables for the build
+    - jf rt bce $CI_JOB_NAME $CI_JOB_ID
+    
+    # Collect VCS details from Git and add them to the build
+    - jf rt bag $CI_JOB_NAME $CI_JOB_ID
+    
+    # Publish build info
+    - jf rt bp $CI_JOB_NAME $CI_JOB_ID
+    
+    # Scan with JFrog Xray
+    - jf bs $CI_JOB_NAME $CI_JOB_ID
