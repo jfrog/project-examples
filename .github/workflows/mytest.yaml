@@ -1,0 +1,12 @@
+name: "JF test"
+on: [push, pull_request]
+jobs:
+  - uses: jfrog/setup-jfrog-cli@v3
+  env:
+    # JFrog platform url (for example: https://acme.jfrog.io) 
+    JF_URL: ${{ secrets.JF_URL }}
+    
+    # JFrog Platform access token
+    JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+- run: |
+    jf rt ping
