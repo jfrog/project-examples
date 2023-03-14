@@ -25,11 +25,11 @@ jf --version
 ## Running the Example
 
 - Clone this repository.
-- CD into this example directory.
+- 'cd' into this example directory.
 - Run the following commands, after replacing **DOCKER_REG_URL** with your Artifactory Docker registry URL and **TARGET_REPO** with the target repository name in Artifactory. **TARGET_REPO** is the name of the Artifactory repository mentioned in the [Prerequisites for running this example](#prerequisites-for-running-this-example) section.
 
 ```sh
-# Configure Artifactory
+# Configure your JFrog Platform connection details
 jf c add
 
 # Configure Docker image name
