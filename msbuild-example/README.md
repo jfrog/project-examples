@@ -155,22 +155,22 @@ Next, include *nuget-remote* and *nuget-local* in *nuget*.
 CD into the solution's root directory and run the following command to set your project with the virtual repository (named *nuget*) you created.
 If you'd like JFrog CLI to use the **nuget** client, run:
 ```console
-> jfrog rt nugetc
+> jf nuget-config --repo-resolve=<NUGET_RESOLVE_REPO>
 ```
 and if you'd like it to use the **.NET core CLI**, run:
 ```console
-> jfrog rt dotnetc
+> jf dotnet-config --repo-resolve=<NUGET_RESOLVE_REPO>
 ```
 The above commands created a directory named *.jfrog* at the root directory of the project.
 
 Now run one of the following commands, depending on whether you'd like to use the **nuget** or **dotnet core CLI** clients.
 
 ```console
-> jfrog rt nuget restore --build-name nuget-build --build-number 1
+> jfrog nuget restore --build-name nuget-build --build-number 1
 ```
 or
 ```console
-> jfrog rt dotnet restore --build-name nuget-build --build-number 1
+> jfrog dotnet restore --build-name nuget-build --build-number 1
 ```
 
 The command restored the project dependencies by downloading them from Artifactory and also stored the build-info locally.
