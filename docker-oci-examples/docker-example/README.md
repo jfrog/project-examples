@@ -30,7 +30,7 @@ jf --version
 
 ```sh
 # Configure your JFrog Platform connection details
-jf c add
+jf c add --url=<JFROG_PLATFORM_URL> [credentials flags]
 
 # Configure Docker image name
 # Example: acme.jfrog.io/docker-local/hello-frog:1.0.0
