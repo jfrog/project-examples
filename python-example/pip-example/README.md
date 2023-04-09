@@ -45,10 +45,15 @@ Configure Artifactory:
 > jf c add
 
 Configure the project's resolution repository. You shoud set the virtual repository you created.
-> jf rt pipc
+> jf pipc --repo-resolve=pypi-repo
 
 Install project dependencies with pip from Artifactory:
-> jf rt pipi -r requirements.txt --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+
+Using Setup.py:
+> jf pip-install --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+ OR
+Using requirements.txt:
+> jf pip-install -r requirements.txt --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
 
 Package the project, create distribution archives (tar.gz and whl):
 > python setup.py sdist bdist_wheel
