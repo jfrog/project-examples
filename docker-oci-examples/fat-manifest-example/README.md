@@ -40,7 +40,7 @@ For this demo, we will be using [buildx](https://github.com/docker/buildx) in or
   > docker buildx build --platform=linux/amd64,linux/arm64,linux/arm/v7 --tag=DOCKER_REG_URL/TARGET_REPO/multiarch-image:1 -f=Dockerfile.Fatmanifest --metadata-file=build-metadata --push .
 
   Configure Artifactory:
-  > jf c add MY_SERVER_ID
+  > jf c add --url=<JFROG_PLATFORM_URL> [credentials flags]
 
   Collect image build info:
   > jf rt build-docker-create TARGET_REPO --server-id=MY_SERVER_ID --image-file build-metadata --build-name myBuild --build-number 1
