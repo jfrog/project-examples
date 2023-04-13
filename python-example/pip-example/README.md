@@ -50,10 +50,10 @@ Configure the project's resolution repository. You shoud set the virtual reposit
 Install project dependencies with pip from Artifactory:
 
 Using Setup.py:
-> jf pip install --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+> jf pip install . --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
  OR
 Using requirements.txt:
-> jf pip-install -r requirements.txt --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+> jf pip install -r requirements.txt --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
 
 Package the project, create distribution archives (tar.gz and whl):
 > python setup.py sdist bdist_wheel
