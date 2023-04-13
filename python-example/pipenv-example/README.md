@@ -36,7 +36,7 @@ Configure Artifactory:
 > jf c add
 
 Configure the project's resolution repository. You shoud set the virtual repository you created.
-> jf pipec
+> jf pipenv-config --repo-resolve=<PYPI_REPO> [credentials flags]
 
 Install project dependencies with pipenv from Artifactory:
 > jf pipenv install --build-name=my-pipenv-build --build-number=1 --module=jfrog-pipenv-example

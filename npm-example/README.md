@@ -39,13 +39,13 @@ Create the following repositories on your Artifactory instance:
 Configure Artifactory:
 
 ```
-jf c add
+jf c add --url=<JFROG_PLATFORM_URL> [credentials flags]
 ```
 
 Configure the npm project and select the virtual repository as the resolution and deployment repository:
 
 ```
-jf npm-config
+jf npm-config --repo-resolve=<NPM_RESOLVE_REPO> --repo-deploy=<NPM_DEPLOY_REPO>
 ```
 
 Build the project and record the dependencies as part of the build-info:

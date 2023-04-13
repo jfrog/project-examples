@@ -35,7 +35,7 @@ Configure Artifactory:
 > jf c add
 
 Configure the project's resolution repository. You shoud set the virtual repository you created.
-> jf poetry-config
+> jf poetry-config --repo-resolve=<PYPI_REPO> [credentials flags]
 
 Install project dependencies with poetry from Artifactory:
 > jf poetry install --build-name=my-poetry-build --build-number=1 --module=jfrog-poetry-example

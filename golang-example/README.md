@@ -16,10 +16,10 @@ To work with Go repositories you need to use [JFrog CLI](https://www.jfrog.com/c
 
 ```console
 Configure Artifactory:
-> jf c add
+> jf c add --url=<JFROG_PLATFORM_URL> [credentials flags]
 
 Configure the project's repositories:
-> jf rt go-config
+> jf rt go-config --repo-resolve=<GO_RESOLVE_REPO> --repo-deploy=<GO_DEPLOY_REPO>
 
 Build the project with go and resolve the project dependencies from Artifactory.
 > jf rt go build --build-name=my-build --build-number=1 
