@@ -68,7 +68,7 @@ Publish the build info to Artifactory:
 > jf rt bp my-pip-build 1
 
 Install published package by installing it from Artifactory using pip:
-> jf rt pip-install jfrog-python-example
+> jf pip install jfrog-python-example
 
 Validate package successfully installed:
 > pip show jfrog-python-example
