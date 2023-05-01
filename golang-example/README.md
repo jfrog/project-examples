@@ -24,8 +24,8 @@ Configure the project's repositories:
 Build the project with go and resolve the project dependencies from Artifactory.
 > jf go build --build-name=my-build --build-number=1 
 
-Publish version v1.0.0 of the package to the go-local repository in Artifactory.
-> jf go-publish go-local v1.0.0 --build-name=my-build --build-number=1
+Publish version v1.0.0 of the package to the <GO_DEPLOY_REPO> repository in Artifactory.
+> jf go-publish v1.0.0 --build-name=my-build --build-number=1
 
 Collect environment variables and add them to the build info.
 > jf rt bce my-build 1
