@@ -20,7 +20,7 @@ In your terminal, validate that the following commands work.
 Output Python version:
 > python --version
 
-Output pipenv version:
+Output poetry version:
 > poetry --version
 
 Output JFrog CLI version:
