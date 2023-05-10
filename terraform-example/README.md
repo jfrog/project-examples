@@ -29,10 +29,10 @@ CD to directory which contains the modules. for example "aws" directory.
 > cd aws
 
 Publish modules to Artifactory:
-> jf tf p --namespace=example --provider=aws --tag=v0.0.1
+> jf terraform publish --namespace=example --provider=aws --tag=v0.0.1
 
-You can exclude files and directories from being scanned by the commandm using the --exclusions option. In this example, files and directories which include test or ignore anywhere in their path, won't be scanned.
-> jf tf p --namespace=example --provider=aws --tag=v0.0.2 --exclusions="*test*;*ignore*"
+You can exclude files and directories from being scanned by the commands using the --exclusions option. In this example, files and directories which include test or ignore anywhere in their path, won't be scanned.
+> jf terraform publish --namespace=example --provider=aws --tag=v0.0.2 --exclusions="*test*;*ignore*"
 ```
 
 ## How are the modules packed and published?
