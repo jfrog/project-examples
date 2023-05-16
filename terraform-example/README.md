@@ -22,7 +22,7 @@ Output JFrog CLI version:
 Configure Artifactory:
 > jf c add --url=<JFROG_PLATFORM_URL> [credentials flags]
 
-Configure the project's deployment repository. You shoud set the local repository you created.
+Configure the project's deployment repository. You should set the local repository you created.
 > jf terraform-config --repo-deploy=<TERRAFORM_REPO>
 
 CD to directory which contains the modules. for example "aws" directory.
