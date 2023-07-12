@@ -5,7 +5,7 @@ go 1.19
 require (
 	cloud.google.com/go v0.45.1 // indirect
 	github.com/aws/aws-sdk-go v1.15.78 // indirect
-	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect - test
+	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d // indirect - test yes
 	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
