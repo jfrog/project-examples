@@ -31,7 +31,7 @@ pipeline {
             steps {
                 rtPipInstall (
                     resolverId: "PIP_RESOLVER"
-                    args: "-r python-example/requirements.txt"
+                    args: "-r python-example/pip-example/requirements.txt"
                 )
             }
         }

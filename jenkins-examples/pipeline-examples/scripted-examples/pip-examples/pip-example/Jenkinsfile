@@ -14,7 +14,7 @@ node {
     }
 
     stage ('Pip install') {
-        rtPip.install buildInfo: buildInfo, args: "-r python-example/requirements.txt", envActivation: virtual_env_activation
+        rtPip.install buildInfo: buildInfo, args: "-r python-example/pip-example/requirements.txt", envActivation: virtual_env_activation
     }
 
     stage ('Package and create distribution archives') {
