@@ -14,7 +14,7 @@ node {
 
     withPythonEnv('/usr/local/bin/python3') {
         stage ('Pip install') {
-            rtPip.install buildInfo: buildInfo, args: "-r python-example/requirements.txt"
+            rtPip.install buildInfo: buildInfo, args: "-r python-example/pip-example/requirements.txt"
         }
 
         stage ('Package and create distribution archives') {
