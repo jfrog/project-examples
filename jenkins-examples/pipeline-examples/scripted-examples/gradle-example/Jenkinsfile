@@ -30,7 +30,7 @@ node {
         }
 
         stage ('Exec Gradle') {
-            rtGradle.run rootDir: "gradle-examples/gradle-example/", tasks: 'clean artifactoryPublish', buildInfo: buildInfo
+            rtGradle.run rootDir: "gradle-examples/gradle-example-publish/", tasks: 'clean artifactoryPublish', buildInfo: buildInfo
         }
 
         stage ('Publish build info') {

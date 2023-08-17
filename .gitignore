@@ -4,7 +4,7 @@
 *.iml
 atlassian*.xml
 maven-examples/**/target
-gradle-example/**/build
+gradle-examples/**/build
 _ReSharper*
 bin
 obj
@@ -14,3 +14,4 @@ packages
 *.tmp
 .idea
 .DS_Store
+node_modules
