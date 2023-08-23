@@ -51,7 +51,7 @@ pipeline {
                     usesPlugin: true, // Artifactory plugin already defined in build script
                     useWrapper: true,
                     tool: GRADLE_TOOL, // Tool name from Jenkins configuration
-                    rootDir: "gradle-examples/gradle-example/",
+                    rootDir: "gradle-examples/gradle-example-publish/",
                     tasks: 'clean artifactoryPublish',
                     deployerId: "GRADLE_DEPLOYER",
                     resolverId: "GRADLE_RESOLVER"

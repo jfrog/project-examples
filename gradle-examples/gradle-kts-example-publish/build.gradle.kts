@@ -1,24 +1,9 @@
 import org.jfrog.gradle.plugin.artifactory.task.ArtifactoryTask
 
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.jfrog.buildinfo", "build-info-extractor-gradle", "4.+")
-    }
-    configurations.classpath {
-        resolutionStrategy {
-            cacheDynamicVersionsFor(0, "seconds")
-            cacheChangingModulesFor(0, "seconds")
-        }
-    }
-}
-
 plugins {
     java
     `maven-publish`
+    id("com.jfrog.artifactory") version "5.+"
 }
 
 fun javaProjects() = subprojects.filter {
@@ -103,8 +88,8 @@ configure<org.jfrog.gradle.plugin.artifactory.dsl.ArtifactoryPluginConvention> {
     publish {
         repository {
             setRepoKey("libs-snapshot-local") // The Artifactory repository key to publish to
-            setUsername(findProperty("artifactory_user")) // The publisher user name
-            setPassword(findProperty("artifactory_password")) // The publisher password
+            setUsername(providers.gradleProperty("artifactory_user").getOrNull()) // The publisher user name
+            setPassword(providers.gradleProperty("artifactory_password").getOrNull()) // The publisher password
             // This is an optional section for configuring Ivy publication (when publishIvy = true).
             ivy {
                 setIvyLayout("[organization]/[module]/ivy-[revision].xml")
