@@ -1,0 +1,62 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+- task: ArtifactoryNpm@2
+  inputs:
+    command: 'pack and publish'
+    artifactoryService: 'jy_dev'
+    sourceRepo: 'prjt-npm-remote'    
+    targetRepo: 'prjt-test-dev'
+    workingFolder: 'npm-example'
+    projectKey: 'prjt'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+- task: ArtifactoryPublishBuildInfo@1
+  inputs:
+    artifactoryService: 'jy_dev'
+    projectKey: 'prjt'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+- task: ArtifactoryBuildPromotion@1
+  inputs:
+    artifactoryService: 'jy_dev'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+    projectKey: 'prjt'
+    targetRepo: 'prjt-test-stg'
+    status: 'Released'
+    sourceRepo: 'prjt-test-dev'
+    includeDependencies: true
+    copy: false
+    dryRun: false
+
+
+- task: ArtifactoryBuildPromotion@1
+  inputs:
+    artifactoryService: 'jy_prd'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+    projectKey: 'prjt'
+    targetRepo: 'prjt-test-prd'
+    status: 'Released'
+    sourceRepo: 'prjt-test-stg'
+    includeDependencies: true
+    copy: false
+    dryRun: false

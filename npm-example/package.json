@@ -1,13 +1,21 @@
 {
-  "name": "npm-example",
-  "version": "0.0.3",
-  "scripts": {
-    "start": "node helloworld"
+  "name": "monocle-ngx",
+  "version": "0.0.1-alpha.4",
+  "publishConfig": {
+    "registry": "https://sandeepmkp.jfrog.io/artifactory/api/npm/san-npm/"
+  },
+  "peerDependencies": {
+    "@angular/common": "^12.2.0",
+    "@angular/core": "^12.2.0"
   },
   "dependencies": {
-    "send": "^0.16.2"
+    "tslib": "^2.3.0"
   },
-  "devDependencies": {
-    "debug": "^4.1.1"
-  }
+  "main": "bundles/monocle-ngx.umd.js",
+  "module": "fesm2015/monocle-ngx.js",
+  "es2015": "fesm2015/monocle-ngx.js",
+  "esm2015": "esm2015/monocle-ngx.js",
+  "fesm2015": "fesm2015/monocle-ngx.js",
+  "typings": "monocle-ngx.d.ts",
+  "sideEffects": false
 }

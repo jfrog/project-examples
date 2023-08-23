@@ -1,0 +1,57 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+- task: ArtifactoryNuGet@2
+  inputs:
+    command: 'restore'
+    artifactoryService: 'jy-service'
+    targetResolveRepo: 'test-nuget'
+    solutionPath: '**/*.sln'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+- task: ArtifactoryDotnetCore@1
+  inputs:
+    command: 'push'
+    artifactoryService: 'jy-service'
+    targetDeployRepo: 'test-nuget'
+    pathToNupkg: '*.nupkg'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+- task: ArtifactoryNuGet@2
+  inputs:
+    command: 'push'
+    artifactoryService: 'jy-service'
+    targetDeployRepo: 'test-nuget'
+    pathToNupkg: '*.nupkg'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+- task: ArtifactoryPublishBuildInfo@1
+  inputs:
+    artifactoryService: 'jy-service'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+- task: ArtifactoryXrayScan@1
+  inputs:
+    artifactoryService: 'jy-service'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+    allowFailBuild: true
