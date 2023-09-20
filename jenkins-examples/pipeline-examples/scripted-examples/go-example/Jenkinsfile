@@ -14,11 +14,11 @@ node {
     }
 
     stage ('Go run') {
-        rtGo.run buildInfo: buildInfo, path: 'golang-example/hello', args: 'build'
+        rtGo.run buildInfo: buildInfo, path: 'golang-example', args: 'build'
     }
 
     stage ('Go publish') {
-        rtGo.publish buildInfo: buildInfo, path: 'golang-example/hello', version: '1.0.0'
+        rtGo.publish buildInfo: buildInfo, path: 'golang-example', version: '1.0.0'
     }
 
     stage ('Publish build info') {

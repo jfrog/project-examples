@@ -9,7 +9,7 @@ To work with Go repositories you need to use [JFrog CLI](https://www.jfrog.com/c
 * Make sure the **go** command is in your PATH.
 * Install [JFrog CLI](https://jfrog.com/getcli/)
 * Make sure your Artifactory version is 5.11.0 or above
-* Make sure your JFrog CLI version is 1.26.0 or above
+* Make sure your JFrog CLI version is 2.0.0 or above
 
 ## Running the Example
 'cd' to the root project directory
