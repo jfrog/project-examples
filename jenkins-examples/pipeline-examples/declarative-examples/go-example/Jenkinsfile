@@ -33,7 +33,7 @@ pipeline {
         stage ('Exec Go run') {
             steps {
                 rtGoRun (
-                    path: "golang-example/hello",
+                    path: "golang-example",
                     resolverId: "GO_RESOLVER",
                     args: "build"
                 )
@@ -43,7 +43,7 @@ pipeline {
         stage ('Exec Go publish') {
             steps {
                 rtGoPublish (
-                    path: "golang-example/hello",
+                    path: "golang-example",
                     deployerId: "GO_DEPLOYER",
                     version: "1.0.0"
                 )
