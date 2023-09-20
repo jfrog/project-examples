@@ -1,4 +1,4 @@
-package main // import "github.com/you/hello"
+package main
 
 import (
 	"fmt"

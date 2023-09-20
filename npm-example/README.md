@@ -10,7 +10,7 @@ For more details on npm build integration using JFrog CLI, please refer to [Buil
 
 ## This Example
 
-This example demonstrates how to build an npm project using JFrog CLI. The build does the following:
+This example demonstrates how to build a npm project using JFrog CLI. The build does the following:
 
 1. Downloads its npm dependencies from Artifactory.
 2. Packs and uploads the built package to Artifactory.
