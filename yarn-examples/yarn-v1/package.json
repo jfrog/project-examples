@@ -1,0 +1,13 @@
+{
+  "name": "yarn-v1",
+  "version": "1.0.0",
+  "description": "yarn v1 project example",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "json": "9.0.6",
+    "minimist": "1.2.5",
+    "tough-cookie": "2.5.0"
+  },
+  "packageManager": "yarn@1.22.19"
+}
