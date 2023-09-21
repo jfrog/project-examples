@@ -19,7 +19,6 @@ Configure Artifactory:
 
 Configure the project's repositories:
 > jf yarn-config --repo-resolve=<YARN_RESOLVE_REPO>
-(or just jf yarn config and follow UI instructions)
 
 Build the project with yarn and resolve the project dependencies from Artifactory.
 > jf yarn install --build-name=my-build --build-number=1 

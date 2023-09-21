@@ -19,13 +19,6 @@ Configure Artifactory:
 
 Configure the project's repositories:
 > jf yarn-config --repo-resolve=<YARN_RESOLVE_REPO>
-(or just jf yarn config and follow UI instructions)
-
-Collect environment variables and add them to the build info.
-> jf rt bce my-build 1
-
-Publish the build info to Artifactory.
-> jf rt bp my-build 1
 
 Execute 'audit' scan command.
 > jf audit
