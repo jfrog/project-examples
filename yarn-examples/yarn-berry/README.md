@@ -32,6 +32,3 @@ Publish the build info to Artifactory.
 Execute 'audit' scan command.
 > jf audit
 ```
-
-### Note
-Artifactory supports all Yarn Berry versions but Build operation is currently not supported for projects with version prior to 2.4.0
