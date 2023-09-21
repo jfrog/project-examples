@@ -25,7 +25,6 @@ Execute 'audit' scan command.
 ```
 
 ### Note
-Yarn classic projects are not fully supported by Artifactory as Yarn Berry projects.
 * Building projects is currently unsupported for Yarn Classic projects
 
 
