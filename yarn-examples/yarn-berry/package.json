@@ -1,0 +1,13 @@
+{
+  "name": "yarn-berry",
+  "version": "1.0.0",
+  "description": "yarn berry example project",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "json": "9.0.6",
+    "minimist": "1.2.5",
+    "tough-cookie": "2.5.0"
+  },
+  "packageManager": "yarn@3.6.3"
+}
