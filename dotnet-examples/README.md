@@ -2,7 +2,7 @@
 
 ## Overview
 Artifactory provides full support for managing .NET/NuGet packages and ensures optimal and reliable access to nuget.org. It also allows aggregating multiple NuGet registries under a virtual repository Artifactory, which provides access to all your .NET/NuGet packages through a single URL for both upload and download.
-To work with .Net/NuGet repositories you need to use [JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory) and having your .Net/NuGet project configured to an Artifactory server.
+To work with NuGet repositories you need to use [JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory) and have your .Net/NuGet project configured to an Artifactory server.
 
 You may store exhaustive build information in Artifactory by running your .NET/NuGet builds with JFrog CLI. JFrog CLI collects build-info from your build agents and then publishes it to Artifactory. Once published, the build info can be viewed in the Build Browser under Builds. For more details on .NET/NuGet build integration using JFrog CLI, please refer to [Building .NET/NuGet Packages](https://jfrog.com/help/r/jfrog-cli/building-nuget-packages) in the JFrog CLI User Guide
 
