@@ -7,7 +7,7 @@ To work with NuGet repositories you need to use [JFrog CLI](https://www.jfrog.co
 You may store exhaustive build information in Artifactory by running your .NET/NuGet builds with JFrog CLI. JFrog CLI collects build-info from your build agents and then publishes it to Artifactory. Once published, the build info can be viewed in the Build Browser under Builds. For more details on .NET/NuGet build integration using JFrog CLI, please refer to [Building .NET/NuGet Packages](https://jfrog.com/help/r/jfrog-cli/building-nuget-packages) in the JFrog CLI User Guide
 
 ## This Example
-This examples demonstrates how to build a .NET/NuGet project using JFrog CLI. The build does the following:
+These examples demonstrate how to build a .NET/NuGet project using JFrog CLI. The build does the following:
 
 1. Downloads its .NET dependencies from Artifactory.
 2. Packs and uploads the built package to Artifactory.
