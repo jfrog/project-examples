@@ -9,7 +9,7 @@ You may store exhaustive build information in Artifactory by running your .NET/N
 ## This Example
 These examples demonstrate how to build a .NET/NuGet project using JFrog CLI. The build does the following:
 
-1. Downloads its .NET dependencies from Artifactory.
+1. Downloads its NuGet dependencies from Artifactory.
 2. Packs and uploads the built package to Artifactory.
 3. Records and publishes build-info to Artifactory.
 
