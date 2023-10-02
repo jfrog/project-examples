@@ -24,7 +24,7 @@ Create the following repositories on your Artifactory instance:
 
 1. A remote NuGet repository. Make sure the repository has *https://www.nuget.org/* configured as its URL (this is the default when creating the repository).
 2. A local NuGet repository.
-3. A virtual repository:
+3. A virtual NuGet repository:
     - Include the remote and local repositories as part of the new virtual repository.
     - Set the new local repository as the **Default Deployment Repository** of the new virtual repository.
 
