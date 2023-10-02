@@ -45,7 +45,10 @@ Execute 'audit' scan command.
 > jf audit
 
 Build the project with dotnet and resolve the project dependencies from Artifactory.
-> jf dotnet pack
+> dotnet pack
+
+Upload the packages to a NuGet repository in Artifactory:
+> jf rt u <source pattern> <target pattern> --build-name=my-build --build-number=1 --module=jfrog-nuget-example
 
 Collect environment variables and add them to the build info.
 > jf rt bce my-build 1
