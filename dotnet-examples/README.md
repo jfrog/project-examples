@@ -38,15 +38,18 @@ Configure Artifactory:
 Configure the project's repositories:
 > jf dotnet-config --repo-resolve=<YARN_RESOLVE_REPO>
 
+Restores the dependencies and tools of the project from Artifactory
+> jf dotnet restore --build-name=my-build --build-number=1
+
+Execute 'audit' scan command.
+> jf audit
+
 Build the project with dotnet and resolve the project dependencies from Artifactory.
-> jf dotnet restore --build-name=my-build --build-number=1 
+> jf dotnet pack
 
 Collect environment variables and add them to the build info.
 > jf rt bce my-build 1
 
 Publish the build info to Artifactory.
 > jf rt bp my-build 1
-
-Execute 'audit' scan command.
-> jf audit
 ```
