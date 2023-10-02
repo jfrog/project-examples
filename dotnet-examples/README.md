@@ -36,7 +36,7 @@ Configure Artifactory:
 > jf c add --url=<JFROG_PLATFORM_URL> [credentials flags]
 
 Configure the project's repositories:
-> jf dotnet-config --repo-resolve=<YARN_RESOLVE_REPO>
+> jf dotnet-config --repo-resolve=<NUGET_RESOLUTION_REPOSITORY>
 
 Build the project with dotnet and resolve the project dependencies from Artifactory.
 > jf dotnet restore --build-name=my-build --build-number=1 
