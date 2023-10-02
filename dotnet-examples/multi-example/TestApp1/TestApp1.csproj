@@ -9,6 +9,7 @@
     <Copyright>Foobar</Copyright>
     <Authors>Frederik</Authors>
     <Platforms>AnyCPU;x64</Platforms>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
