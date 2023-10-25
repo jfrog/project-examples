@@ -1,0 +1,23 @@
+plugins {
+    id 'version-catalog'
+    id 'maven-publish'
+    id 'java-platform'
+}
+
+group = 'com.jfrog'
+version = '1.0.0'
+catalog {
+    versionCatalog {
+        library('commons-lang3', 'org.apache.commons:commons-lang3:3.9')
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.versionCatalog
+            artifactId = 'gradle-version-catalog'
+        }
+    }
+}
+

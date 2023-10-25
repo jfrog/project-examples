@@ -1,0 +1,8 @@
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            // Use gradle-version-catalog from JFrog Artifactory
+            from("com.jfrog:gradle-version-catalog:1.0.0")
+        }
+    }
+}

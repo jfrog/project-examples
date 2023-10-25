@@ -78,3 +78,7 @@ Sample project that uses the Gradle Artifactory Plugin to deploy Android library
 
 Read more information about [Artifactory as a Gradle repository](https://jfrog.com/integration/gradle-repository/) and the [Gradle Artifactory Plugin](https://www.jfrog.com/confluence/display/RTF/Gradle+Artifactory+Plugin).
 Also read about [JFrog CLI's integration with Gradle and Maven](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-RunningMavenandGradleBuilds).
+
+### gradle-version-catalog-example
+
+Sample projects that use the JFrog CLI to share a [Version Catalog](https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog) file in JFrog Artifactory.
