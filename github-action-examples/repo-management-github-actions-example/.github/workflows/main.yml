@@ -20,20 +20,20 @@ jobs:
     name: calculate-ci-job
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
          
     - name: Setup JDK 1.8
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v4
       with:
-        java-version: 1.8
+        distribution: 'temurin'
+        java-version: 8
 
     - name: Setup JFrog CLI
-      uses: jfrog/setup-jfrog-cli@v2
+      uses: jfrog/setup-jfrog-cli@v4
       env:
         JF_ENV_1: ${{ secrets.JF_SECRET_ENV_1 }}
-        M2_HOME: /usr/local/apache-maven/apache-maven-3.6.3 
         
-    - name: Ping JFrog CLI
+    - name: Ping Artifactory
       run: jf rt ping
 
     - name: Set Environment Variables

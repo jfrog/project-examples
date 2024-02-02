@@ -3,7 +3,7 @@ This is an example Github workflow, which uses the [Setup JFrog CLI Github Actio
 
 ## Running the Example
 1. Create a new Github repository.
-2. Make sure you have version **1.29.0** or above of [JFrog CLI](https://jfrog.com/getcli/) on your local machine, by running ```jfrog -v```.
+2. Make sure you have version **1.46.4** or above of [JFrog CLI](https://jfrog.com/getcli/) on your local machine, by running ```jfrog -v```.
 3. Configure the details of your Artifactory server by running ```jfrog c add```.
 4. Using the server ID you configured, export the server details by running ```jfrog c export <Server ID>```.
 5. Copy the generated token to the clipboard.
