@@ -1,8 +1,0 @@
-{
-   "key":"auto-cli-virtual-${key1}",
-   "packageType":"maven",
-   "rclass":"virtual",
-   "repositories":"auto-cli-central-${key1},auto-cli-local-${key1}",
-   "defaultDeploymentRepo":"auto-cli-local-${key1}"
-}      
-  
