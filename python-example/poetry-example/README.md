@@ -20,7 +20,7 @@ In your terminal, validate that the following commands work.
 Output Python version:
 > python --version
 
-Output pipenv version:
+Output poetry version:
 > poetry --version
 
 Output JFrog CLI version:
@@ -41,7 +41,7 @@ Install project dependencies with poetry from Artifactory:
 > jf poetry install --build-name=my-poetry-build --build-number=1 --module=jfrog-poetry-example
 
 Package the project, create distribution archives (tar.gz and whl):
-> jf build
+> jf poetry build
 
 Upload the packages to the pypi repository in Artifactory:
 > jf rt u dist/ pypi/ --build-name=my-poetry-build --build-number=1 --module=jfrog-poetry-example
