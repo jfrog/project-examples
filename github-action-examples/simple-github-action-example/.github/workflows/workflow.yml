@@ -1,0 +1,32 @@
+name: "Setup JFrog CLI Example"
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        env:
+          # JFrog platform url (for example: https://acme.jfrog.io)
+          JF_URL: ${{ secrets.JF_URL }}
+
+          # JFrog Platform access token
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+
+          # Basic authentication credentials
+          ## JF_USER: ${{ secrets.JF_USER }}
+          ## JF_PASSWORD: ${{ secrets.JF_PASSWORD }}
+
+      - name: Run JFrog CLI
+        run: |
+          # Ping the server
+          jf rt ping
+          # Collect environment variables for the build
+          jf rt bce
+          # Collect VCS details from git and add them to the build
+          jf rt bag
+          # Publish build info
+          jf rt bp
