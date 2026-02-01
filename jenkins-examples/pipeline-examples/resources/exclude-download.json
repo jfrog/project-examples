@@ -1,9 +1,0 @@
-{
-  "files": [
-    {
-      "pattern": "libs-snapshot-local",
-      "target": "Bazinga/",
-      "exclusions": ["*ArtifactoryPipeline.zip"]
-    }
-  ]
-}

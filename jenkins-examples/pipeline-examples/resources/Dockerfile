@@ -1,1 +1,0 @@
-FROM hello-world:latest
