@@ -4,7 +4,7 @@ on:
   # Triggers for every commit pushed to any branch
   push:
   # Triggers for all Pull Request activity (opened, updated, reopened)
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
   # Allows manual triggers from the Actions tab test
   workflow_dispatch:
@@ -16,6 +16,7 @@ permissions:
   pull-requests: write
   contents: write
   security-events: write
+  actions: read
 
 jobs:
   frogbot-scan:
