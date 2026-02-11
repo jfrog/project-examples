@@ -1,0 +1,37 @@
+name: "Frogbot Security Scan"
+
+on:
+  # Triggers for every commit pushed to any branch
+  push:
+  # Triggers for all Pull Request activity (opened, updated, reopened)
+  pull_request:
+    types: [opened, synchronize, reopened]
+  # Allows manual triggers from the Actions tab
+  workflow_dispatch:
+  # Scheduled daily scan
+  schedule:
+    - cron: "0 0 * * *"
+
+permissions:
+  pull-requests: write
+  contents: write
+  security-events: write
+
+jobs:
+  frogbot-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jfrog/frogbot@v2
+        env:
+          # Connection Details
+          JF_URL: ${{ secrets.JF_URL }}
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+          JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+          # Project Specifics
+          JF_WORKING_DIR: "npm-example"
+          JF_INSTALL_DEPS_CMD: "npm install"
+          
+          # Dynamic Branch Context
+          # This tells Frogbot which branch is the "base" for the current run
+          JF_GIT_BASE_BRANCH: ${{ github.event.pull_request.base.ref || github.ref_name }}
