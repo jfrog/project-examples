@@ -6,7 +6,7 @@ on:
   # Triggers for all Pull Request activity (opened, updated, reopened)
   pull_request:
     types: [opened, synchronize, reopened]
-  # Allows manual triggers from the Actions tab
+  # Allows manual triggers from the Actions tab test
   workflow_dispatch:
   # Scheduled daily scan
   schedule:
