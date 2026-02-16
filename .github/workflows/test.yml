@@ -1,0 +1,46 @@
+name: All Tests
+on:
+  push:
+  schedule:
+    - cron: 0 0 1 * *
+jobs:
+  test_maven:
+    strategy:
+      max-parallel: 3
+      matrix:
+        image:
+          - eclipse-temurin:8-jdk
+          - adoptopenjdk/openjdk11:jdk-11.0.11_9-debian
+          - adoptopenjdk/openjdk16:jdk-16.0.1_9-debian
+          - eclipse-temurin:20-jdk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Detect changed files
+        id: changed-files-yaml
+        uses: tj-actions/changed-files@v45
+        with:
+          files_yaml: |
+            maven:
+              - 'maven-examples/**'
+              - '.github/workflows/test.yml'
+      - name: Define options
+        run: |
+          set -x
+          if [ -n "${JOB_CONTAINER_NAME}" ]; then
+            echo "options=--volumes-from=${JOB_CONTAINER_NAME}" >> $GITHUB_ENV
+          else
+            echo "options=-v ${GITHUB_WORKSPACE}:${GITHUB_WORKSPACE}" >> $GITHUB_ENV
+          fi
+        shell: bash
+        id: define-options
+      - name: Test Maven project updates
+        uses: addnab/docker-run-action@v3
+        if: github.event.schedule == '0 0 1 * *' || steps.changed-files-yaml.outputs.maven_any_changed == 'true'
+        with:
+          image: ${{ matrix.image }}
+          options: ${{ env.options || steps.define-options.outputs.options }} --rm
+          run: |
+            cd ${{ github.workspace }}/maven-examples/maven-example
+            ./mvnw clean package
