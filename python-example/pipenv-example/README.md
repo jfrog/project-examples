@@ -56,4 +56,4 @@ Publish the build info to Artifactory:
 Install published package by installing it from Artifactory using pip:
 > jf pipenv install jfrog-pipenv-example
 
-Learn about [Building Python Packages with JFrog CLI](https://www.jfrog.com/confluence/display/CLI/CLI+for+JFrog+Artifactory#CLIforJFrogArtifactory-BuildingPythonPackages).
+Learn about [Building Python Packages with JFrog CLI](https://docs.jfrog-applications.jfrog.io/jfrog-applications/jfrog-cli/cli-for-jfrog-artifactory/package-managers-integration#building-python-packages).
