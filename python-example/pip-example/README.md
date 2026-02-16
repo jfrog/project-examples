@@ -44,8 +44,8 @@ Output JFrog CLI version:
 Configure Artifactory:
 > jf c add --url=<JFROG_PLATFORM_URL> [credentials flags]
 
-Configure the project's resolution repository. You shoud set the virtual repository you created.
-> jf pip-config --repo-resolve=<PYPI_REPO>
+Configure the project's resolution repository.
+> jf pip-config --repo-resolve=<PYPI_REPO> --repo-deploy=<PYPI_REPO>
 
 Install project dependencies with pip from Artifactory:
 
@@ -59,7 +59,7 @@ Package the project, create distribution archives (tar.gz and whl):
 > python setup.py sdist bdist_wheel
 
 Upload the packages to the pypi repository in Artifactory:
-> jf rt u dist/ pypi/ --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
+> jf twine upload dist/* --build-name=my-pip-build --build-number=1 --module=jfrog-python-example
 
 Collect environment variables and add them to the build info:
 > jf rt bce my-pip-build 1
