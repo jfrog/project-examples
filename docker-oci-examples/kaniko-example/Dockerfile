@@ -1,2 +1,2 @@
 FROM alpine
-RUN echo "Hello frog!"
+RUN echo "Hello frog!" > echo.txt
