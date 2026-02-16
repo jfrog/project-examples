@@ -8,7 +8,7 @@ This example is using the Maven Artifactory Plugin for artifacts and build-info 
 
 To run this example, please do the following:
 * Edit the pom.xml file and set the value of the *contextUrl* with your Artifactory URL, as well as the other Artifactory properties.
-For more configuration information see the [Maven Artifactory Plugin documentation](https://www.jfrog.com/confluence/display/RTF/Maven+Artifactory+Plugin).
+For more configuration information see the [Maven Artifactory Plugin documentation](https://docs.jfrog-applications.jfrog.io/ci-and-sdks/ci-integrations/maven-artifactory-plugin).
 * CD to the project directory and run *mvn deploy*.
 
 You can define the Artifactory details inside the pom file using properties. These properties can be sent to maven as system properties: 
@@ -51,4 +51,4 @@ The full plugin documentation is available [here](https://www.jfrog.com/confluen
 
 <br><br>
 
-For more information about managing your maven packages with an [Artifactory Maven repository](https://jfrog.com/integration/maven-repository/) visit [Artifactory's documentation page](https://www.jfrog.com/confluence/display/RTF/Maven+Repository).
+For more information about managing your maven packages with an [Artifactory Maven repository](https://jfrog.com/integration/maven-repository/) visit [Artifactory's documentation page](https://docs.jfrog-applications.jfrog.io/ci-and-sdks/ci-integrations/maven-artifactory-plugin).
