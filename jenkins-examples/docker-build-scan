@@ -1,0 +1,53 @@
+//Pipeline example using the JFrog Jenkins plugin - https://plugins.jenkins.io/jfrog/
+
+pipeline {
+    agent any
+    tools {
+        jfrog 'jfrog-cli'
+    }
+    environment {
+        GIT_REPO_URL = "https://github.com/jfrog/project-examples.git"
+        DOCKERFILE_DIR = "docker-oci-examples/docker-example"
+        DOCKER_IMAGE_TAG = "my-image:latest"
+        DOCKER_IMAGE_NAME = "<JFrog-URL>/docker-local/my-image:latest"
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git url: "${GIT_REPO_URL}", branch: 'master'
+            }
+        }
+
+        stage('Build Docker image') {
+            steps {
+                script {
+                    // Running docker build
+                    sh "docker build -t ${DOCKER_IMAGE_TAG} ${DOCKERFILE_DIR}"
+                }
+            }
+        }
+        
+        stage('Push image') {
+            steps {
+                dir('docker-oci-examples/docker-example/') {
+                    
+                    sh "docker tag $DOCKER_IMAGE_TAG ${DOCKER_IMAGE_NAME}"
+                    // Push image to Artifactory
+                    jf 'docker push $DOCKER_IMAGE_NAME'
+
+                }
+            }
+        }        
+
+         stage('Publish build info and scan') {
+            steps {
+                // Publish build information
+                jf 'rt build-publish'
+                // Run JFrog build scan
+                jf 'bs'
+            }
+        }
+        
+    }
+}
