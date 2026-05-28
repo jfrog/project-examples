@@ -25,5 +25,5 @@ This phase sets an OIDC integration between GitHub Actions to the JFrog platform
 
 ## Resources
 
-- [OpenID Connect Integration](https://jfrog.com/help/r/jfrog-platform-administration-documentation/openid-connect-integration)
+- [OpenID Connect Integration](https://docs.jfrog.com/administration/docs/openid-connect-integration)
 - [Secure Access To Your Software Development with GitHub OpenID Connect (OIDC) and JFrog](https://jfrog.com/blog/secure-access-development-jfrog-github-oidc)
